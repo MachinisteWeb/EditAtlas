@@ -1,0 +1,244 @@
+<% include head.htm %>
+
+<h1><%-: specific | et: ['demo.title', fs] %></h1>
+
+<p><%-: specific | et: ['demo.subtitle', fs] %></p>
+<p><%-: specific | et: ['demo.explaination', fs] %></p>
+
+<hr>
+
+<!-- Éditable -->
+<h2>En dure</h2>
+<h3>dans Common</h3>
+<p><%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', 'common.json'] %></p>
+<%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', 'common.json'] %>
+<p><a href="<%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', 'common.json', 'href'] %>" title="<%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', 'common.json', 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', 'common.json', 'href'] %>" title="<%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', 'common.json', 'title'] %>"><%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', 'common.json'] %></a></p>
+<div class="<%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', 'common.json', 'class'] %>"><%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', 'common.json'] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', 'common.json'] %&gt;&lt;/p&gt;
+&lt;%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', 'common.json'] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', 'common.json', 'href'] %&gt;" title="&lt;%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', 'common.json', 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', 'common.json', 'href'] %&gt;" title="&lt;%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', 'common.json', 'title'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', 'common.json'] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', 'common.json', 'class'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', 'common.json'] %&gt;&lt;/div&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p><%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', 'index.json'] %></p>
+<%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', 'index.json'] %>
+<p><a href="<%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', 'index.json', 'href'] %>" title="<%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', 'index.json', 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', 'index.json', 'href'] %>" title="<%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', 'index.json', 'title'] %>"><%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', 'index.json'] %></a></p>
+<div class="<%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', 'index.json', 'class'] %>"><%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', 'index.json'] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', 'index.json'] %&gt;&lt;/p&gt;
+&lt;%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', 'index.json'] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', 'index.json', 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', 'index.json', 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', 'index.json', 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', 'index.json', 'title'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', 'index.json'] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', 'index.json', 'class'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', 'index.json'] %&gt;&lt;/div&gt;</code></pre>
+
+<hr>
+
+<!-- Avec fichier passer en variable (file = 'index.json') -->
+<h2>Avec <samp>file</samp> passer en second paramètre (file = 'index.json')</h2>
+<h3>dans Common</h3>
+<p><%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', file] %></p>
+<%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', file] %>
+<p><a href="<%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', file, 'href'] %>" title="<%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', file, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', file, 'href'] %>" title="<%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', file, 'title'] %>"><%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', file] %></a></p>
+<div class="<%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', file, 'class'] %>"><%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', file] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', file] %&gt;&lt;/p&gt;
+&lt;%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', file] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', file, 'href'] %&gt;" title="&lt;%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', file, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', file, 'href'] %&gt;" title="&lt;%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', file, 'title'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', file] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', file, 'class'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', file] %&gt;&lt;/div&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p><%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', file] %></p>
+<%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', file] %>
+<p><a href="<%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', file, 'href'] %>" title="<%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', file, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', file, 'href'] %>" title="<%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', file, 'title'] %>"><%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', file] %></a></p>
+<div class="<%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', file, 'class'] %>"><%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', file] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', file] %&gt;&lt;/p&gt;
+&lt;%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', file] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', file, 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', file, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', file, 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', file, 'title'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', file] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', file, 'class'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', file] %&gt;&lt;/div&gt;</code></pre>
+
+<!-- Avec fichier à false passer en variable (file = false) -->
+<h2>Avec <samp>file</samp> passer en second paramètre mais à false</h2>
+<% var edit1 = false %>
+<h3>dans Common</h3>
+<p><%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', edit1] %></p>
+<%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', edit1] %>
+<p><a href="<%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', edit1, 'href'] %>" title="<%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', edit1, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', edit1, 'href'] %>" title="<%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', edit1, 'title'] %>"><%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', edit1] %></a></p>
+<div class="<%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', edit1, 'class'] %>"><%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', edit1] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: common.demo.example.hardText | editText: ['common.demo.example.hardText', file] %&gt;&lt;/p&gt;
+&lt;%-: common.demo.example.hardHtml | editHtml: ['common.demo.example.hardHtml', file] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardAttr.url | editAttr: ['common.demo.example.hardAttr.url', file, 'href'] %&gt;" title="&lt;%-: common.demo.example.hardAttr.description | editAttr: ['common.demo.example.hardAttr.description', file, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common.demo.example.hardMulti.url | editAttr: ['common.demo.example.hardMulti.url', file, 'href'] %&gt;" title="&lt;%-: common.demo.example.hardMulti.description | editAttr: ['common.demo.example.hardMulti.description', file, 'title'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.content | editText: ['common.demo.example.hardMulti.content', file] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: common.demo.example.hardMulti.class | editAttr: ['common.demo.example.hardMulti.class', file, 'class'] %&gt;"&gt;&lt;%-: common.demo.example.hardMulti.html | editHtml: ['common.demo.example.hardMulti.html', file] %&gt;&lt;/div&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p><%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', edit1] %></p>
+<%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', edit1] %>
+<p><a href="<%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', edit1, 'href'] %>" title="<%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', edit1, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', edit1, 'href'] %>" title="<%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', edit1, 'title'] %>"><%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', edit1] %></a></p>
+<div class="<%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', edit1, 'class'] %>"><%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', edit1] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: specific.demo.example.hardText | editText: ['specific.demo.example.hardText', file] %&gt;&lt;/p&gt;
+&lt;%-: specific.demo.example.hardHtml | editHtml: ['specific.demo.example.hardHtml', file] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardAttr.url | editAttr: ['specific.demo.example.hardAttr.url', file, 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardAttr.description | editAttr: ['specific.demo.example.hardAttr.description', file, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific.demo.example.hardMulti.url | editAttr: ['specific.demo.example.hardMulti.url', file, 'href'] %&gt;" title="&lt;%-: specific.demo.example.hardMulti.description | editAttr: ['specific.demo.example.hardMulti.description', file, 'title'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.content | editText: ['specific.demo.example.hardMulti.content', file] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: specific.demo.example.hardMulti.class | editAttr: ['specific.demo.example.hardMulti.class', file, 'class'] %&gt;"&gt;&lt;%-: specific.demo.example.hardMulti.html | editHtml: ['specific.demo.example.hardMulti.html', file] %&gt;&lt;/div&gt;</code></pre>
+
+<hr>
+
+<!-- Avec raccourci et variable fc et fs -->
+<h2>Avec raccourci et variable <samp>fc</samp> et <samp>fs</samp></h2>
+<h3>dans Common</h3>
+<p><%-: common | et: ['demo.example.hardText', fc] %></p>
+<%-: common | eh: ['demo.example.hardHtml', fc] %>
+<p><a href="<%-: common | ea: ['demo.example.hardAttr.url', fc, 'href'] %>" title="<%-: common | ea: ['demo.example.hardAttr.description', fc, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: common | ea: ['demo.example.hardMulti.url', fc, 'href'] %>" title="<%-: common | ea: ['demo.example.hardMulti.description', fc, 'title'] %>"><%-: common | et: ['demo.example.hardMulti.content', fc] %></a></p>
+<div class="<%-: common | ea: ['demo.example.hardMulti.class', fc, 'class'] %>"><%-: common | eh: ['demo.example.hardMulti.html', fc] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: common | et: ['demo.example.hardText', fc] %&gt;&lt;/p&gt;
+&lt;%-: common | eh: ['demo.example.hardHtml', fc] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common | ea: ['demo.example.hardAttr.url', fc, 'href'] %&gt;" title="&lt;%-: common | ea: ['demo.example.hardAttr.description', fc, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: common | ea: ['demo.example.hardMulti.url', fc, 'href'] %&gt;" title="&lt;%-: common | ea: ['demo.example.hardMulti.description', fc, 'title'] %&gt;"&gt;&lt;%-: common | et: ['demo.example.hardMulti.content', fc] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: common | ea: ['demo.example.hardMulti.class', fc, 'class'] %&gt;"&gt;&lt;%-: common | eh: ['demo.example.hardMulti.html', fc] %&gt;&lt;/div&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p><%-: specific | et: ['demo.example.hardText', fs] %></p>
+<%-: specific | eh: ['demo.example.hardHtml', fs] %>
+<p><a href="<%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href'] %>" title="<%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title'] %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%-: specific | ea: ['demo.example.hardMulti.url', fs, 'href'] %>" title="<%-: specific | ea: ['demo.example.hardMulti.description', fs, 'title'] %>"><%-: specific | et: ['demo.example.hardMulti.content', fs] %></a></p>
+<div class="<%-: specific | ea: ['demo.example.hardMulti.class', fs, 'class'] %>"><%-: specific | eh: ['demo.example.hardMulti.html', fs] %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%-: specific | et: ['demo.example.hardText', fs] %&gt;&lt;/p&gt;
+&lt;%-: specific | eh: ['demo.example.hardHtml', fs] %&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href'] %&gt;" title="&lt;%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%-: specific | ea: ['demo.example.hardMulti.url', fs, 'href'] %&gt;" title="&lt;%-: specific | ea: ['demo.example.hardMulti.description', fs, 'title'] %&gt;"&gt;&lt;%-: specific | et: ['demo.example.hardMulti.content', fs] %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%-: specific | ea: ['demo.example.hardMulti.class', fs, 'class'] %&gt;"&gt;&lt;%-: specific | eh: ['demo.example.hardMulti.html', fs] %&gt;&lt;/div&gt;</code></pre>
+
+<hr>
+
+<!-- Avec réclamation de source -->
+<h2>Avec réclamation de source</h2>
+<h3>dans Common</h3>
+<p class="add-text"><%-: common | et: ['demo.example.hardText', fc, true] %></p>
+<div class="add-text"><%-: common | eh: ['demo.example.hardHtml', fc, true] %></div>
+<p><a class="add-attr" href="<%-: common | ea: ['demo.example.hardAttr.url', fc, 'href', true] %>" title="<%-: common | ea: ['demo.example.hardAttr.description', fc, 'title', true] %>">Les attributs ne sont pas éditable.</a></p>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p class="add-text"&gt;&lt;%-: common | et: ['demo.example.hardText', fc, true] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: common | eh: ['demo.example.hardHtml', fc, true] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: common | ea: ['demo.example.hardAttr.url', fc, 'href', true] %&gt;" title="&lt;%-: common | ea: ['demo.example.hardAttr.description', fc, 'title', true] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p class="add-text"><%-: specific | et: ['demo.example.hardText', fs, true] %></p>
+<div class="add-text"><%-: specific | eh: ['demo.example.hardHtml', fs, true] %></div>
+<p><a class="add-attr" href="<%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href', true] %>" title="<%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title', true] %>">Les attributs ne sont pas éditable.</a></p>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p class="add-text"&gt;&lt;%-: specific | et: ['demo.example.hardText', fs, true] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: specific | eh: ['demo.example.hardHtml', fs, true] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href', true] %&gt;" title="&lt;%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title', true] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;</code></pre>
+
+<hr>
+
+<!-- Avec réclamation de source et execution temp réelle de fonction -->
+<h2>Avec réclamation de source et execution temp réelle</h2>
+<h3>dans Common</h3>
+<p class="add-text"><%-: common | et: ['demo.example.hardText', fc, 'website.addText()'] %></p>
+<div class="add-text"><%-: common | eh: ['demo.example.hardHtml', fc, 'website.addText()'] %></div>
+<p><a class="add-attr" href="<%-: common | ea: ['demo.example.hardAttr.url', fc, 'href', 'website.addAttr()'] %>" title="<%-: common | ea: ['demo.example.hardAttr.description', fc, 'title', 'website.addAttr()'] %>">Les attributs ne sont pas éditable.</a></p>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p class="add-text"&gt;&lt;%-: common | et: ['demo.example.hardText', fc, 'website.addText()'] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: common | eh: ['demo.example.hardHtml', fc, 'website.addText()'] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: common | ea: ['demo.example.hardAttr.url', fc, 'href', 'website.addAttr()'] %&gt;" title="&lt;%-: common | ea: ['demo.example.hardAttr.description', fc, 'title', 'website.addAttr()'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<p class="add-text"><%-: specific | et: ['demo.example.hardText', fs, 'website.addText()'] %></p>
+<div class="add-text"><%-: specific | eh: ['demo.example.hardHtml', fs, 'website.addText()'] %></div>
+<p><a class="add-attr" href="<%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href', 'website.addAttr()'] %>" title="<%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title', 'website.addAttr()'] %>">Les attributs ne sont pas éditable.</a></p>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p class="add-text"&gt;&lt;%-: specific | et: ['demo.example.hardText', fs, 'website.addText()'] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: specific | eh: ['demo.example.hardHtml', fs, 'website.addText()'] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: specific | ea: ['demo.example.hardAttr.url', fs, 'href', 'website.addAttr()'] %&gt;" title="&lt;%-: specific | ea: ['demo.example.hardAttr.description', fs, 'title', 'website.addAttr()'] %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;</code></pre>
+
+<hr>
+
+<!-- Test de boucle -->
+<h2>Test de boucle</h2>
+<h3>dans Common</h3>
+<% for (var i = 0, l = common.demo.loop.length; i < l; i++) { %>
+<p class="add-text"><%-: common | et: ['demo.loop[' + i + '].hardText', fc, 'website.addText()'] %></p>
+<div class="add-text"><%-: common | eh: ['demo.loop[' + i + '].hardHtml', fc, 'website.addText()'] %></div>
+<p><a class="add-attr" href="<%-: common | ea: ['demo.loop[' + i + '].hardAttr.url', fc, 'href', 'website.addAttr()'] %>" title="<%-: common | ea: ['demo.loop[' + i + '].hardAttr.description', fc, 'title', 'website.addAttr()'] %>">Les attributs sont éditable.</a></p>
+<% } %>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;% for (var i = 0, l = common.demo.loop.length; i &lt; l; i++) { %&gt;
+&lt;p class="add-text"&gt;&lt;%-: common | et: ['demo.loop[' + i + '].hardText', fc, 'website.addText()'] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: common | eh: ['demo.loop[' + i + '].hardHtml', fc, 'website.addText()'] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: common | ea: ['demo.loop[' + i + '].hardAttr.url', fc, 'href', 'website.addAttr()'] %&gt;" title="&lt;%-: common | ea: ['demo.loop[' + i + '].hardAttr.description', fc, 'title', 'website.addAttr()'] %&gt;"&gt;Les attributs sont éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;% } %&gt;</code></pre>
+
+<h3>dans Specific</h3>
+<% for (var i = 0, l = specific.demo.loop.length; i < l; i++) { %>
+<p class="add-text"><%-: specific | et: ['demo.loop[' + i + '].hardText', fs, 'website.addText()'] %></p>
+<div class="add-text"><%-: specific | eh: ['demo.loop[' + i + '].hardHtml', fs, 'website.addText()'] %></div>
+<p><a class="add-attr" href="<%-: specific | ea: ['demo.loop[' + i + '].hardAttr.url', fs, 'href', 'website.addAttr()'] %>" title="<%-: specific | ea: ['demo.loop[' + i + '].hardAttr.description', fs, 'title', 'website.addAttr()'] %>">Les attributs sont éditable.</a></p>
+<% } %>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;% for (var i = 0, l = specific.demo.loop.length; i &lt; l; i++) { %&gt;
+&lt;p class="add-text"&gt;&lt;%-: specific | et: ['demo.loop[' + i + '].hardText', fs, 'website.addText()'] %&gt;&lt;/p&gt;
+&lt;div class="add-text"&gt;&lt;%-: specific | eh: ['demo.loop[' + i + '].hardHtml', fs, 'website.addText()'] %&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a class="add-attr" href="&lt;%-: specific | ea: ['demo.loop[' + i + '].hardAttr.url', fs, 'href', 'website.addAttr()'] %&gt;" title="&lt;%-: specific | ea: ['demo.loop[' + i + '].hardAttr.description', fs, 'title', 'website.addAttr()'] %&gt;"&gt;Les attributs sont éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;% } %&gt;</code></pre>
+
+<hr>
+
+<!-- Non éditable -->
+<h2>Non éditable</h2>
+<h3>En dure</h3>
+<p>Ce texte <strong>n'est</strong> pas éditable.</p>
+<div><p>Ce HTML n'est...</p> <p>...pas éditable.</p></div>
+<p><a href="javascript:;" title="Title">Les attributs ne sont pas éditable.</a></p>
+<p><a href="javascript:;" title="Title">Ce texte et ses attributs ne sont pas éditable</a></p>
+<div class="class-multi"><p><strong>et ce HTML <br /> non plus</strong></p></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;Ce texte &lt;strong&gt;n'est&lt;/strong&gt; pas éditable.&lt;/p&gt;
+&lt;div&gt;&lt;p&gt;Ce HTML n'est...&lt;/p&gt; &lt;p&gt;...pas éditable.&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href="javascript:;" title="Title"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="javascript:;" title="Title"&gt;Ce texte et ses attributs ne sont pas éditable&lt;/a&gt;&lt;/p&gt;
+&lt;div class="class-multi"&gt;&lt;p&gt;&lt;strong&gt;et ce HTML &lt;br /&gt; non plus&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</code></pre>
+
+<h3>Sans filtre dans Common</h3>
+<p><%- common.demo.example.hardTextNotEditable %></p>
+<%- common.demo.example.hardHtmlNotEditable %>
+<p><a href="<%= common.demo.example.hardAttrNotEditable.url %>" title="<%= common.demo.example.hardAttrNotEditable.description %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%= common.demo.example.hardMultiNotEditable.url %>" title="<%= common.demo.example.hardMultiNotEditable.description %>"><%- common.demo.example.hardMultiNotEditable.content %></a></p>
+<div class="<%= common.demo.example.hardMultiNotEditable.class %>"><%- common.demo.example.hardMultiNotEditable.html %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%- common.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;
+&lt;%- common.demo.example.hardHtmlNotEditable %&gt;
+&lt;p&gt;&lt;a href="&lt;%= common.demo.example.hardAttrNotEditable.url %&gt;" title="&lt;%= common.demo.example.hardAttrNotEditable.description %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%= common.demo.example.hardMultiNotEditable.url %&gt;" title="&lt;%= common.demo.example.hardMultiNotEditable.description %&gt;"&gt;&lt;%- common.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%= common.demo.example.hardMultiNotEditable.class %&gt;"&gt;&lt;%- common.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>
+
+<h3>Sans filtre dans Specific</h3>
+<p><%- specific.demo.example.hardTextNotEditable %></p>
+<%- specific.demo.example.hardHtmlNotEditable %>
+<p><a href="<%= specific.demo.example.hardAttrNotEditable.url %>" title="<%= specific.demo.example.hardAttrNotEditable.description %>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<%= specific.demo.example.hardMultiNotEditable.url %>" title="<%= specific.demo.example.hardMultiNotEditable.description %>"><%- specific.demo.example.hardMultiNotEditable.content %></a></p>
+<div class="<%= specific.demo.example.hardMultiNotEditable.class %>"><%- specific.demo.example.hardMultiNotEditable.html %></div>
+
+<pre class="prettyprint linenums"><code class="lang-html">&lt;p&gt;&lt;%- specific.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;
+&lt;%- specific.demo.example.hardHtmlNotEditable %&gt;
+&lt;p&gt;&lt;a href="&lt;%= specific.demo.example.hardAttrNotEditable.url %&gt;" title="&lt;%= specific.demo.example.hardAttrNotEditable.description %&gt;"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="&lt;%= specific.demo.example.hardMultiNotEditable.url %&gt;" title="&lt;%= specific.demo.example.hardMultiNotEditable.description %&gt;"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;div class="&lt;%= specific.demo.example.hardMultiNotEditable.class %&gt;"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>
+
+<% include foot.htm %>

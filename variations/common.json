@@ -1,0 +1,66 @@
+{
+    "editableArea": {
+        "close": "Fermer",
+        "htmlInfo": "(HTML activé)",
+        "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
+        "title": "Zone d'édition de contenu",
+        "next": "Continuer avant d'envoyer",
+        "submit": "Modifier"
+    },
+    "demo": {
+        "example": {
+            "hardTextNotEditable": "Ce texte <strong>n'est pas</strong> éditable.",
+            "hardHtmlNotEditable": "<div><p>Ce HTML n'est...</p> <p>... pas éditable.</p></div>",
+            "hardAttrNotEditable": {
+                "url": "javascript:;",
+                "description": "Title"
+            },
+            "hardMultiNotEditable": {
+                "url": "javascript:;",
+                "description": "Title",
+                "content": "Ce texte et ses attributs ne sont pas éditable.",
+                "class": "class-test",
+                "html": "<strong>et ce HTML <br /> non plus</strong>."
+            },
+            "hardText": "Ce texte est éditable.",
+            "hardHtml": "<div><p>Ce HTML est...</p> <p>... éditable.</p></div>",
+            "hardAttr": {
+                "url": "javascript:;",
+                "description": "Title"
+            },
+            "hardMulti": {
+                "url": "javascript:;",
+                "description": "Title",
+                "content": "Ce texte et ses attributs sont éditable",
+                "class": "class-test",
+                "html": "<p><strong>et ce HTML <br> l'est</strong>.</p>"
+            }
+        },
+        "loop": [
+            {
+                "hardText": "Ce texte <strong>est</strong> éditable 1.",
+                "hardHtml": "<div><p>Ce HTML est...</p> <p>...éditable 1.</p></div>",
+                "hardAttr": {
+                    "url": "javascript:;",
+                    "description": "Title 1"
+                }
+            },
+            {
+                "hardText": "Ce texte <strong>est</strong> éditable 2.",
+                "hardHtml": "<div><p>Ce HTML est...</p> <p>...éditable 2.</p></div>",
+                "hardAttr": {
+                    "url": "javascript:;",
+                    "description": "Title 2"
+                }
+            },
+            {
+                "hardText": "Ce texte <strong>est</strong> éditable 3.",
+                "hardHtml": "<div><p>Ce HTML est...</p> <p>...éditable 3.</p></div>",
+                "hardAttr": {
+                    "url": "javascript:;",
+                    "description": "Title 3"
+                }
+            }
+        ]
+    }
+}

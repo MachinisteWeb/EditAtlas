@@ -1,0 +1,23 @@
+{
+	"httpPort": 7777,
+	"autoGenerate": false,
+ 	"commonVariation": "common.json",
+ 	"commonController": "common.js",
+ 	"controllersRelativePath": "controllers/",
+ 	"pageNotFound": "/page-inexistante/",
+	"routes": {
+		"/": {
+			"template": "index.htm",
+			"variation": "index.json"
+		},
+		"": {
+			"redirect": "/",
+			"statusCode": 301
+		},
+		"/page-inexistante/": {
+			"redirect": "/",
+			"statusCode": 301
+		}
+	},
+	"_needModulePath": true
+}

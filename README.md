@@ -40,10 +40,10 @@ et en plaçant dans le fichier de variation `common.js` commun ces variables :
 
 ```js
 {
-	"text": "Un texte dans common.",
+	"text": "<p>Un texte dans common.</p>",
 	"liens": [{
-		"href": "./",
-		"title": "Le titre du lien dans common.",
+		"url": "./",
+		"description": "Le titre du lien dans common.",
 		"content": "Le contenu du lien dans common."
 	}]
 }
@@ -55,10 +55,10 @@ ainsi que dans un fichier spécifique `index.json` ces variables :
 
 ```js
 {
-	"texts": ["Un texte dans specific."],
+	"texts": ["<p>Un texte dans specific.</p>"],
 	"lien": {
-		"href": "./",
-		"title": "Le titre du lien dans specific.",
+		"url": "./",
+		"description": "Le titre du lien dans specific.",
 		"content": "Le contenu du lien dans specific."
 	}
 }
@@ -67,15 +67,51 @@ ainsi que dans un fichier spécifique `index.json` ces variables :
 nous sommes capable de les affichers dans le template `index.htm` comme ceci :
 
 ```html
-<p><%- common.text %></p>
-<p><a href="<%- common.liens[0].href %>" title="<%- common.liens[0].title %>"><%- common.liens[0].content %></a></p>
+<%- common.text %>
+<a href="<%= common.liens[0].url %>" title="<%= common.liens[0].description %>">
+	<%- common.liens[0].content %>
+</a>
 
-<p><%- specific.texts[0] %></p>
-<p><a href="<%= specific.lien.href %>" title="<%= specific.lien.title %>"><%- specific.lien.content %></a></p>
+<%- specific.texts[0] %>
+<a href="<%= specific.lien.url %>" title="<%= specific.lien.description %>">
+	<%- specific.lien.content %>
+</a>
 ```
 
-...suite en cours de rédaction...
+et le code source disponible dans votre navigateur pour l'adresse `http://localhost/` sera :
 
+```html
+<p>Un texte dans common.</p>
+<a href="./" title="Le titre du lien dans common.">
+	Le contenu du lien dans common.
+</a>
+
+<p>Un texte dans specific.</p>
+<a href="./" title="Le titre du lien dans specific.">
+	Le contenu du lien dans specific.
+</a>
+```
+
+
+### Du contenu éditable à la volée ###
+
+En transformant le code précédent en celui-ci :
+
+```html
+<%-: common | eh: ['text','common.json'] %>
+<a href="<%-: common | ea: ['liens[0].url','common.json','href'] %>" title="<%-: common | ea: ['liens[0].description','common.json','title'] %>">
+	<%-: common | et: ['liens[0].content','common.json'] %>
+</a>
+
+<%-: specific | eh: ['texts[0]','index.json'] %>
+<a href="<%-: specific | ea: ['lien.url','index.json','href'] %>" title="<%-: specific | ea: ['lien.title','index.json','title'] %>">
+	<%-: specific | et: ['lien.content','index.json'] %>
+</a>
+```
+
+Vous obtiendrez alors la sortie suivante dans la source Html :
+
+... En cours de rédaction...
 
 
 ## Lancer le site en local ##

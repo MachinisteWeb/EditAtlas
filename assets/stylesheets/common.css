@@ -5,6 +5,20 @@ body {
 	padding: 8px;
 }
 
+a {
+	color: #48739E;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #48739E;
+}
+
+a:visited:hover,
+a:hover {
+	color: #CC0000;
+}
+
 .layout {
 	max-width: 1200px;
 	margin: 0 auto;

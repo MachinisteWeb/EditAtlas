@@ -1,5 +1,6 @@
 var website = website || {},
-    $html = $('html');
+    $html = $('html'),
+    $window = $(window);
 
 (function (publics) {
     "use strict";
@@ -14,6 +15,50 @@ var website = website || {},
         $object.find('[data-edit-targeted=true]').removeAttr("data-edit-targeted");
         return $object;
     }
+
+    publics.moveEditableArea = function () {
+        var $pc = $(".popup-content"),
+            $popup = $(".popup");
+
+        $pc.mouseleave(function () {
+            $.data(this, "draggable", false);
+            $.data(this, "offset-x", 0);
+            $.data(this, "offset-y", 0);
+            $(this).css("cursor", "");
+        }).mousedown(function (e) {
+            $.data(this, "draggable", true);
+            $.data(this, "offset-x", e.pageX);
+            $.data(this, "offset-y", e.pageY);
+            $(this).css("cursor", "all-scroll");
+        }).mouseup(function () {
+            $.data(this, "draggable", false);
+            $.data(this, "offset-x", 0);
+            $.data(this, "offset-y", 0);
+            $(this).css("cursor", "");
+        }).mousemove(function (e) {
+            var positionX, positionY, deltaX, deltaY;
+
+            if ($(this).data("draggable")) {
+                deltaX = parseInt($(this).data("offset-x") - e.pageX, 10);
+                deltaY = parseInt($(this).data("offset-y") - e.pageY, 10);
+                positionX = parseInt($(this).offset().left, 10);
+                positionY = parseInt($(this).offset().top, 10);
+
+                $(this).css("-webkit-transform", "translateY(0%) translateX(0%)")
+                    .css("-moz-transform", "translateY(0%) translateX(0%)")
+                    .css("-ms-transform", "translateY(0%) translateX(0%)")
+                    .css("-o-transform", "translateY(0%) translateX(0%)")
+                    .css("transform", "translateY(0%) translateX(0%)");
+
+                $(this).css("left", positionX - deltaX).css("top", positionY - deltaY);
+
+                $popup.css("left", 0).css("top", 0);
+
+                $.data(this, "offset-x", e.pageX);
+                $.data(this, "offset-y", e.pageY);
+            }
+        }).data("draggable", false).data("offset-x", 0).data("offset-y", 0);
+    };
 
     publics.targetDataEdit = function () {
         function clone(obj) {
@@ -292,6 +337,7 @@ var website = website || {},
         publics.editContent();
         publics.broadcastContent();
         publics.sourceContent();
+        publics.moveEditableArea();
 
         website.addText();
         website.addAttr();

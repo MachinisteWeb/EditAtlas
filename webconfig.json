@@ -5,19 +5,7 @@
  	"commonController": "common.js",
  	"controllersRelativePath": "controllers/",
  	"pageNotFound": "/page-inexistante/",
-	"routes": {
-		"/": {
-			"template": "index.htm",
-			"variation": "index.json"
-		},
-		"": {
-			"redirect": "/",
-			"statusCode": 301
-		},
-		"/page-inexistante/": {
-			"redirect": "/",
-			"statusCode": 301
-		}
-	},
+	"routes": "routes.json",
+	"_minified": "",
 	"_needModulePath": true
 }

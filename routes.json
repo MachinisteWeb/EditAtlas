@@ -1,0 +1,14 @@
+{
+	"/": {
+		"template": "index.htm",
+		"variation": "index.json"
+	},
+	"": {
+		"redirect": "/",
+		"statusCode": 301
+	},
+	"/page-inexistante/": {
+		"redirect": "/",
+		"statusCode": 301
+	}
+}

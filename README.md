@@ -39,6 +39,8 @@ Dans un contexte standard, avec une configuration comme celle-ci :
 
 ```js
 {
+	"controllersRelativePath": "controllers/",
+	"commonController": "common.js",
 	"commonVariation": "common.json",
 	"routes": {
 		"/": {
@@ -148,6 +150,67 @@ On remarque également que
 - Pour `editHtml`, `editText` et `editAttr` on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de filtre la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
 
 **Dès lors, nos valeurs sont cliquable en maintenant la touche `Ctrl` enfoncé et éditable dans la fenêtre d'édition.**
+
+
+### Gestion de droit d'édition / ne plus spécifier de fichier d'enregistrement ###
+
+En imaginant que dans votre controller commun vous précisiez ceci :
+
+```js
+(function (publics) {
+	"use strict";
+
+	publics.preRender = function (params, mainCallback) {
+		var variation = params.variation,
+			session = params.request.session;
+
+		// Création de variable à false.
+		variation.fs = false;
+		variation.fc = false;
+
+		// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
+		if (session.hasPermissionForEdit) {
+			// Le fichier spécifique utilisé pour générer cette vue.
+			variation.fs = variation.pageParameters.variation;
+			// Le fichier commun utilisé pour générer cette vue.
+			variation.fc = variation.webconfig.commonVariation;
+		}
+
+		mainCallback(variation);
+	};
+}(website));
+
+exports.preRender = website.preRender;
+```
+
+vous pourriez permettre da controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+
+Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
+
+```html
+<%-: common | eh: ['text',fc] %>
+<a href="<%-: common | ea: ['liens[0].url',fc,'href'] %>" title="<%-: common | ea: ['liens[0].description',fc,'title'] %>">
+	<%-: common | et: ['liens[0].content',fc] %>
+</a>
+
+<%-: specific | eh: ['texts[0]',fs] %>
+<a href="<%-: specific | ea: ['lien.url',fs,'href'] %>" title="<%-: specific | ea: ['lien.title',fs,'title'] %>">
+	<%-: specific | et: ['lien.content',fs] %>
+</a>
+```
+
+Dans ce cas: 
+
+- si l'utilisateur en a le droit, `fs` et `fc` fournissent les noms des fichiers, et l'édition est possible mais
+- si l'utilisateur n'en a pas le droit, `fs` et `fc` valent `false` et l'édition n'est pas permise.
+
+*Note : il est également nécéssaire dans la partie Back-end d'interdire l'enregistrement dans le fichier json au cas ou un utilisateur bidouillerais le code client.*
+
+
+### Modification à partir de la source du serveur ###
+
+... en cours de rédaction ...
+
 
 
 ## Lancer le site en local ##

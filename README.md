@@ -17,9 +17,9 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 5. Jouer des fonctions après modification pour re-rendre en temps réel le résultat (active la feature 4 et ré-active 2 et 3).
 6. D'empiler et de déplacer vos zones d'édition dans une fenêtre pour toujours voir votre rendu.
 
-Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projet [NodeAtlas](http://www.lesieur.name/nodeatlas/). Ce mécanisme est actuellement utilisé sur [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](http://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
 
-Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seul différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
+Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
 
 
@@ -143,18 +143,18 @@ On peut alors s'apercevoir que :
 
 - Le filtre `eh` (raccourci de `editHtml` qui fonctionne aussi) génère une `div` supplémentaire encadrant votre rendu. C'est une édition de type `block` pour éditer de large frange de HTML.
 - Le filtre `et` (raccourci de `editText` qui fonctionne aussi) génère un `span` supplémentaire encadrant votre rendu. C'est une édition de type `inline` pour éditer des phrases, des titres, des menus, etc. tout élément ne contenant pas de balise de type `block`.
-- Le filtre `ea` (raccourci de `editAttr` qui fonctionne aussi) génère des attributs supplémentaires dans la balises mais ne créér pas de balise encadrante. Cela est réservé pour l'édition de lien, de titre ou même de classe, etc.
+- Le filtre `ea` (raccourci de `editAttr` qui fonctionne aussi) génère des attributs supplémentaires dans la balise, mais ne créér pas de balise encadrante. Cela est réservé pour l'édition de lien, de titre, d'image ou même de classe, etc.
 
 On remarque également que
 
 - Pour `editHtml`, `editText` et `editAttr` on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de filtre la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
 
-**Dès lors, nos valeurs sont cliquable en maintenant la touche `Ctrl` enfoncé et éditable dans la fenêtre d'édition.**
+**Dès lors, nos valeurs sont cliquables en maintenant la touche `Ctrl` enfoncé et éditable dans la fenêtre d'édition.**
 
 
 ### Gestion de droit d'édition / ne plus spécifier de fichier d'enregistrement ###
 
-En imaginant que dans votre controller commun vous précisiez ceci :
+En imaginant que dans votre controlleur commun vous précisiez ceci :
 
 ```js
 (function (publics) {
@@ -266,7 +266,7 @@ mais le titre de l'article :
 Comment faire entendre raison à un sourd ?
 ```
 
-Si je demande à éditer cette valeur, j'aurais dans mon champ d'édition la valeur de la source HTML « Comment faire entendre raison à un sourd ? » au lieu d'avoir la valeur « Cet article n'a pas de titre ». Par conséquent si j'enregistre, je viendrais écraser la valeur original dans le fichier de variation par le titre de l'article... pas terrible.
+Si je demande à éditer cette valeur, j'aurai dans mon champ d'édition la valeur de la source HTML « Comment faire entendre raison à un sourd ? » au lieu d'avoir la valeur « Cet article n'a pas de titre ». Par conséquent si j'enregistre, je viendrai écraser la valeur originale dans le fichier de variation par le titre de l'article... pas terrible.
 
 Ce qu'il faut, ce n'est pas la source du fichier HTML mais la source du JSON. Pour la réclamer directement depuis le sereur, il faut ajouter un nouveau paramètre.
 
@@ -291,7 +291,7 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 ```
 
 
-### Exécution de fonction en temps réel ###
+### Exécution de fonctions en temps réel ###
 
 Imaginons à présent que vous ayez la valeur suivante dans le fichier de variations communes :
 
@@ -337,7 +337,7 @@ Cependant, une fois les fichiers JavaScript client exécuté, ce qu'il y a dans 
 
 car vous utilisez `prettify.js` pour rendre votre code jolie.
 
-Si je demande à éditer cette valeur, j'aurais dans mon champ d'édition la valeur de la source HTML modifié par `prettify.js` au lieu d'avoir la valeur du serveur. Par conséquent si j'enregistre, je viendrais écraser la valeur original dans le fichier de variation par le titre de l'article... toujours pas terrible.
+Si je demande à éditer cette valeur, j'aurai dans mon champ d'édition la valeur de la source HTML modifiée par `prettify.js` au lieu d'avoir la valeur du serveur. Par conséquent si j'enregistre, je viendrais écraser la valeur originale dans le fichier de variation par le titre de l'article... toujours pas terrible.
 
 On a vu plus haut que :
 
@@ -347,7 +347,7 @@ On a vu plus haut que :
 <%-: common | et: ['code',fc,true] %>
 ```
 
-irait cherché la valeur d'origine du serveur... mais ne modifierait pas le rendu en live.
+irait chercher la valeur d'origine du serveur... mais ne modifierait pas le rendu en live.
 
 Et bien, au lieu de passer `true`, passez plutôt du code JavaScript qui sera exécuté après chaque modification pour rendre le résultat en temps réel !
 
@@ -369,23 +369,22 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 <a href="<%-: common | ea: ['code',fs,'href','some javascript function'] %>"></a>
 ```
 
+
 ### Manipulation de DOM et posibilité d'édition ###
 
 #### Après un retour AJAX/Websocket ####
 
-Les balises sencée être éditable ne le sont pas si elles sont arrivées après l'appel de `website.editAtlas()`. Pour les rendres éditables, il suffit d'exécuter en retour AJAX/Websocket la fonction `website.targetDataEditAtlas()` pour les rendres éditables.
+Les balises sensées être éditables ne le sont pas si elles sont arrivées après l'appel de `website.editAtlas()`. Pour les rendres éditables, il suffit d'exécuter en retour AJAX/Websocket la fonction `website.targetDataEditAtlas()` pour les rendres éditables.
 
 #### Après une duplication d'une balise éditable (ou plusieurs) ####
 
-En dupliquant un élément HTML éditable ou contenant des éléments éditable qui était présent dans le DOM lors de l'appel de `website.editAtlas()` ou de `website.targetDataEditAtlas()`, vous perdrez la possibilité d'éditer le clone. Pour le rendre éditable comme l'original, il faut tout d'abord le nettoyer avec `website.cleanDataEditAtlas($objetANettoyer)` pour nettoyer l'objet lui même et/ou tous ses éléments fils avant de l'injecter dans le DOM. Une fois fait, il ne vous reste qu'à exécuter la fonction `website.targetDataEditAtlas()`.
-
-
+En dupliquant un élément HTML éditable ou contenant des éléments éditables qui étaient présent dans le DOM lors de l'appel de `website.editAtlas()` ou de `website.targetDataEditAtlas()`, vous perdrez la possibilité d'éditer le clone. Pour le rendre éditable comme l'original, il faut tout d'abord le nettoyer avec `website.cleanDataEditAtlas($objetANettoyer)` pour nettoyer l'objet lui même et/ou tous ses éléments fils avant de l'injecter dans le DOM. Une fois fait, il ne vous reste qu'à exécuter la fonction `website.targetDataEditAtlas()`.
 
 
 
 ## Intégrer EditAtlas à votre site NodeAtlas ##
 
-Malgré le petit nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas utile pour vos propres sites node.js avec [NodeAtlas](http://www.lesieur.name/node-atlas/) tiens dans quelques fichier.
+Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas pour vos propres sites node.js avec [NodeAtlas](http://www.lesieur.name/node-atlas/) tient dans quelques fichiers.
 
 
 ### Configuration minimal ###
@@ -404,7 +403,7 @@ Il va falloir poser sur tous les templates contenant des filtres d'édition `edi
 
 ### Phrase dans l'interface ###
 
-L'interface elle-même est éditable et son contenu est à placer dans le fichier de variations comunes :
+L'interface elle-même est éditable et son contenu est à placer dans le fichier de variations communes :
 
 ```js
 {
@@ -456,7 +455,7 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.modules.ejs, NA);
 ```
 
-- Pour enregistrer les valeurs et les répercutés à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
+- Pour enregistrer les valeurs et les répercuter à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
 
    ```js
 	require('../components/controllers/edit-atlas').sockets(socket, NA)

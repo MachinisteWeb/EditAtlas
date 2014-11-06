@@ -209,8 +209,165 @@ Dans ce cas:
 
 ### Modification à partir de la source du serveur ###
 
-... en cours de rédaction ...
+Imaginons la valeur suivante dans le fichier de variations communes :
 
+*common.json*
+
+```js
+{
+	"titleArticle": "Cet article n'a pas de titre"
+}
+```
+
+Cette valeur est intercepté côté controller comme ceci :
+
+*common.js*
+
+```js
+(function (publics) {
+	"use strict";
+
+	publics.preRender = function (params, mainCallback) {
+		var variation = params.variation,
+			article;
+
+		// Renvoi des informations sur un article à partir d'une valeur dans l'url.
+		article = website.getArticle(/* Valeur dans l'url */);
+
+		// Si l'article à un titre, alors on modifie la valeur de variation « titleArticle ».
+		if (article.title) {
+			variation.titleArticle = article.title;
+		}
+
+		mainCallback(variation);
+	};
+}(website));
+
+exports.preRender = website.preRender;
+```
+
+Ci-bien que le rendu de ceci :
+
+*index.htm*
+
+```html
+<%-: common | et: ['articleTitle',fs] %>
+```
+
+n'est pas ce qu'il y avait dans le fichier de variation :
+
+```html
+Cet article n'a pas de titre
+```
+
+mais le titre de l'article :
+
+```html
+Comment faire entendre raison à un sourd ?
+```
+
+Si je demande à éditer cette valeur, j'aurais dans mon champ d'édition la valeur de la source HTML « Comment faire entendre raison à un sourd ? » au lieu d'avoir la valeur « Cet article n'a pas de titre ». Par conséquent si j'enregistre, je viendrais écraser la valeur original dans le fichier de variation par le titre de l'article... pas terrible.
+
+Ce qu'il faut, ce n'est pas la source du fichier HTML mais la source du JSON. Pour la réclamer directement depuis le sereur, il faut ajouter un nouveau paramètre.
+
+*index.htm*
+
+```html
+<%-: common | et: ['articleTitle',fc,true] %>
+```
+
+Ainsi la valeur éditer sera bien « Cet article n'a pas de titre ». Le revert de la médaille c'est que vous ne verrez pas vos modifications en direct, elles ne seront pas non plus répercuté sur les pages déjà ouvertes.
+
+Vous pouvez faire de même avec les variables spécifiques bien entendu.
+
+Vous pouvez également faire de même pour les modifications `editText`, `editHtml` et `editAttr` :
+
+*index.htm*
+
+```html
+<%-: common | et: ['articleTitle',fc,true] %>
+<%-: common | eh: ['articleTitle',fc,true] %>
+<a href="<%-: common | ea: ['articleTitle',fs,'href',true] %>"></a>
+```
+
+
+### Exécution de fonction en temps réel ###
+
+Imaginons à présent que vous ayez la valeur suivante dans le fichier de variations communes :
+
+*common.json*
+
+```js
+{
+	"code": "<pre class="prettyprint linenums"><code class="lang-html">var test = 'Hello World';</code></pre>"
+}
+```
+
+Et que vous fassiez tomber cette valeur sur votre page de rendu :
+
+*index.htm*
+
+```html
+<%-: common | eh: ['code',fc] %>
+```
+
+Ce qui affiche dans la source de votre page côté client :
+
+```html
+<pre class="prettyprint linenums"><code class="lang-html">var test = 'Hello World';</code></pre>
+```
+
+Cependant, une fois les fichiers JavaScript client exécuté, ce qu'il y a dans la source ne ressemble plus à cela mais à cela :
+
+```html
+<pre class="prettyprint linenums prettyprinted">
+	<ol class="linenums">
+		<li class="L0">
+			<code class="lang-js">
+				<span class="kwd">var</span>
+				<span class="pln"> test </span>
+				<span class="pun">=</span>
+				<span class="pln"> </span>
+				<span class="str">'Hello World'</span>
+			</code>
+		</li>
+	</ol>
+</pre>
+```
+
+car vous utilisez `prettify.js` pour rendre votre code jolie.
+
+Si je demande à éditer cette valeur, j'aurais dans mon champ d'édition la valeur de la source HTML modifié par `prettify.js` au lieu d'avoir la valeur du serveur. Par conséquent si j'enregistre, je viendrais écraser la valeur original dans le fichier de variation par le titre de l'article... toujours pas terrible.
+
+On a vu plus haut que :
+
+*index.htm*
+
+```html
+<%-: common | et: ['code',fc,true] %>
+```
+
+irait cherché la valeur d'origine du serveur... mais ne modifierait pas le rendu en live.
+
+Et bien, au lieu de passer `true`, passez plutôt du code JavaScript qui sera exécuté après chaque modification pour rendre le résultat en temps réel !
+
+```html
+<%-: common | et: ['code',fc,'prettyPrint()'] %>
+```
+
+Ainsi à chaque modification, `prettify.js` sera rappeler et coloriera la nouvelle valeur insérée dans le DOM. Une fois validée, ce même processus ce répercutera sur l'ensemble des fenêtres ouvertes dans tous les autres navigateurs.
+
+Vous pouvez toujours faire de même avec les variables spécifiques.
+
+Vous pouvez également faire de même pour les modifications `editText`, `editHtml` et `editAttr` :
+
+*index.htm*
+
+```html
+<%-: common | et: ['code',fc,'some javascript function'] %>
+<%-: common | eh: ['code',fc,'some javascript function'] %>
+<a href="<%-: common | ea: ['code',fs,'href','some javascript function'] %>"></a>
+```
 
 
 ## Lancer le site en local ##

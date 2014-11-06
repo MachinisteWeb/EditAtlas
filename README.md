@@ -19,7 +19,7 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
 Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projet [NodeAtlas](http://www.lesieur.name/nodeatlas/). Ce mécanisme est actuellement utilisé sur [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
 
-Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/) (en cours de déploiement). *La seul différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
+Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seul différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
 
 
@@ -243,4 +243,4 @@ Le site sera accessible ici :
 
 ## Exemple en ligne ##
 
-Vous pouvez voir fonctionner ce repository à l'adresse : [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/) (en cours de déploiement).
+Vous pouvez voir fonctionner ce repository à l'adresse : [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/).

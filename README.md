@@ -369,8 +369,102 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 <a href="<%-: common | ea: ['code',fs,'href','some javascript function'] %>"></a>
 ```
 
+### Manipulation de DOM et posibilité d'édition ###
 
-## Lancer le site en local ##
+#### Après un retour AJAX/Websocket ####
+
+Les balises sencée être éditable ne le sont pas si elles sont arrivées après l'appel de `website.editAtlas()`. Pour les rendres éditables, il suffit d'exécuter en retour AJAX/Websocket la fonction `website.targetDataEditAtlas()` pour les rendres éditables.
+
+#### Après une duplication d'une balise éditable (ou plusieurs) ####
+
+En dupliquant un élément HTML éditable ou contenant des éléments éditable qui était présent dans le DOM lors de l'appel de `website.editAtlas()` ou de `website.targetDataEditAtlas()`, vous perdrez la possibilité d'éditer le clone. Pour le rendre éditable comme l'original, il faut tout d'abord le nettoyer avec `website.cleanDataEditAtlas($objetANettoyer)` pour nettoyer l'objet lui même et/ou tous ses éléments fils avant de l'injecter dans le DOM. Une fois fait, il ne vous reste qu'à exécuter la fonction `website.targetDataEditAtlas()`.
+
+
+
+
+
+## Intégrer EditAtlas à votre site NodeAtlas ##
+
+Malgré le petit nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas utile pour vos propres sites node.js avec [NodeAtlas](http://www.lesieur.name/node-atlas/) tiens dans quelques fichier.
+
+
+### Configuration minimal ###
+
+Il vous faudra, pour faire fonctionner EditAtlas, activer le fichier de variations communes via `commonVariation`. Il vous faudra également activer la partie Back-end avec `controllersRelativePath` avec le modules node.js « socket.io ». Ce repository en donne un parfait exemple.
+
+
+### Interface HTML ###
+
+Il va falloir poser sur tous les templates contenant des filtres d'édition `editHtml`, `editText` et `editAttr` l'inclusion suivante (mormalement juste avant la fermeture de la balise `body`, avant vos balises scripts `script`) :
+
+```html
+<% include templates/edit-atlas.htm %>
+```
+
+
+### Phrase dans l'interface ###
+
+L'interface elle-même est éditable et son contenu est à placer dans le fichier de variations comunes :
+
+```js
+{
+	...,
+	"editableArea": {
+        "close": "Fermer",
+        "htmlInfo": "(HTML activé)",
+        "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
+        "title": "Zone d'édition de contenu",
+        "next": "Continuer avant d'envoyer",
+        "submit": "Modifier"
+    },
+    ...
+}
+```
+
+
+### Habillage CSS ###
+
+Il va falloir, pour habiller votre fenêtre d'édition et mettre en surbrillance les éléments éditables en maintenant « Ctrl », injecter la feuille CSS suivante :
+
+```html
+<link rel="stylesheet" type="text/css" href="stylesheets/edit-atlas.css" />
+```
+
+
+### Intéraction JavaScript ###
+
+Pour permettre l'ouverture de votre popup il va falloir injecter le script suivant :
+
+```html
+<script type="text/javascript" src="javascript/edit-atlas.js"></script>
+```
+
+et lancer la fonction suivante dans votre JavaScript controlleur de page :
+
+```js
+website.editAtlas();
+```
+
+
+### Enregistrement côté serveur ###
+
+Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va falloir faire appel à deux fonctions dans votre controlleur commun.
+
+- Pour faire fonctionner les filtres il faut ajouter dans la fonction `loadModules` de NodeAtlas :
+
+   ```js
+NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.modules.ejs, NA);
+```
+
+- Pour enregistrer les valeurs et les répercutés à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
+
+   ```js
+	require('../components/controllers/edit-atlas').sockets(socket, NA)
+```
+
+
+
+## Lancer ce repository en local ##
 
 Pour faire tourner le site en local, il vous faudra installer [NodeAtlas](http://www.lesieur.name/node-atlas/) sur votre poste de développement.
 

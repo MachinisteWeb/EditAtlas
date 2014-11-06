@@ -236,7 +236,9 @@ var website = {};
 								}
 							}
 						}
-						fs.writeFileSync(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file, JSON.stringify(object, undefined, "    "));
+						if (!NA.webconfig._demo) { // Adding part for avoid recording for demo mode.
+							fs.writeFileSync(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file, JSON.stringify(object, undefined, "    "));
+						}
 					} catch (exception) {
 						console.log(exception);
 					}
@@ -289,7 +291,8 @@ var website = {};
 	};			
 
 	privates.socketIoInitialisation = function (socketio, NA, callback) {
-		var io = socketio.listen(NA.server),
+		var optionIo = (NA.webconfig.urlRelativeSubPath) ? { resource: NA.webconfig.urlRelativeSubPath + '/socket.io' } : undefined,
+			io = socketio.listen(NA.server, optionIo),
 			connect = NA.modules.connect,
 			cookie = NA.modules.cookie;
 

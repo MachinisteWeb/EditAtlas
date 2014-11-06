@@ -1,12 +1,21 @@
 var website = website || {},
     $html = $('html'),
+    $body = $('body'),
     $window = $(window);
 
 (function (publics) {
     "use strict";
 
     var privates = {},
-        socket = io.connect();
+        optionsSocket;
+
+    if ($body.data('hostname') !== 'localhost') {
+        optionsSocket = {
+          resource: $body.data('subpath') + (($body.data('subpath')) ? '/' : '') + 'socket.io'
+        }
+    }
+
+    publics.socket = io.connect(($body.data('hostname') === 'localhost') ? undefined : $body.data('hostname'), optionsSocket);
 
     publics.isEditable = false;
 
@@ -26,16 +35,20 @@ var website = website || {},
             $.data(this, "offset-y", 0);
             $(this).css("cursor", "");
         }).mousedown(function (e) {
-            $.data(this, "draggable", true);
-            $.data(this, "offset-x", e.pageX);
-            $.data(this, "offset-y", e.pageY);
-            $(this).css("cursor", "all-scroll");
+            e.stopPropagation();
+            if ($(event.target).hasClass('popup-content')) {
+                $.data(this, "draggable", true);
+                $.data(this, "offset-x", e.pageX);
+                $.data(this, "offset-y", e.pageY);
+                $(this).css("cursor", "all-scroll");
+            }
         }).mouseup(function () {
             $.data(this, "draggable", false);
             $.data(this, "offset-x", 0);
             $.data(this, "offset-y", 0);
             $(this).css("cursor", "");
         }).mousemove(function (e) {
+            e.stopPropagation();
             var positionX, positionY, deltaX, deltaY;
 
             if ($(this).data("draggable")) {
@@ -101,7 +114,7 @@ var website = website || {},
                         $clone.find("label .info").text($editedObject.data('edit-file') + " > " + $editedObject.data('edit-path'));
                         if ($editedObject.data('edit-source')) {
                             $clone.find("textarea").hide();
-                            socket.emit('source-variation', {
+                            publics.socket.emit('source-variation', {
                                 path: $editedObject.data('edit-path'),
                                 file: $editedObject.data('edit-file')
                             });
@@ -131,7 +144,7 @@ var website = website || {},
                         $clone.find("label .info").text($editedObject.data('edit-file') + " > " + $editedObject.data('edit-path'));
                         if ($editedObject.data('edit-source')) {
                             $clone.find("input").hide();
-                            socket.emit('source-variation', {
+                            publics.socket.emit('source-variation', {
                                 path: $editedObject.data('edit-path'),
                                 file: $editedObject.data('edit-file')
                             });
@@ -167,7 +180,7 @@ var website = website || {},
                                         $clone.find("label .info").text($editedObject.data('edit-attr-file-' + name) + " > " + $editedObject.data('edit-attr-path-' + name));
                                         if ($editedObject.data('edit-attr-source-' + name)) {
                                             $clone.find("input").hide();
-                                            socket.emit('source-variation', {
+                                            publics.socket.emit('source-variation', {
                                                 path: $editedObject.data('edit-attr-path-' + name),
                                                 file: $editedObject.data('edit-attr-file-' + name)
                                             });
@@ -285,11 +298,11 @@ var website = website || {},
     };
 
     publics.sendContent = function (options) {
-        socket.emit('update-variation', options);
+        publics.socket.emit('update-variation', options);
     };
 
     publics.sourceContent = function (options) {
-        socket.on('source-variation', function (data) {
+        publics.socket.on('source-variation', function (data) {
             var area = $(".popup ." + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).next();
             area.show();
             area.val(data.value);
@@ -298,7 +311,7 @@ var website = website || {},
     };
 
     publics.broadcastContent = function (options) {
-        socket.on('update-variation', function (data) {
+        publics.socket.on('update-variation', function (data) {
             if (data.type === 'html') {
                 $('[data-edit-path=' + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html(data.value);
                 eval(data.source);

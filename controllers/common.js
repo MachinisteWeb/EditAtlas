@@ -14,6 +14,7 @@ var website = {};
 		NA.modules.fs = require('fs');
 		NA.modules.socketio = require(modulePath + 'socket.io');
 		NA.modules.cookie = require(modulePath + 'cookie');
+		NA.modules.connect = require(modulePath + 'connect');
 
 		NA.modules.ejs = website.editAtlas.setFilters(NA.modules.ejs, NA);
 

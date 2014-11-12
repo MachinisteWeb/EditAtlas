@@ -3,6 +3,7 @@
 	"autoGenerate": false,
  	"commonVariation": "common.json",
  	"commonController": "common.js",
+ 	"urlRelativeSubPath": "/edit-atlas",
  	"controllersRelativePath": "controllers/",
  	"pageNotFound": "/page-inexistante/",
 	"routes": "routes.json",

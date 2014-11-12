@@ -1,8 +1,8 @@
 # EdtitAtlas #
 
-Version : 0.1.3 (Beta)
+Version : 0.2.0 (Beta)
 
-NodeAtlas Version minimale : 0.23.5
+NodeAtlas Version minimale : 0.24.x
 
 
 
@@ -51,7 +51,7 @@ Dans un contexte standard, avec une configuration comme celle-ci :
 }
 ```
 
-et en plaçant dans le fichier de variation `common.js` commun ces variables :
+et en plaçant dans le fichier de variation `common.json` commun ces variables :
 
 *common.json*
 

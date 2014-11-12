@@ -1,6 +1,6 @@
 {
   "name": "edit-atlas",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "author": "Bruno Lesieur <bruno.lesieur@gmail.com>",
   "description": "Exemple de Content filling sans peine avec NodeAtlas.",
   "private": false,
@@ -17,8 +17,7 @@
   },
   "dependencies": {
     "cookie": "0.1.x",
-    "socket.io": "0.9.x",
-    "connect": "2.12.0"
+    "socket.io": "1.2.x"
   },
   "engines": {
     "node": ">=0.10.10"

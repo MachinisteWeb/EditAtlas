@@ -14,7 +14,6 @@ var website = {};
 		NA.modules.fs = require('fs');
 		NA.modules.socketio = require(modulePath + 'socket.io');
 		NA.modules.cookie = require(modulePath + 'cookie');
-		NA.modules.connect = require(modulePath + 'connect');
 
 		NA.modules.ejs = website.editAtlas.setFilters(NA.modules.ejs, NA);
 
@@ -32,10 +31,10 @@ var website = {};
 	var privates = {};
 
 	publics.asynchrone = function (params) {
-		var io = params.io,
+		var socketio = params.socketio,
 			NA = params.NA;
 
-		io.sockets.on('connection', function (socket) {
+		socketio.sockets.on('connection', function (socket) {
 
 			website.editAtlas.sockets(socket, NA);
 
@@ -54,12 +53,11 @@ var website = {};
 
 	publics.setConfigurations = function (NA, callback) {
 		var mongoose = NA.modules.mongoose,
-			socketio = NA.modules.socketio,
-			connect = NA.modules.connect;
+			socketio = NA.modules.socketio;
 
-		privates.socketIoInitialisation(socketio, NA, function (io) {
+		privates.socketIoInitialisation(socketio, NA, function (socketio) {
 
-			privates.socketIoEvents(io, NA);
+			privates.socketIoEvents(socketio, NA);
 
 			callback(NA);					
 		});
@@ -67,54 +65,39 @@ var website = {};
 	};			
 
 	privates.socketIoInitialisation = function (socketio, NA, callback) {
-		var optionIo = (NA.webconfig.urlRelativeSubPath) ? { resource: NA.webconfig.urlRelativeSubPath + '/socket.io' } : undefined,
-			io = socketio.listen(NA.server, optionIo),
-			connect = NA.modules.connect,
-			cookie = NA.modules.cookie;
+		var optionIo = (NA.webconfig.urlRelativeSubPath) ? { path: NA.webconfig.urlRelativeSubPath + '/socket.io' } : undefined,
+			socketio = socketio(NA.server, optionIo),
+			cookie = NA.modules.cookie,
+			cookieParser = NA.modules.cookieParser;
 
-		io.enable('browser client minification');
-		if (NA.webconfig._ioGzip) {
-			io.enable('browser client gzip');
-		}
-		io.set('log level', 1);
-		io.enable('browser client cache');
-		io.set('browser client expires', 86400000 * 30);
-		io.enable('browser client etag');
-		io.set('authorization', function (data, accept) {
+		socketio.use(function(socket, next) {
+			var handshakeData = socket.request;
 
-            // No cookie enable.
-            if (!data.headers.cookie) {
-                return accept('Session cookie required.', false);
+			if (!handshakeData.headers.cookie) {
+                return next(new Error('Cookie de session requis.'));
             }
 
-            // First parse the cookies into a half-formed object.
-            data.cookie = cookie.parse(data.headers.cookie);
+            handshakeData.cookie = cookie.parse(handshakeData.headers.cookie);
+            handshakeData.cookie = cookieParser.signedCookies(handshakeData.cookie, NA.webconfig.session.secret);
+    		handshakeData.sessionID = handshakeData.cookie[NA.webconfig.session.key];
 
-            // Next, verify the signature of the session cookie.
-            data.cookie = connect.utils.parseSignedCookies(data.cookie, NA.webconfig.session.secret);
-             
-            // save ourselves a copy of the sessionID.
-            data.sessionID = data.cookie[NA.webconfig.session.key];
-
-			// Accept cookie.
-            NA.sessionStore.load(data.sessionID, function (error, session) {
+			NA.sessionStore.load(handshakeData.sessionID, function (error, session) {
                 if (error || !session) {
-                    accept("Error", false);
+                	return next(new Error('Aucune session récupérée.'));
                 } else {
-                    data.session = session;
-                    accept(null, true);
+                    handshakeData.session = session;           			
+                    next();
                 }
             });
+		});
 
-        });
-
-    	callback(io);		
+    	callback(socketio);
 	};
 
-	privates.socketIoEvents = function (io, NA) {
+	privates.socketIoEvents = function (socketio, NA) {
 		var params = {};
 
-		params.io = io;
+		params.socketio = socketio;
 		params.NA = NA;
 
 		website.asynchrone(params);

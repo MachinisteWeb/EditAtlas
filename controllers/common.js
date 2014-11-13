@@ -9,11 +9,8 @@ var website = {};
 	publics.editAtlas = require('../components/controllers/edit-atlas');
 
 	publics.loadModules = function (NA) {
-		var modulePath = (NA.webconfig._needModulePath) ? NA.nodeModulesPath : '';
-		
-		NA.modules.fs = require('fs');
-		NA.modules.socketio = require(modulePath + 'socket.io');
-		NA.modules.cookie = require(modulePath + 'cookie');
+		NA.modules.socketio = require('socket.io');
+		NA.modules.cookie = require('cookie');
 
 		NA.modules.ejs = website.editAtlas.setFilters(NA.modules.ejs, NA);
 
@@ -35,9 +32,7 @@ var website = {};
 			NA = params.NA;
 
 		socketio.sockets.on('connection', function (socket) {
-
 			website.editAtlas.sockets(socket, NA);
-
 		});
 	};
 
@@ -52,16 +47,12 @@ var website = {};
 	var privates = {};
 
 	publics.setConfigurations = function (NA, callback) {
-		var mongoose = NA.modules.mongoose,
-			socketio = NA.modules.socketio;
+		var socketio = NA.modules.socketio;
 
 		privates.socketIoInitialisation(socketio, NA, function (socketio) {
-
 			privates.socketIoEvents(socketio, NA);
-
 			callback(NA);					
 		});
-
 	};			
 
 	privates.socketIoInitialisation = function (socketio, NA, callback) {
@@ -105,6 +96,8 @@ var website = {};
 
 }(website));
 
+
+
 // PreRender
 (function (publics) {
 	"use strict";
@@ -120,6 +113,8 @@ var website = {};
 	};
 
 }(website));
+
+
 
 exports.preRender = website.preRender;
 exports.loadModules = website.loadModules;

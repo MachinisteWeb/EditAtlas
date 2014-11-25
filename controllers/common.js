@@ -17,15 +17,6 @@ website.components = {};
 		return NA;
 	};
 
-	publics.asynchrones = function (params) {
-		var socketio = params.socketio,
-			NA = params.NA;
-
-		socketio.sockets.on('connection', function (socket) {
-			website.components.editAtlas.sockets(socket, NA);
-		});
-	};
-
 	publics.setConfigurations = function (NA, next) {
 		var socketio = NA.modules.socketio;
 
@@ -34,6 +25,15 @@ website.components = {};
 				website.asynchrones(params);
 				next(NA);
 			});
+		});
+	};
+
+	publics.asynchrones = function (params) {
+		var socketio = params.socketio,
+			NA = params.NA;
+
+		socketio.sockets.on('connection', function (socket) {
+			website.components.editAtlas.sockets(socket, NA);
 		});
 	};
 

@@ -69,34 +69,34 @@ var website = {};
     };
 
     publics.setFilters = function (templateEngine, NA) {
-    	templateEngine.filters.et = templateEngine.filters.editText = function (obj, arr) {
-    		var markup = "span",
-        		file,
-        		claimSource = " ";
+        templateEngine.filters.et = templateEngine.filters.editText = function (obj, arr) {
+            var markup = "span",
+                file,
+                claimSource = " ";
 
-        	if (typeof obj === 'string') {
-            	if (arr[0].split(".")[0] === "specific") {
-            		file = arr[1];
-            	} else {
-            		file = NA.webconfig.commonVariation;
-            	}
-        	} else {
-        		file = arr[1];
-        		obj = website.getLookup(obj, arr[0]);
-        		if (file === NA.webconfig.commonVariation) {
-        			arr[0] = 'common.' + arr[0];
-        		} else {
-        			arr[0] = 'specific.' + arr[0];
-        		}
-        	}
+            if (typeof obj === 'string') {
+                if (arr[0].split(".")[0] === "specific") {
+                    file = arr[1];
+                } else {
+                    file = NA.webconfig.commonVariation;
+                }
+            } else {
+                file = arr[1];
+                obj = website.getLookup(obj, arr[0]);
+                if (file === NA.webconfig.commonVariation) {
+                    arr[0] = 'common.' + arr[0];
+                } else {
+                    arr[0] = 'specific.' + arr[0];
+                }
+            }
 
-        	if (!obj) { obj = " "; }
+            if (!obj) { obj = " "; }
 
-        	//if (arr[2]) { markup = "div"; }
-        	
-        	if (arr[2]) {
-    			claimSource = ' data-edit-source="' + arr[2] + '" ';
-        	}
+            //if (arr[2]) { markup = "div"; }
+            
+            if (arr[2]) {
+                claimSource = ' data-edit-source="' + arr[2] + '" ';
+            }
 
             if (arr[1]) {
                 return '<' + markup + claimSource + 'data-edit="true" data-edit-type="text" data-edit-file="' + file + '" data-edit-path="' + arr[0] + '">' +  obj + "</" + markup + ">";
@@ -106,33 +106,33 @@ var website = {};
         };
 
         templateEngine.filters.eh = templateEngine.filters.editHtml = function (obj, arr) {
-        	var markup = "div",
-        		file,
-        		claimSource = " ";
+            var markup = "div",
+                file,
+                claimSource = " ";
 
-        	if (typeof obj === 'string') {
-            	if (arr[0].split(".")[0] === "specific") {
-            		file = arr[1];
-            	} else {
-            		file = NA.webconfig.commonVariation;
-            	}
-        	} else {
-        		file = arr[1];
-        		obj = website.getLookup(obj, arr[0]);
-        		if (file === NA.webconfig.commonVariation) {
-        			arr[0] = 'common.' + arr[0];
-        		} else {
-        			arr[0] = 'specific.' + arr[0];
-        		}
-        	}
+            if (typeof obj === 'string') {
+                if (arr[0].split(".")[0] === "specific") {
+                    file = arr[1];
+                } else {
+                    file = NA.webconfig.commonVariation;
+                }
+            } else {
+                file = arr[1];
+                obj = website.getLookup(obj, arr[0]);
+                if (file === NA.webconfig.commonVariation) {
+                    arr[0] = 'common.' + arr[0];
+                } else {
+                    arr[0] = 'specific.' + arr[0];
+                }
+            }
 
-        	if (!obj) { obj = " "; }
+            if (!obj) { obj = " "; }
 
-        	//if (arr[2]) { markup = "span"; }
+            //if (arr[2]) { markup = "span"; }
 
-        	if (arr[2]) {
-    			claimSource = ' data-edit-source="' + arr[2] + '" ';
-        	}
+            if (arr[2]) {
+                claimSource = ' data-edit-source="' + arr[2] + '" ';
+            }
 
             if (arr[1]) {
                 return '<' + markup + claimSource  + ' data-edit="true" data-edit-type="html" data-edit-file="' + file + '" data-edit-path="' + arr[0] + '">' +  obj + "</" + markup + ">";
@@ -142,30 +142,30 @@ var website = {};
         };
 
         templateEngine.filters.ea = templateEngine.filters.editAttr = function (obj, arr) {
-        	var file,
-        		claimSource = " ";
+            var file,
+                claimSource = " ";
 
-        	if (typeof obj === 'string') {
-            	if (arr[0].split(".")[0] === "specific") {
-            		file = arr[1];
-            	} else {
-            		file = NA.webconfig.commonVariation;
-            	}
-        	} else {
-        		file = arr[1];
-        		obj = website.getLookup(obj, arr[0]);
-        		if (file === NA.webconfig.commonVariation) {
-        			arr[0] = 'common.' + arr[0];
-        		} else {
-        			arr[0] = 'specific.' + arr[0];
-        		}
-        	}
+            if (typeof obj === 'string') {
+                if (arr[0].split(".")[0] === "specific") {
+                    file = arr[1];
+                } else {
+                    file = NA.webconfig.commonVariation;
+                }
+            } else {
+                file = arr[1];
+                obj = website.getLookup(obj, arr[0]);
+                if (file === NA.webconfig.commonVariation) {
+                    arr[0] = 'common.' + arr[0];
+                } else {
+                    arr[0] = 'specific.' + arr[0];
+                }
+            }
 
-        	if (!obj) { obj = " "; }
+            if (!obj) { obj = " "; }
 
-        	if (arr[3]) {
-    			claimSource = ' data-edit-attr-source-' + arr[2] + '="' + arr[3] + '" ';
-        	}
+            if (arr[3]) {
+                claimSource = ' data-edit-attr-source-' + arr[2] + '="' + arr[3] + '" ';
+            }
 
             if (arr[1]) {
                 return obj + '" data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + arr[2] + '="true" data-edit-attr-path-' + arr[2] + '="' + arr[0] + '" data-edit-attr-file-' + arr[2] + '="' + file;
@@ -174,63 +174,67 @@ var website = {};
             }
         };
 
-    	return templateEngine;
+        return templateEngine;
     };
 
-    publics.sockets = function (socket, NA) {
+    publics.sockets = function (socket, NA, auth) {
         var fs = NA.modules.fs;
 
         socket.on('update-variation', function (options) {
             var files, object, key;
 
-            files = website.orderByFile(options);
-            
-            for (var file in files) {
-                try {
-                    object = require(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file);
-                    if (object) {
-                        for (var i = 0, l = files[file].length; i < l; i++) {
-                            key = files[file][i].path.split('.').slice(1).join('.');
+            if (auth) {
+                files = publics.orderByFile(options);
+                
+                for (var file in files) {
+                    try {
+                        object = require(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file);
+                        if (object) {
+                            for (var i = 0, l = files[file].length; i < l; i++) {
+                                key = files[file][i].path.split('.').slice(1).join('.');
 
-                            if (publics.getLookup(object, key) || publics.getLookup(object, key) === "") {
-                                website.setLookup(object, key, files[file][i].value);
+                                if (publics.getLookup(object, key) || publics.getLookup(object, key) === "") {
+                                    publics.setLookup(object, key, files[file][i].value);
 
-                                if (!files[file][i].source || typeof files[file][i].source === 'string') {
-                                    socket.broadcast.emit('update-variation', {
-                                        path: files[file][i].path,
-                                        value: files[file][i].value,
-                                        source: files[file][i].source,
-                                        type: files[file][i].type,
-                                        attrName: files[file][i].attrName
-                                    });
+                                    if (!files[file][i].source || typeof files[file][i].source === 'string') {
+                                        socket.broadcast.emit('update-variation', {
+                                            path: files[file][i].path,
+                                            value: files[file][i].value,
+                                            source: files[file][i].source,
+                                            type: files[file][i].type,
+                                            attrName: files[file][i].attrName
+                                        });
+                                    }
                                 }
                             }
                         }
+                        if (!NA.webconfig._demo) { // Adding part for avoid recording for demo mode.
+                            fs.writeFileSync(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file, JSON.stringify(object, undefined, "    "));
+                        }
+                    } catch (exception) {
+                        console.log(exception);
                     }
-                    if (!NA.webconfig._demo) { // Adding part for avoid recording for demo mode.
-                        fs.writeFileSync(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + file, JSON.stringify(object, undefined, "    "));
-                    }
-                } catch (exception) {
-                    console.log(exception);
-                }
-            }   
+                }   
+            }
         });
 
         socket.on('source-variation', function (options) {
             var object, key;
 
-            try {
-                object = require(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + options.file);
-                if (object) {
-                    key = options.path.split('.').slice(1).join('.');
+            if (auth) {
+                try {
+                    object = require(NA.websitePhysicalPath + NA.webconfig.variationsRelativePath + options.file);
+                    if (object) {
+                        key = options.path.split('.').slice(1).join('.');
 
-                    socket.emit('source-variation', {
-                        value: publics.getLookup(object, key),
-                        path: options.path
-                    });
-                }
-            } catch (exception) {
-                console.log(exception);
+                        socket.emit('source-variation', {
+                            value: publics.getLookup(object, key),
+                            path: options.path
+                        });
+                    }
+                } catch (exception) {
+                    console.log(exception);
+                }   
             }
         });
     };

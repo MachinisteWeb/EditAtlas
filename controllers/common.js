@@ -33,7 +33,7 @@ website.components = {};
 			NA = params.NA;
 
 		socketio.sockets.on('connection', function (socket) {
-			website.components.editAtlas.sockets(socket, NA);
+			website.components.editAtlas.sockets(socket, NA, true);
 		});
 	};
 

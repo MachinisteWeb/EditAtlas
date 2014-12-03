@@ -11,7 +11,7 @@ NodeAtlas Version minimale : 0.24.x
 EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](http://www.lesieur.name/nodeatlas/). Facile à intégrer, facile à éditer ! Il permet :
 
 1. L'édition de n'importe quel texte, groupe de balise HTML ou attribut de balise dans la source cliente. 
-2. L'édition avec rendu caractère par caractère du résultat final en temps réel partout ou la phrase est logé dans la page.
+2. L'édition avec rendu caractère par caractère du résultat final en temps réel partout ou la phrase est logée dans la page.
 3. Répercution de toutes les modifications sur toutes les pages déjà ouvertes dans les navigateurs des utilisateurs sans rechargement de celles-ci.
 4. Modification du texte depuis la source serveur (désactive les features 2 et 3).
 5. Jouer des fonctions après modification pour re-rendre en temps réel le résultat (active la feature 4 et ré-active 2 et 3).
@@ -183,7 +183,7 @@ En imaginant que dans votre controlleur commun vous précisiez ceci :
 exports.preRender = website.preRender;
 ```
 
-vous pourriez permettre da controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
 
 Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
 

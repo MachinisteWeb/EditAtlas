@@ -40,8 +40,8 @@ website.components = {};
 	publics.preRender = function (params, mainCallback) {
 		var variation = params.variation;
 
-		variation.file = variation.pageParameters.variation;
-		variation.fs = variation.pageParameters.variation;
+		variation.file = variation.currentRouteParameters.variation;
+		variation.fs = variation.currentRouteParameters.variation;
 		variation.fc = variation.webconfig.commonVariation;
 
 		mainCallback(variation);

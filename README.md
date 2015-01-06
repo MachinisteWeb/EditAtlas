@@ -1,8 +1,8 @@
 # EdtitAtlas #
 
-Version : 0.2.3 (Beta)
+Version : 0.3.0 (Beta)
 
-NodeAtlas Version minimale : 0.25.x
+NodeAtlas Version minimale : 0.31.x
 
 
 

@@ -37,7 +37,7 @@ website.components = {};
 		});
 	};
 
-	publics.preRender = function (params, mainCallback) {
+	publics.changeVariation = function (params, mainCallback) {
 		var variation = params.variation;
 
 		variation.file = variation.currentRouteParameters.variation;
@@ -51,6 +51,6 @@ website.components = {};
 
 
 
-exports.preRender = website.preRender;
+exports.changeVariation = website.changeVariation;
 exports.loadModules = website.loadModules;
 exports.setConfigurations = website.setConfigurations;

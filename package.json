@@ -1,6 +1,6 @@
 {
   "name": "edit-atlas",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Bruno Lesieur <bruno.lesieur@gmail.com>",
   "description": "Exemple de Content filling sans peine avec NodeAtlas.",
   "private": false,

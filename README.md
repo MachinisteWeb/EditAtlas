@@ -24,7 +24,7 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
  6. D'empiler et de déplacer vos zones d'édition dans une fenêtre pour toujours voir votre rendu.
 
-Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](http://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](http://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
@@ -170,7 +170,7 @@ En imaginant que dans votre controlleur commun vous précisiez ceci :
 (function (publics) {
 	"use strict";
 
-	publics.preRender = function (params, mainCallback) {
+	publics.changeVariation = function (params, mainCallback) {
 		var variation = params.variation,
 			session = params.request.session;
 
@@ -181,7 +181,7 @@ En imaginant que dans votre controlleur commun vous précisiez ceci :
 		// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
 		if (session.hasPermissionForEdit) {
 			// Le fichier spécifique utilisé pour générer cette vue.
-			variation.fs = variation.pageParameters.variation;
+			variation.fs = variation.currentRouteParameters.variation;
 			// Le fichier commun utilisé pour générer cette vue.
 			variation.fc = variation.webconfig.commonVariation;
 		}
@@ -190,10 +190,10 @@ En imaginant que dans votre controlleur commun vous précisiez ceci :
 	};
 }(website));
 
-exports.preRender = website.preRender;
+exports.changeVariation = website.changeVariation;
 ```
 
-vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
 
@@ -238,7 +238,7 @@ Cette valeur est interceptée côté controller comme ceci :
 (function (publics) {
 	"use strict";
 
-	publics.preRender = function (params, mainCallback) {
+	publics.changeVariation = function (params, mainCallback) {
 		var variation = params.variation,
 			article;
 
@@ -254,7 +254,7 @@ Cette valeur est interceptée côté controller comme ceci :
 	};
 }(website));
 
-exports.preRender = website.preRender;
+exports.changeVariation = website.changeVariation;
 ```
 
 Ci-bien que le rendu de ceci :
@@ -479,7 +479,34 @@ NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.m
 - Pour enregistrer les valeurs et les répercuter à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
 
    ```js
-	require('../components/controllers/edit-atlas').sockets(socket, NA)
+	require('../components/controllers/edit-atlas').sockets(socket, NA, true);
+```
+
+
+
+#### Dernières choses à faire ####
+
+- Vous devez lancer le JavaScript client quand le DOM est prèt avec
+
+   ```js
+website.editAtlas();
+```
+
+- Ajoutez dans la fonction du contrôleur commun `changeVariation` les chemins vers vos variations :
+
+   ```js
+(function (publics) {
+	"use strict";
+
+	publics.changeVariation = function (params, mainCallback) {
+		var variation = params.variation;
+
+		variation.fs = variation.currentRouteParameters.variation;
+		variation.fc = variation.webconfig.commonVariation;
+
+		mainCallback(variation);
+	};
+}(website));
 ```
 
 
@@ -542,7 +569,7 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
  6. Stack and move your edit area in the popup window to keep an eye on the rendering behind.
 
- You can download this repository to test it or integrate it with any of your [NodeAtlas](http://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+ You can download this repository to test it or integrate it with any of your [NodeAtlas](http://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
  A live example of this repository is testable at [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
 
@@ -688,7 +715,7 @@ Imagining that your common controller you to specify this:
 (function (publics) {
 	"use strict";
 
-	publics.preRender = function (params, mainCallback) {
+	publics.changeVariation = function (params, mainCallback) {
 		var variation = params.variation,
 			session = params.request.session;
 
@@ -699,7 +726,7 @@ Imagining that your common controller you to specify this:
 		// If the user are the right, we allowed edit files.
 		if (session.hasPermissionForEdit) {
 			// The specific file used to generate this view.
-			variation.fs = variation.pageParameters.variation;
+			variation.fs = variation.currentRouteParameters.variation;
 			// The common file used to generate this view.
 			variation.fc = variation.webconfig.commonVariation;
 		}
@@ -708,10 +735,10 @@ Imagining that your common controller you to specify this:
 	};
 }(website));
 
-exports.preRender = website.preRender;
+exports.changeVariation = website.changeVariation;
 ```
 
-you could to check if a user can or can not edit the text. Similar implementation run in [BlogAtlas](https://github.com/Haeresis/BlogAtlas/).
+you could to check if a user can or can not edit the text. Similar implementation run in [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 So the above code could be written as following injection with variable `fs` and `fc`:
 
@@ -756,7 +783,7 @@ This value is intercepted in controller-side like this:
 (function (publics) {
 	"use strict";
 
-	publics.preRender = function (params, mainCallback) {
+	publics.changeVariation = function (params, mainCallback) {
 		var variation = params.variation,
 			article;
 
@@ -772,7 +799,7 @@ This value is intercepted in controller-side like this:
 	};
 }(website));
 
-exports.preRender = website.preRender;
+exports.changeVariation = website.changeVariation;
 ```
 
 and it means this:
@@ -997,7 +1024,34 @@ NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.m
 - To save the values ​​and pass them all open windows within `io.sockets.on('connection', function (socket) { ... })`:
 
    ```js
-	require('../components/controllers/edit-atlas').sockets(socket, NA)
+	require('../components/controllers/edit-atlas').sockets(socket, NA, true);
+```
+
+
+
+#### Last thing to do ####
+
+- You must start the front JavaScript when the DOM is ready with
+
+   ```js
+website.editAtlas();
+```
+
+- Add in common `changeVariation` controller fonction the paths to your variations :
+
+   ```js
+(function (publics) {
+	"use strict";
+
+	publics.changeVariation = function (params, mainCallback) {
+		var variation = params.variation;
+
+		variation.fs = variation.currentRouteParameters.variation;
+		variation.fc = variation.webconfig.commonVariation;
+
+		mainCallback(variation);
+	};
+}(website));
 ```
 
 

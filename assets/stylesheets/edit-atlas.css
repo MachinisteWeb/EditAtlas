@@ -33,6 +33,7 @@
 	top: 50%;
 	left: 50%;
 	background-color: #fff;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAAbSURBVBhXY/j//z8KBhMLFiywAWHcAgj8nwEA9u0sTVrSYqUAAAAASUVORK5CYII=');
 	-webkit-transform: translateY(-50%) translateX(-50%);
 	   -moz-transform: translateY(-50%) translateX(-50%);
 	    -ms-transform: translateY(-50%) translateX(-50%);
@@ -42,6 +43,14 @@
 	        box-shadow: 0 0 10px #000;
 	-webkit-border-radius: 4px;
 	        border-radius: 4px;
+	cursor: all-scroll;
+}
+.popup-edit-atlas .popup-content .close,
+.popup-edit-atlas .popup-content h1,
+.popup-edit-atlas .popup-content .templates,
+.popup-edit-atlas .popup-content .submit {
+	background-color: #fff;
+	cursor: default;
 }
 @media (min-width: 400px) {
 	.popup-edit-atlas .popup-content {
@@ -75,6 +84,9 @@
 .popup-edit-atlas .source,
 .popup-edit-atlas .template {
 	display: none;
+}
+.popup-edit-atlas .source em {
+	font-size: 0.7em;
 }
 .popup-edit-atlas .templates {
 	max-height: 400px;

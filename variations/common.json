@@ -68,7 +68,7 @@
                 "html": "<strong>et ce HTML <br /> non plus</strong>."
             },
             "hardText": "Ce texte est éditable.",
-            "hardHtml": "<div><p>Ce HTML est...</p> <p>... éditable.</p></div>",
+            "hardHtml": "<div>\n   <p>Ce HTML est...</p> \n   <p>... éditable.</p>\n</div>",
             "hardAttr": {
                 "url": "javascript:;",
                 "description": "Title"

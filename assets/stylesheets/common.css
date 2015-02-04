@@ -12,7 +12,9 @@ h1, h2, h3 {
 	font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.link,
 a {
+	cursor: pointer;
 	color: #48739E;
 	text-decoration: none;
 }

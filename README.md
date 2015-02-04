@@ -158,7 +158,7 @@ On remarque également que :
 
 - Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de filtre la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
 
-**Dès lors, nos valeurs sont cliquables en maintenant la touche `Ctrl` enfoncé et éditable dans la fenêtre d'édition.**
+**Dès lors, nos valeurs sont cliquables en maintenant les touches `Ctrl + Alt + E` enfoncé et éditable dans la fenêtre d'édition.**
 
 
 
@@ -442,7 +442,7 @@ L'interface elle-même est éditable et son contenu est à placer dans le fichie
 
 ### Habillage CSS ###
 
-Il va falloir, pour habiller votre fenêtre d'édition et mettre en surbrillance les éléments éditables en maintenant « Ctrl », injecter la feuille CSS suivante :
+Il va falloir, pour habiller votre fenêtre d'édition et mettre en surbrillance les éléments éditables en maintenant « Ctrl + Alt + E », injecter la feuille CSS suivante :
 
 ```html
 <link rel="stylesheet" type="text/css" href="stylesheets/edit-atlas.css" />
@@ -703,7 +703,7 @@ We also note that:
 
 - For `editHtml`, `editText` and `editAttr`, it does not pass the variable but the object containing the variable. The value we pass in first is a filter argument to view/edit and the secondl parameters is the json file in which the change will be registered.
 
-**Therefore, our values ​​are clickable holding down the `Ctrl` key and editable in the edit window.**
+**Therefore, our values ​​are clickable holding down `Ctrl + Alt + E` keys and editable in the edit window.**
 
 
 
@@ -987,7 +987,7 @@ The interface itself is editable and its content is to place in the common varia
 
 #### CSS design ####
 
-We'll have to dress up your editing window and highlight the editable items by holding "Ctrl", inject the following CSS:
+We'll have to dress up your editing window and highlight the editable items by holding "Ctrl + Alt + E", inject the following CSS:
 
 ```html
 <link rel="stylesheet" type="text/css" href="stylesheets/edit-atlas.css" />

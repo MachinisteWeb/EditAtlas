@@ -1,7 +1,7 @@
 {
     "editableArea": {
         "close": "Fermer",
-        "htmlInfo": "(HTML activé)",
+        "htmlInfo": "(WYSIWYG)",
         "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
         "title": "Zone d'édition de contenu",
         "next": "Continuer avant d'envoyer",

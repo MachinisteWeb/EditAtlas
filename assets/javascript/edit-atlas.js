@@ -96,7 +96,7 @@ var website = website || {},
                     name,
                     accept = false;
 
-                if (publics.keys[17] && publics.keys[18] && publics.keys[69]) {
+                if ($html.hasClass("is-editable")) {
                     e.preventDefault();
 
                     $popup.addClass("opened");
@@ -292,7 +292,7 @@ var website = website || {},
                 currentOptions,
                 name;
                 
-            if (!(publics.keys[17] && publics.keys[18] && publics.keys[69])) {
+            if (!$html.hasClass("is-editable")) {
 
                 for (var i = 0, l = privates.editedObjects.length; i < l; i++) {
                     if (privates.editedObjects[i].data('edit-type') === 'html') {
@@ -337,8 +337,10 @@ var website = website || {},
                 }
 
                 publics.sendContent(options);
-                for (var i in CKEDITOR.instances) {
-                    CKEDITOR.instances[i].destroy();
+                if (typeof CKEDITOR !== 'undefined') {
+                    for (var i in CKEDITOR.instances) {
+                        CKEDITOR.instances[i].destroy();
+                    }
                 }
 
                 privates.editedObjects = [];
@@ -386,24 +388,32 @@ var website = website || {},
         });
     };
 
-    publics.listeningKeystroke = function () {
+    publics.listeningKeystroke = function (onKeyup, onKeyDown) {
         $window.on("keyup keydown", function (e) {
             e = e || event;
             publics.keys[e.keyCode] = e.type === 'keydown';
 
-            if (publics.keys[17] && publics.keys[18] && publics.keys[69]) {
-                $html.addClass("is-editable");
-            } else {
-                $html.removeClass("is-editable");
+            if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                if (publics.keys[17] && publics.keys[18] && publics.keys[69]) {
+                    if (typeof onKeyup !== 'undefined') {
+                        onKeyup();
+                    }
+                    $html.addClass("is-editable");
+                } else {
+                    if (typeof onKeyDown !== 'undefined') {
+                        onKeyDown();
+                    }
+                    $html.removeClass("is-editable");
+                }
             }
         });
     };
 
-    publics.editAtlas = function () {
+    publics.editAtlas = function (onKeyup, onKeyDown) {
         publics.editContent();
         publics.broadcastContent();
         publics.sourceContent();
         publics.moveEditableArea();
-        publics.listeningKeystroke();
+        publics.listeningKeystroke(onKeyup, onKeyDown);
     };
 }(website));

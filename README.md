@@ -1,8 +1,8 @@
 # EdtitAtlas #
 
-Version : 0.6.1 (Beta)
+Version : 0.10 (Beta)
 
-NodeAtlas Version minimale : 0.36.x
+NodeAtlas Version minimale : 0.40
 
 **For an international version of this README.md, [see below](#international-version).**
 
@@ -123,14 +123,14 @@ et le code source disponible dans votre navigateur pour l'adresse `http://localh
 En transformant le code précédent en celui-ci :
 
 ```html
-<%-: common | eh: ['text','common.json'] %>
-<a href="<%-: common | ea: ['liens[0].url','common.json','href'] %>" title="<%-: common | ea: ['liens[0].description','common.json','title'] %>">
-	<%-: common | et: ['liens[0].content','common.json'] %>
+<%- eh(common, ['text','common.json']) %>
+<a href="<%- ea(common, ['liens[0].url','common.json','href']) %>" title="<%- ea(common, ['liens[0].description','common.json','title']) %>">
+	<%- et(common, ['liens[0].content','common.json']) %>
 </a>
 
-<%-: specific | eh: ['texts[0]','index.json'] %>
-<a href="<%-: specific | ea: ['lien.url','index.json','href'] %>" title="<%-: specific | ea: ['lien.title','index.json','title'] %>">
-	<%-: specific | et: ['lien.content','index.json'] %>
+<%- eh(specific, ['texts[0]','index.json']) %>
+<a href="<%- ea(specific, ['lien.url','index.json','href']) %>" title="<%- ea(specific, ['lien.title','index.json','title']) %>">
+	<%- et(specific, ['lien.content','index.json']) %>
 </a>
 ```
 
@@ -150,15 +150,15 @@ Vous obtiendrez alors la sortie suivante dans la source HTML :
 
 On peut alors s'apercevoir que :
 
-- Le filtre `eh` (raccourci de `editHtml` qui fonctionne aussi) génère une `div` supplémentaire encadrant votre rendu. C'est une édition de type `block` pour éditer de large frange de HTML.
-- Le filtre `et` (raccourci de `editText` qui fonctionne aussi) génère un `span` supplémentaire encadrant votre rendu. C'est une édition de type `inline` pour éditer des phrases, des titres, des menus, etc. tout élément ne contenant pas de balise de type `block`.
-- Le filtre `ea` (raccourci de `editAttr` qui fonctionne aussi) génère des attributs supplémentaires dans la balise, mais ne créér pas de balise encadrante. Cela est réservé pour l'édition de lien, de titre, d'image ou même de classe, etc.
+- La fonction `eh` (raccourci de `editHtml` qui fonctionne aussi) génère une `div` supplémentaire encadrant votre rendu. C'est une édition de type `block` pour éditer de large frange de HTML.
+- Le fonction `et` (raccourci de `editText` qui fonctionne aussi) génère un `span` supplémentaire encadrant votre rendu. C'est une édition de type `inline` pour éditer des phrases, des titres, des menus, etc. tout élément ne contenant pas de balise de type `block`.
+- Le fonction `ea` (raccourci de `editAttr` qui fonctionne aussi) génère des attributs supplémentaires dans la balise, mais ne créér pas de balise encadrante. Cela est réservé pour l'édition de lien, de titre, d'image ou même de classe, etc.
 
 On remarque également que :
 
-- Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de filtre la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
+- Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de fonction la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
 
-**Dès lors, nos valeurs sont cliquables en maintenant les touches `Ctrl + Alt + E` enfoncé et éditable dans la fenêtre d'édition.**
+**Dès lors, nos valeurs sont cliquables en maintenant les touches `E + T` enfoncé et éditable dans la fenêtre d'édition.**
 
 
 
@@ -198,14 +198,14 @@ vous pourriez permettre de controller dans quel condition un utilisateur peut ou
 Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
 
 ```html
-<%-: common | eh: ['text',fc] %>
-<a href="<%-: common | ea: ['liens[0].url',fc,'href'] %>" title="<%-: common | ea: ['liens[0].description',fc,'title'] %>">
-	<%-: common | et: ['liens[0].content',fc] %>
+<%- eh(common, ['text',fc]) %>
+<a href="<%- ea(common, ['liens[0].url',fc,'href']) %>" title="<%- ea(common, ['liens[0].description',fc,'title']) %>">
+	<%- et(common, ['liens[0].content',fc]) %>
 </a>
 
-<%-: specific | eh: ['texts[0]',fs] %>
-<a href="<%-: specific | ea: ['lien.url',fs,'href'] %>" title="<%-: specific | ea: ['lien.title',fs,'title'] %>">
-	<%-: specific | et: ['lien.content',fs] %>
+<%- eh(specific, ['texts[0]',fs]) %>
+<a href="<%- ea(specific, ['lien.url',fs,'href']) %>" title="<%- ea(specific, ['lien.title',fs,'title']) %>">
+	<%- et(specific, ['lien.content',fs]) %>
 </a>
 ```
 
@@ -262,7 +262,7 @@ Ci-bien que le rendu de ceci :
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fs] %>
+<%- et(common, ['articleTitle',fs]) %>
 ```
 
 n'est pas ce qu'il y avait dans le fichier de variation :
@@ -284,7 +284,7 @@ Ce qu'il faut, ce n'est pas la source du fichier HTML mais la source du JSON. Po
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fc,true] %>
+<%- et(common, ['articleTitle',fc,true]) %>
 ```
 
 Ainsi la valeur éditer sera bien « Cet article n'a pas de titre ». Le revert de la médaille c'est que vous ne verrez pas vos modifications en direct, elles ne seront pas non plus répercuté sur les pages déjà ouvertes.
@@ -296,9 +296,9 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fc,true] %>
-<%-: common | eh: ['articleTitle',fc,true] %>
-<a href="<%-: common | ea: ['articleTitle',fs,'href',true] %>"></a>
+<%- et(common, ['articleTitle',fc,true]) %>
+<%- eh(common, ['articleTitle',fc,true]) %>
+<a href="<%- ea(common, ['articleTitle',fs,'href',true]) %>"></a>
 ```
 
 
@@ -320,7 +320,7 @@ et que vous fassiez tomber cette valeur sur votre page de rendu :
 *index.htm*
 
 ```html
-<%-: common | eh: ['code',fc] %>
+<%- eh(common, ['code',fc]) %>
 ```
 
 Ce qui affiche dans la source de votre page côté client :
@@ -356,7 +356,7 @@ On a vu plus haut que
 *index.htm*
 
 ```html
-<%-: common | et: ['code',fc,true] %>
+<%- et(common, ['code',fc,true]) %>
 ```
 
 irait chercher la valeur d'origine du serveur... mais ne modifierait pas le rendu en live.
@@ -364,7 +364,7 @@ irait chercher la valeur d'origine du serveur... mais ne modifierait pas le rend
 Et bien, au lieu de passer `true`, passez plutôt du code JavaScript qui sera exécuté après chaque modification pour rendre le résultat en temps réel !
 
 ```html
-<%-: common | et: ['code',fc,'prettyPrint()'] %>
+<%- et(common, ['code',fc,'prettyPrint()']) %>
 ```
 
 Ainsi à chaque modification, `prettify.js` sera rappeler et coloriera la nouvelle valeur insérée dans le DOM. Une fois validée, ce même processus ce répercutera sur l'ensemble des fenêtres ouvertes dans tous les autres navigateurs.
@@ -376,9 +376,9 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 *index.htm*
 
 ```html
-<%-: common | et: ['code',fc,'some javascript function'] %>
-<%-: common | eh: ['code',fc,'some javascript function'] %>
-<a href="<%-: common | ea: ['code',fs,'href','some javascript function'] %>"></a>
+<%- et(common, ['code',fc,'some javascript function']) %>
+<%- eh(common, ['code',fc,'some javascript function']) %>
+<a href="<%- ea(common, ['code',fs,'href','some javascript function']) %>"></a>
 ```
 
 
@@ -411,7 +411,7 @@ Il vous faudra, pour faire fonctionner EditAtlas, activer le fichier de variatio
 
 ### Interface HTML ###
 
-Il va falloir poser sur tous les templates contenant des filtres d'édition `editHtml`, `editText` et `editAttr` l'inclusion suivante (normalement juste avant la fermeture de la balise `body`, avant vos balises scripts `script`) :
+Il va faloir poser sur tous les templates contenant les fonctions d'édition `editHtml`, `editText` et `editAttr` l'inclusion suivante (normalement juste avant la fermeture de la balise `body`, avant vos balises scripts `script`) :
 
 ```html
 <% include templates/edit-atlas.htm %>
@@ -470,16 +470,30 @@ website.editAtlas();
 
 Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va falloir faire appel à deux fonctions dans votre controlleur commun.
 
-- Pour faire fonctionner les filtres il faut ajouter dans la fonction `loadModules` de NodeAtlas :
-
-   ```js
-NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.modules.ejs, NA);
-```
-
 - Pour enregistrer les valeurs et les répercuter à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
 
    ```js
 	require('../components/controllers/edit-atlas').sockets(socket, NA, true);
+```
+
+- Ajoutez dans la fonction du contrôleur commun `changeVariation` les chemins vers vos variations et les fonctions d'édition :
+
+   ```js
+(function (publics) {
+	"use strict";
+
+	publics.changeVariation = function (params, mainCallback) {
+		var variation = params.variation,
+			NA = params.NA;
+
+		variation.fs = variation.currentRouteParameters.variation;
+		variation.fc = variation.webconfig.commonVariation;
+
+		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
+
+		mainCallback(variation);
+	};
+}(website));
 ```
 
 
@@ -490,23 +504,6 @@ NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.m
 
    ```js
 website.editAtlas();
-```
-
-- Ajoutez dans la fonction du contrôleur commun `changeVariation` les chemins vers vos variations :
-
-   ```js
-(function (publics) {
-	"use strict";
-
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation;
-
-		variation.fs = variation.currentRouteParameters.variation;
-		variation.fc = variation.webconfig.commonVariation;
-
-		mainCallback(variation);
-	};
-}(website));
 ```
 
 
@@ -668,14 +665,14 @@ and source code available in your browser at the following address: `http://loca
 By changing the code above to this:
 
 ```html
-<%-: common | eh: ['text','common.json'] %>
-<a href="<%-: common | ea: ['liens[0].url','common.json','href'] %>" title="<%-: common | ea: ['liens[0].description','common.json','title'] %>">
-	<%-: common | et: ['liens[0].content','common.json'] %>
+<%- eh(common, ['text','common.json']) %>
+<a href="<%- ea(common, ['liens[0].url','common.json','href']) %>" title="<%- ea(common, ['liens[0].description','common.json','title']) %>">
+	<%- et(common, ['liens[0].content','common.json']) %>
 </a>
 
-<%-: specific | eh: ['texts[0]','index.json'] %>
-<a href="<%-: specific | ea: ['lien.url','index.json','href'] %>" title="<%-: specific | ea: ['lien.title','index.json','title'] %>">
-	<%-: specific | et: ['lien.content','index.json'] %>
+<%- eh(specific, ['texts[0]','index.json']) %>
+<a href="<%- ea(specific, ['lien.url','index.json','href']) %>" title="<%- ea(specific, ['lien.title','index.json','title']) %>">
+	<%- et(specific, ['lien.content','index.json']) %>
 </a>
 ```
 
@@ -695,15 +692,15 @@ You will then get the following output in the HTML source:
 
 We can then see that:
 
-- The `eh` filter (shortcut of `editHtml`) generate an additional `div` wrapping your render. It an `block` area used for edit HTML text.
-- The `et` filter (shohtcut of `editText`) generate an additional `span` wrapping your render. It an `inline` area used for edit phrases, titles, menus, etc. All element we not contain a `block` type markup.
-- The `ea` filter (shohtcut of `editAttr`)  generate an additional attributes into the markup, but do not create a wrapping markup. This is useful for link edition, titles, images, or class, etc.
+- The `eh` function (shortcut of `editHtml`) generate an additional `div` wrapping your render. It an `block` area used for edit HTML text.
+- The `et` function (shohtcut of `editText`) generate an additional `span` wrapping your render. It an `inline` area used for edit phrases, titles, menus, etc. All element we not contain a `block` type markup.
+- The `ea` function (shohtcut of `editAttr`)  generate an additional attributes into the markup, but do not create a wrapping markup. This is useful for link edition, titles, images, or class, etc.
 
 We also note that:
 
-- For `editHtml`, `editText` and `editAttr`, it does not pass the variable but the object containing the variable. The value we pass in first is a filter argument to view/edit and the secondl parameters is the json file in which the change will be registered.
+- For `editHtml`, `editText` and `editAttr`, it does not pass the variable but the object containing the variable. The value we pass in first is to view/edit and the second parameters is the json file in which the change will be registered.
 
-**Therefore, our values ​​are clickable holding down `Ctrl + Alt + E` keys and editable in the edit window.**
+**Therefore, our values ​​are clickable holding down `E + T` keys and editable in the edit window.**
 
 
 
@@ -743,14 +740,14 @@ you could to check if a user can or can not edit the text. Similar implementatio
 So the above code could be written as following injection with variable `fs` and `fc`:
 
 ```html
-<%-: common | eh: ['text',fc] %>
-<a href="<%-: common | ea: ['liens[0].url',fc,'href'] %>" title="<%-: common | ea: ['liens[0].description',fc,'title'] %>">
-	<%-: common | et: ['liens[0].content',fc] %>
+<%- eh(common, ['text',fc]) %>
+<a href="<%- ea(common, ['liens[0].url',fc,'href']) %>" title="<%- ea(common, ['liens[0].description',fc,'title']) %>">
+	<%- et(common, ['liens[0].content',fc]) %>
 </a>
 
-<%-: specific | eh: ['texts[0]',fs] %>
-<a href="<%-: specific | ea: ['lien.url',fs,'href'] %>" title="<%-: specific | ea: ['lien.title',fs,'title'] %>">
-	<%-: specific | et: ['lien.content',fs] %>
+<%- eh(specific, ['texts[0]',fs]) %>
+<a href="<%- ea(specific, ['lien.url',fs,'href']) %>" title="<%- ea(specific, ['lien.title',fs,'title']) %>">
+	<%- et(specific, ['lien.content',fs]) %>
 </a>
 ```
 
@@ -807,7 +804,7 @@ and it means this:
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fs] %>
+<%- et(common, ['articleTitle',fs]) %>
 ```
 
 is not that it is into the variation file:
@@ -829,7 +826,7 @@ What we want, it's not the HTML source but the JSON source. For request it direc
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fc,true] %>
+<%- et(common, ['articleTitle',fc,true]) %>
 ```
 
 And the edit value will be "This article has no title". But the side effect it's you will not see modification in real time. This modification will not change the page already open in others' user browsers.
@@ -841,9 +838,9 @@ You could also make the same modifications with `editText`, `editHtml` et `editA
 *index.htm*
 
 ```html
-<%-: common | et: ['articleTitle',fc,true] %>
-<%-: common | eh: ['articleTitle',fc,true] %>
-<a href="<%-: common | ea: ['articleTitle',fs,'href',true] %>"></a>
+<%- et(common, ['articleTitle',fc,true]) %>
+<%- eh(common, ['articleTitle',fc,true]) %>
+<a href="<%- ea(common, ['articleTitle',fs,'href',true]) %>"></a>
 ```
 
 
@@ -865,7 +862,7 @@ and you inject this value on the render page:
 *index.htm*
 
 ```html
-<%-: common | eh: ['code',fc] %>
+<%- eh(common, ['code',fc]) %>
 ```
 
 That display in the source page, in client side:
@@ -901,7 +898,7 @@ We are see above this
 *index.htm*
 
 ```html
-<%-: common | et: ['code',fc,true] %>
+<%- et(common, ['code',fc,true]) %>
 ```
 
 will find value into original JSON file... but not allow real time modification.
@@ -909,7 +906,7 @@ will find value into original JSON file... but not allow real time modification.
 So, in place of `true` in third parameter, use a JavaScript function into a string to render modifications in real time !
 
 ```html
-<%-: common | et: ['code',fc,'prettyPrint()'] %>
+<%- et(common, ['code',fc,'prettyPrint()']) %>
 ```
 
 With that method, each modification `prettify.js` will be call to color the new value insert into the DOM. Once validated, the same process will be execute on all the windows open in all other browsers.
@@ -921,9 +918,9 @@ You can also do the same for changes `editText`, `editHtml` and `editAttr`:
 *index.htm*
 
 ```html
-<%-: common | et: ['code',fc,'some javascript function'] %>
-<%-: common | eh: ['code',fc,'some javascript function'] %>
-<a href="<%-: common | ea: ['code',fs,'href','some javascript function'] %>"></a>
+<%- et(common, ['code',fc,'some javascript function']) %>
+<%- eh(common, ['code',fc,'some javascript function']) %>
+<a href="<%- ea(common, ['code',fs,'href','some javascript function']) %>"></a>
 ```
 
 
@@ -956,7 +953,7 @@ You will need to run EditAtlas, activate common variations file via `commonVaria
 
 #### HTML Interface ####
 
-On all templates containing `editHtml`, `editText` and `editAttr` editing filters the following inclusion (usually just before the closing of the `body` tag before your `script` scripts tags):
+On all templates containing `editHtml`, `editText` and `editAttr` editing functions the following inclusion (usually just before the closing of the `body` tag before your `script` scripts tags):
 
 ```html
 <% include templates/edit-atlas.htm %>
@@ -1015,10 +1012,24 @@ website.editAtlas();
 
 Finally, for save your values ​​in your variation file, we will have to use two common functions in your controller.
 
-- To operate the filter must be added in the `loadModules` NodeAtlas function:
+- Add in common `changeVariation` controller fonction the paths to your variations and editing functions :
 
    ```js
-NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.modules.ejs, NA);
+(function (publics) {
+	"use strict";
+
+	publics.changeVariation = function (params, mainCallback) {
+		var variation = params.variation;
+			NA = params.NA;
+
+		variation.fs = variation.currentRouteParameters.variation;
+		variation.fc = variation.webconfig.commonVariation;
+
+		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
+
+		mainCallback(variation);
+	};
+}(website));
 ```
 
 - To save the values ​​and pass them all open windows within `io.sockets.on('connection', function (socket) { ... })`:
@@ -1036,24 +1047,6 @@ NA.modules.ejs = require('../components/controllers/edit-atlas').setFilters(NA.m
    ```js
 website.editAtlas();
 ```
-
-- Add in common `changeVariation` controller fonction the paths to your variations :
-
-   ```js
-(function (publics) {
-	"use strict";
-
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation;
-
-		variation.fs = variation.currentRouteParameters.variation;
-		variation.fc = variation.webconfig.commonVariation;
-
-		mainCallback(variation);
-	};
-}(website));
-```
-
 
 
 

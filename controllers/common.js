@@ -12,8 +12,6 @@ website.components = {};
 		NA.modules.cookie = require('cookie');
 		NA.modules.socketio = require('socket.io');
 
-		NA.modules.ejs = website.components.editAtlas.setFilters(NA.modules.ejs, NA);
-
 		return NA;
 	};
 
@@ -38,11 +36,14 @@ website.components = {};
 	};
 
 	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation;
+		var variation = params.variation,
+			NA = params.NA;
 
 		variation.file = variation.currentRouteParameters.variation;
 		variation.fs = variation.currentRouteParameters.variation;
 		variation.fc = variation.webconfig.commonVariation;
+
+		variation = website.components.editAtlas.setFilters(variation, NA);
 
 		mainCallback(variation);
 	};

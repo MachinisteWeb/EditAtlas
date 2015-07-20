@@ -1,8 +1,8 @@
 # EdtitAtlas #
 
-Version : 0.10 (Beta)
+Version : 0.11 (Beta)
 
-NodeAtlas Version minimale : 0.40
+NodeAtlas Version minimale : 0.44
 
 **For an international version of this README.md, [see below](#international-version).**
 

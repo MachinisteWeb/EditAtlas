@@ -20,10 +20,11 @@
         "Non éditable",
         "Test divers",
         "Édition d'images avec lien",
-        "Test de changement de code live"
+        "Changement de code live",
+        "Les Éléments ne pouvant pas avoir d'éléments enfants"
     ],
     "image": {
-        "src": "http://colorvisiontesting.com/images/plate%20with%205.jpg",
+        "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
         "alt": "The Moment by Dzsurnik",
         "width": "560",
         "height": "372"
@@ -31,6 +32,26 @@
     "link": {
         "href": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
         "title": "The Moment by Dzsurnik"
+    },
+    "country": {
+        "label": "Pays",
+        "errors": {
+            "required": "Country select is required."
+        },
+        "list": [
+            {
+                "text": "France",
+                "value": "fr-fr"
+            },
+            {
+                "text": "United Kingdom",
+                "value": "en-gb"
+            },
+            {
+                "text": "United States",
+                "value": "en-us"
+            }
+        ]
     },
     "demoCode": [
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;&lt;%- editText(common.demo.example.hardText, ['common.demo.example.hardText', 'common.json']) %&gt;&lt;/p&gt;\n&lt;%- editHtml(common.demo.example.hardHtml, ['common.demo.example.hardHtml', 'common.json']) %&gt;\n&lt;p&gt;&lt;a href=\"&lt;%- editAttr(common.demo.example.hardAttr.url, ['common.demo.example.hardAttr.url', 'common.json', 'href']) %&gt;\" title=\"&lt;%- editAttr(common.demo.example.hardAttr.description, ['common.demo.example.hardAttr.description', 'common.json', 'title']) %&gt;\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"&lt;%- editAttr(common.demo.example.hardMulti.url, ['common.demo.example.hardMulti.url', 'common.json', 'href']) %&gt;\" title=\"&lt;%- editAttr(common.demo.example.hardMulti.description, ['common.demo.example.hardMulti.description', 'common.json', 'title']) %&gt;\"&gt;&lt;%- editText(common.demo.example.hardMulti.content, ['common.demo.example.hardMulti.content', 'common.json']) %&gt;&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"&lt;%- editAttr(common.demo.example.hardMulti.class, ['common.demo.example.hardMulti.class', 'common.json', 'class']) %&gt;\"&gt;&lt;%- editHtml(common.demo.example.hardMulti.html, ['common.demo.example.hardMulti.html', 'common.json']) %&gt;&lt;/div&gt;</code></pre>",
@@ -50,7 +71,7 @@
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;Ce texte &lt;strong&gt;n'est&lt;/strong&gt; pas éditable.&lt;/p&gt;\n&lt;div&gt;&lt;p&gt;Ce HTML n'est...&lt;/p&gt; &lt;p&gt;...pas éditable.&lt;/p&gt;&lt;/div&gt;\n&lt;p&gt;&lt;a href=\"javascript:;\" title=\"Title\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"javascript:;\" title=\"Title\"&gt;Ce texte et ses attributs ne sont pas éditable&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"class-multi\"&gt;&lt;p&gt;&lt;strong&gt;et ce HTML &lt;br /&gt; non plus&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</code></pre>",
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;&lt;%- common.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;\n&lt;%- common.demo.example.hardHtmlNotEditable %&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= common.demo.example.hardAttrNotEditable.url %&gt;\" title=\"&lt;%= common.demo.example.hardAttrNotEditable.description %&gt;\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= common.demo.example.hardMultiNotEditable.url %&gt;\" title=\"&lt;%= common.demo.example.hardMultiNotEditable.description %&gt;\"&gt;&lt;%- common.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"&lt;%= common.demo.example.hardMultiNotEditable.class %&gt;\"&gt;&lt;%- common.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>",
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;&lt;%- specific.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;\n&lt;%- specific.demo.example.hardHtmlNotEditable %&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= specific.demo.example.hardAttrNotEditable.url %&gt;\" title=\"&lt;%= specific.demo.example.hardAttrNotEditable.description %&gt;\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= specific.demo.example.hardMultiNotEditable.url %&gt;\" title=\"&lt;%= specific.demo.example.hardMultiNotEditable.description %&gt;\"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"&lt;%= specific.demo.example.hardMultiNotEditable.class %&gt;\"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>",
-        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;a href=\"&lt;%- ea(common, ['link.href', fc, 'href']) %&gt;\" title=\"&lt;%- ea(common, ['link.title', fc, 'title']) %&gt;\"&gt;\n\t&lt;img src=\"&lt;%- ea(common, ['image.src', fc, 'src']) %&gt;\" alt=\"&lt;%- ea(common, ['image.alt', fc, 'alt']) %&gt;\" width=\"&lt;%- ea(common, ['image.width', fc, 'width']) %&gt;\" height=\"&lt;%- ea(common, ['image.height', fc, 'height']) %&gt;\"&gt;\n&lt;/a&gt;</code></pre>"
+        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;select name=\"country\"\n\tdata-val=\"true\"\n\tdata-rule-required=\"true\"\n\tdata-msg-required=\"&lt;%- ea(specific, ['country.errors.required', fc, 'data-msg-required']) %&gt;\"&gt;\n\t&lt;option value=\"\"&lt;%- ea(common, ['country.label', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% for (var i = 0; i &lt; common.country.list.length; i++) { %&gt;\n\t\t&lt;option value=\"&lt;%- ea(common, ['country.list[' + i + '].value', fc, 'value']) %&gt;\"&lt;%- ea(common, ['country.list[' + i + '].text', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% } %&gt;\n&lt;/select&gt;</code></pre>"
     ],
     "demo": {
         "inCommon": "dans Common",

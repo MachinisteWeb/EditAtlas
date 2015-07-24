@@ -1,6 +1,6 @@
 # EdtitAtlas #
 
-Version : 0.12 (Beta)
+Version : 0.13 (Beta)
 
 NodeAtlas Version minimale : 0.44
 
@@ -218,6 +218,34 @@ Dans ce cas:
 
 
 
+### Cas spécifique ###
+
+Les balises tel que `<option>` ne peuvent pas contenir de balise enfant. Aussi il est impossible d'injecter une valeur comme ceci via `editText` (`et`) :
+
+```html
+<select 
+	name="country">
+	<option value=""><%- et(specific, ['fields.country.label', fs]) %></option>
+	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>
+		<option value="<% ... %>"><%- et(specific, ['fields.country.list[' + i + '].text', fs]) %></option>
+	<% } %>
+</select>
+```
+
+La solution est de remplacer le contenu et le chevron fermant de se type de balise par la fonction `editAttr` (`ea`) avec comme troisième paramètre la valeur `$text`. Afin de garder l'auto-coloration de votre éditeur intact, je vous conseil de fermer la balise comme dans l'exemple ci après.
+
+```html
+<select 
+	name="country">
+	<option value=""<%- ea(specific, ['fields.country.label', fs, '$text']) + "</option" %>>
+	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>
+		<option value="<%- ... %>"<%- ea(specific, ['fields.country.list[' + i + '].text', fs, '$text']) + "</option" %>>
+	<% } %>
+</select>
+```
+
+
+
 ### Modification à partir de la source du serveur ###
 
 Imaginons la valeur suivante dans le fichier de variations communes :
@@ -427,8 +455,10 @@ L'interface elle-même est éditable et son contenu est à placer dans le fichie
 {
 	...,
 	"editableArea": {
-        "close": "Fermer",
-        "htmlInfo": "(HTML activé)",
+		"close": "Fermer",
+        "wysiwyg": "(Éditeur)",
+        "plainText": "(Source)",
+        "cancelUpdate": "(Annuler)",
         "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
         "title": "Zone d'édition de contenu",
         "next": "Continuer avant d'envoyer",
@@ -760,6 +790,38 @@ In this case:
 
 
 
+### Special Case ###
+
+Markup like `<option>` cannot contain child markup. It's also imposible to inject a value with `editText` (`et`) function :
+
+```html
+<select name="country"
+	data-val="true"
+	data-rule-required="true"
+	data-msg-required="<%- ... %>">
+	<option value=""><%- et(specific, ['country.label', fs]) %></option>
+	<% for (var i = 0; i < specific.country.list.length; i++) { %>
+		<option value="<% ... %>"><%- et(specific, ['country.list[' + i + '].text', fs]) %></option>
+	<% } %>
+</select>
+```
+
+The solution is to remplace the content and the close bracket by `editAttr` (`ea`) function with the third parameter the value `$text`. For keep safe auto-coloration of editor, is also recommanded to adopt the syntax below.
+
+```html
+<select name="country"
+	data-val="true"
+	data-rule-required="true"
+	data-msg-required="<%- ... %>">
+	<option value=""<%- ea(specific, ['country.label', fs, '$text']) + "</option" %>>
+	<% for (var i = 0; i < specific.country.list.length; i++) { %>
+		<option value="<%- ... %>"<%- ea(specific, ['country.list[' + i + '].text', fs, '$text']) + "</option" %>>
+	<% } %>
+</select>
+```
+
+
+
 #### Edit from the source on server ####
 
 Consider the following value in the common variations of file:
@@ -969,12 +1031,14 @@ The interface itself is editable and its content is to place in the common varia
 {
 	...,
 	"editableArea": {
-        "close": "Close",
-        "htmlInfo": "(HTML activated)",
+		"close": "Close",
+        "wysiwyg": "(Editor)",
+        "plainText": "(Source)",
+        "cancelUpdate": "(Cancel)",
         "sourceInfo": "This value come from server, a page reloading is maybe necessary.",
-        "title": "Editing content area",
+        "title": "Editing Content Area",
         "next": "Continue before validation",
-        "submit": "Validate"
+        "submit": "Update"
     },
     ...
 }

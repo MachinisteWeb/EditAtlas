@@ -207,8 +207,18 @@
 	<img src="<%- ea(common, ['image.src', fc, 'src']) %>" alt="<%- ea(common, ['image.alt', fc, 'alt']) %>" width="<%- ea(common, ['image.width', fc, 'width']) %>" height="<%- ea(common, ['image.height', fc, 'height']) %>">
 </a>
 
+<h3><%- et(common, ['demoTitle[11]', fc]) %></h3>
+<select name="country"
+	data-val="true"
+	data-rule-required="true"
+	data-msg-required="<%- ea(common, ['country.errors.required', fc, 'data-msg-required']) %>">
+	<option value=""<%- ea(common, ['country.label', fc, '$text']) + "</option" %>>
+	<% for (var i = 0; i < common.country.list.length; i++) { %>
+		<option value="<%- ea(common, ['country.list[' + i + '].value', fc, 'value']) %>"<%- ea(common, ['country.list[' + i + '].text', fc, '$text']) + "</option" %>>
+	<% } %>
+</select>
+
 <h3><%- et(common, ['demoTitle[10]', fc]) %></h3>
 <%- eh(common, ['demoCode[17]', fc, 'prettyPrint()']) %>
-
 
 <% include templates/foot.htm %>

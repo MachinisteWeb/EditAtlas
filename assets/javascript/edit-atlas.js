@@ -22,6 +22,10 @@ var website = website || {},
         return path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]");
     };
 
+    privates.cleanName = function (name) {
+        return name.replace(/\$/g, "\\\$");
+    };
+
     publics.cleanDataEditAtlas = function ($object) {
         $object.removeAttr("data-edit-targeted");
         $object.find('[data-edit-targeted=true]').removeAttr("data-edit-targeted");
@@ -117,14 +121,16 @@ var website = website || {},
 
             $currentDataEdit.attr('data-edit-targeted', true);
 
-            $currentDataEdit.click(function (e) {
-                var $editedObject = $(this),
-                    options = {},
-                    $template,
+            function loadData($editedObject, e) {
+                var $template,
                     $clone,
-                    content,
-                    name,
                     accept = false;
+
+                if ($editedObject[0].tagName === 'SELECT') {
+                    $editedObject.find("option").each(function () {
+                        loadData($(this), e);
+                    });
+                }
 
                 if ($html.hasClass("is-editable")) {
                     e.preventDefault();
@@ -315,21 +321,34 @@ var website = website || {},
                                                 file: $editedObject.data('edit-attr-file-' + name)
                                             });
                                         } else {
-                                            $clone.find("input").val($editedObject.attr(name).trim());
-                                            $clone.find("label").attr("data-cancel", $editedObject.attr(name).trim());
+                                            if (name === '$text') {
+                                                $clone.find("input").val($editedObject.html().trim());
+                                                $clone.find("label").attr("data-cancel", $editedObject.html().trim());
+                                            } else {
+                                                $clone.find("input").val($editedObject.attr(name).trim());
+                                                $clone.find("label").attr("data-cancel", $editedObject.attr(name).trim());
+                                            }
                                         }
                                         if (!$editedObject.data('edit-attr-source-' + name) || typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
                                             var currentName = currentName || publics.clone(name);
                                             $clone.find("input").keyup(function () {
-                                                $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).val());
-                                                if (typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
-                                                    eval($editedObject.data('edit-attr-source-' + name));
+                                                if (currentName === '$text') {
+                                                    $('[data-edit-attr-path-' + privates.cleanName(currentName) + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').html($(this).val());         
+                                                } else {
+                                                    $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).val());
+                                                }
+                                                if (typeof $editedObject.data('edit-attr-source-' + currentName) === 'string') {
+                                                    eval($editedObject.data('edit-attr-source-' + currentName));
                                                 }
                                             });
                                             $clone.find(".cancel").click(function () {
-                                                $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).parents(".text:first").find("label").attr("data-cancel"));
-                                                if (typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
-                                                    eval($editedObject.data('edit-attr-source-' + name));
+                                                if (currentName === '$text') {
+                                                    $('[data-edit-attr-path-' + privates.cleanName(currentName) + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').html($(this).parents(".text:first").find("label").attr("data-cancel"));
+                                                } else {
+                                                    $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).parents(".text:first").find("label").attr("data-cancel"));
+                                                }
+                                                if (typeof $editedObject.data('edit-attr-source-' + currentName) === 'string') {
+                                                    eval($editedObject.data('edit-attr-source-' + currentName));
                                                 }
                                                 $(this).parents(".text:first").remove();
                                                 closePopupIfAllCancel();
@@ -346,6 +365,10 @@ var website = website || {},
                         }
                     }
                 }
+            }
+
+            $currentDataEdit.click(function (e) {
+                loadData($(this), e);
             });
         });
     };
@@ -446,7 +469,11 @@ var website = website || {},
                 $('[data-edit-path=' + privates.cleanPath(data.path) + ']').html(data.value);
             } 
             if (data.type === 'attr') {
-                $('[data-edit-attr-path-' + data.attrName + '=' + privates.cleanPath(data.path) + ']').attr(data.attrName, data.value);
+                if (data.attrName === '$text') {
+                    $('[data-edit-attr-path-' + privates.cleanName(data.attrName) + '=' + privates.cleanPath(data.path) + ']').html(data.value);
+                } else {
+                    $('[data-edit-attr-path-' + data.attrName + '=' + privates.cleanPath(data.path) + ']').attr(data.attrName, data.value);
+                }
             }
             eval(data.source);
         });

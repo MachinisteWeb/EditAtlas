@@ -89,6 +89,14 @@
 	text-align: right;
 }
 
+.popup-edit-atlas .wysiwyg,
+.popup-edit-atlas .plaintext,
+.popup-edit-atlas .cancel {
+	color: #48739E;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .popup-edit-atlas .next-variation-change {
 	cursor: pointer;
 	border: 0;

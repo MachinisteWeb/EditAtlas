@@ -103,12 +103,20 @@ var website = {};
             } else {
                 if (sourceFunction) {
                     claimSource = ' data-edit-attr-source-' + property + '="' + sourceFunction + '" ';
-                } 
-                if (auth) {
-                    result = object + '" data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file;
+                }
+                if (property !== '$text') {               
+                    if (auth) {
+                        result = object + '" data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file;
+                    } else {
+                        result = object + '" data-edit-attr-path-' + property + '="' + pathProperty;
+                    }        
                 } else {
-                    result = object + '" data-edit-attr-path-' + property + '="' + pathProperty;
-                }        
+                    if (auth) {
+                        result = ' data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file + '">' + object;
+                    } else {
+                        result = ' data-edit-attr-path-' + property + '="' + pathProperty + '">' + object;
+                    }   
+                }
             }
 
             return result;

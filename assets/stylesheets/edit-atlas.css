@@ -3,6 +3,13 @@
 	background-color: #E4ECF8;
 	cursor: crosshair;
 }
+.is-editable [data-edit=true][data-edit-targeted=true]:empty:before,
+.is-editable [data-edit=true][data-edit-targeted=true] *:empty:before {
+	content: "";
+	display: inline-block;
+	min-height: 6px;
+	min-width: 6px;
+}
 .is-editable img[data-edit-attr=true][data-edit-targeted=true] {
 	border: 3px solid #E4ECF8;
 	margin: -3px;

@@ -9,21 +9,49 @@ var website = website || {},
     var privates = {},
         optionsSocket;
 
+    optionsSocket = ($body.data('subpath') !== '') ? { path: '/' + $body.data('subpath') + (($body.data('subpath')) ? "/" : "") + 'socket.io' } : undefined;
+    publics.socket = io.connect(($body.data('subpath') !== '') ? $body.data('hostname') : undefined, optionsSocket);
+
+    publics.keys = {};
+
     privates.toDash = function(text) {
         return text.replace(/([A-Z])/g, function ($1) { return "-" + $1.toLowerCase(); });
     };
 
-    optionsSocket = ($body.data('subpath') !== '') ? { path: '/' + $body.data('subpath') + (($body.data('subpath')) ? "/" : "") + 'socket.io' } : undefined;
-
-    publics.socket = io.connect(($body.data('subpath') !== '') ? $body.data('hostname') : undefined, optionsSocket);
-
-    publics.keys = {};
+    privates.cleanPath = function (path) {
+        return path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]");
+    };
 
     publics.cleanDataEditAtlas = function ($object) {
         $object.removeAttr("data-edit-targeted");
         $object.find('[data-edit-targeted=true]').removeAttr("data-edit-targeted");
         return $object;
-    }
+    };
+
+    publics.clone = function (object) {
+        var copy;
+
+        if (null === object || undefined === object || "object" !== typeof object) {
+            return object;
+        }
+        if (object instanceof Date) {
+            copy = new Date();
+            copy.setTime(object.getTime());
+            return copy;
+        }
+        if (object instanceof Array) {
+            return object.slice(0);
+        }
+        if (object instanceof Object) {
+            copy = {};
+            for (var attr in object) {
+                if (object.hasOwnProperty(attr)) {
+                    copy[attr] = publics.clone(object[attr]);
+                }
+            }
+            return copy;
+        }
+    };
 
     publics.moveEditableArea = function () {
         var $pc = $(".popup-content"),
@@ -76,18 +104,16 @@ var website = website || {},
     publics.eaNumberId = 0;
 
     publics.targetDataEditAtlas = function () {
-        function clone(obj) {
-            if (null == obj || "object" != typeof obj) return obj;
-            var copy = obj.constructor();
-            for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-            }
-            return copy;
-        }
-
         $("[data-edit=true]").each(function (i) {
             var $currentDataEdit = $(this),
                 $popup = $(".popup-edit-atlas");
+
+            function closePopupIfAllCancel() {
+                var $popup = $(".popup-edit-atlas");
+                if ($popup.find(".html:not(.template), .text:not(.template)").length === 0) {
+                    $popup.removeClass("opened");
+                }
+            }
 
             $currentDataEdit.attr('data-edit-targeted', true);
 
@@ -106,7 +132,7 @@ var website = website || {},
                     $popup.addClass("opened");
 
                     if ($editedObject.data("edit-type") === "html" &&
-                        $popup.find("." + $editedObject.data('edit-path').replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).length === 0) 
+                        $popup.find("." + privates.cleanPath($editedObject.data('edit-path'))).length === 0) 
                     {
                         $template = $(".popup-edit-atlas .template.html");
                         $clone = $template.clone().removeClass("template");
@@ -123,15 +149,32 @@ var website = website || {},
                             });
                         } else {
                             $clone.find("textarea").val($editedObject.html().trim());
+                            $clone.find("label").attr("data-cancel", $editedObject.html().trim());
                         }
+
                         if (!$editedObject.data('edit-source') || typeof $editedObject.data('edit-source') === 'string') {
                             $clone.find("textarea").keyup(function () {
-                                $('[data-edit-path='+ $editedObject.data('edit-path').replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html($clone.find("textarea").val());
+                                $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("textarea").val());
                                 if (typeof $editedObject.data('edit-source') === 'string') {
                                     eval($editedObject.data('edit-source'));
                                 }
                             });
                         }
+
+                        $clone.find(".cancel").click(function () {
+                            $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
+                            if (typeof $editedObject.data('edit-source') === 'string') {
+                                eval($editedObject.data('edit-source'));
+                            }
+                            if (typeof CKEDITOR !== 'undefined') {
+                                if (Object.keys(CKEDITOR.instances).length > 0) {
+                                    CKEDITOR.instances[$clone.find("textarea").attr("id")].destroy();
+                                }
+                            }
+                            $clone.remove();
+                            closePopupIfAllCancel();
+                        });
+
                         privates.editedObjects.push($editedObject);
                         publics.targetDataEditAtlas();
 
@@ -169,7 +212,7 @@ var website = website || {},
                                 for (var i in CKEDITOR.instances) {
                                     CKEDITOR.instances[i].on('change', function (e, a) {
                                         $clone.find("textarea").val(CKEDITOR.instances[i].getData());
-                                        $('[data-edit-path='+ $editedObject.data('edit-path').replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html(CKEDITOR.instances[i].getData());
+                                        $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html(CKEDITOR.instances[i].getData());
                                         if (typeof $editedObject.data('edit-source') === 'string') {
                                             eval($editedObject.data('edit-source'));
                                         }
@@ -199,15 +242,18 @@ var website = website || {},
                             var $plainText = $(this);
 
                             $plainText.parents(".html").removeClass("alternative");
-
-                            CKEDITOR.instances[$plainText.parents(".html").find("textarea").attr("id")].destroy();
+                            if (typeof CKEDITOR !== 'undefined') {
+                                if (Object.keys(CKEDITOR.instances).length > 0) {
+                                    CKEDITOR.instances[$plainText.parents(".html").find("textarea").attr("id")].destroy();
+                                }
+                            }
                         });
 
                         publics.eaNumberId++;
                     }
 
                     if ($editedObject.data("edit-type") === "text" &&
-                        $popup.find("." + $editedObject.data('edit-path').replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).length === 0) 
+                        $popup.find("." + privates.cleanPath($editedObject.data('edit-path'))).length === 0) 
                     {
                         $template = $(".popup-edit-atlas .template.text");
                         $clone = $template.clone().removeClass("template");
@@ -223,15 +269,26 @@ var website = website || {},
                             });
                         } else {
                             $clone.find("input").val($editedObject.html().trim());
+                            $clone.find("label").attr("data-cancel", $editedObject.html().trim());
                         }
                         if (!$editedObject.data('edit-source') || typeof $editedObject.data('edit-source') === 'string') {
                             $clone.find("input").keyup(function () {
-                                $('[data-edit-path='+ $editedObject.data('edit-path').replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html($clone.find("input").val());
+                                $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("input").val());
                                 if (typeof $editedObject.data('edit-source') === 'string') {
                                     eval($editedObject.data('edit-source'));
                                 }
                             });
                         }
+
+                        $clone.find(".cancel").click(function () {
+                            $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
+                            if (typeof $editedObject.data('edit-source') === 'string') {
+                                eval($editedObject.data('edit-source'));
+                            }
+                            $clone.remove();
+                            closePopupIfAllCancel();
+                        });
+
                         privates.editedObjects.push($editedObject);
                         publics.targetDataEditAtlas();
                     }
@@ -243,7 +300,7 @@ var website = website || {},
                                 if (i.indexOf('editAttrName') !== -1) {
                                     name = privates.toDash(i.replace('editAttrName', '')).slice(1);
 
-                                    if ($popup.find("." + $editedObject.data('edit-attr-path-' + name).replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).length === 0) {
+                                    if ($popup.find("." + privates.cleanPath($editedObject.data('edit-attr-path-' + name))).length === 0) {
                                         accept = true;
                                         $template = $(".popup-edit-atlas .template.text");
                                         $clone = $template.clone().removeClass("template");
@@ -259,19 +316,29 @@ var website = website || {},
                                             });
                                         } else {
                                             $clone.find("input").val($editedObject.attr(name).trim());
+                                            $clone.find("label").attr("data-cancel", $editedObject.attr(name).trim());
                                         }
                                         if (!$editedObject.data('edit-attr-source-' + name) || typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
+                                            var currentName = currentName || publics.clone(name);
                                             $clone.find("input").keyup(function () {
-                                                var currentName = currentName || clone(name);
-                                                $('[data-edit-attr-path-' + currentName + '='+ $editedObject.data('edit-attr-path-' + currentName).replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').attr(currentName, $(this).val());
+                                                $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).val());
                                                 if (typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
                                                     eval($editedObject.data('edit-attr-source-' + name));
                                                 }
                                             });
+                                            $clone.find(".cancel").click(function () {
+                                                $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).parents(".text:first").find("label").attr("data-cancel"));
+                                                if (typeof $editedObject.data('edit-attr-source-' + name) === 'string') {
+                                                    eval($editedObject.data('edit-attr-source-' + name));
+                                                }
+                                                $(this).parents(".text:first").remove();
+                                                closePopupIfAllCancel();
+                                            });
                                         }
                                     }
+
                                 }
-                            }())
+                            }());
                         }
                         if (accept) {
                             publics.targetDataEditAtlas();
@@ -284,60 +351,56 @@ var website = website || {},
     };
 
     publics.editContent = function () {
-        var shiftIsPressed = false,
-            $popup = $(".popup-edit-atlas");
+        var $popup = $(".popup-edit-atlas");
 
         privates.editedObjects = [];
 
         publics.keys = {};
 
         $(".popup-edit-atlas .update-variation-change").click(function () {
-            var options = [],
-                currentOptions,
-                name;
-                
-            if (!$html.hasClass("is-editable")) {
+            var options = [];
 
-                for (var i = 0, l = privates.editedObjects.length; i < l; i++) {
-                    if (privates.editedObjects[i].data('edit-type') === 'html') {
-                        currentOptions = {};
+            function addVariationForUpdate(type, options, i) {
+                var currentOptions = {},
+                    name;
 
-                        currentOptions.file = privates.editedObjects[i].data("edit-file");
-                        currentOptions.path = privates.editedObjects[i].data("edit-path");
-                        currentOptions.source = privates.editedObjects[i].data("edit-source");
-                        currentOptions.type = 'html';
-                        currentOptions.value = $(".popup-edit-atlas ." + privates.editedObjects[i].data("edit-path").replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).next().val().trim();
-                        options.push(currentOptions);
-                    }
+                if (privates.editedObjects[i].data('edit-attr') === true) {
+                    for (var j in privates.editedObjects[i].data()) {
+                        if (j.indexOf('editAttrName') !== -1) {
+                            name = privates.toDash(j.replace('editAttrName', '')).slice(1);
 
-                    if (privates.editedObjects[i].data('edit-type') === 'text') {
-                        currentOptions = {};
+                            currentOptions = {};
 
-                        currentOptions.file = privates.editedObjects[i].data("edit-file");
-                        currentOptions.path = privates.editedObjects[i].data("edit-path");
-                        currentOptions.source = privates.editedObjects[i].data("edit-source");
-                        currentOptions.type = 'text';
-                        currentOptions.value = $(".popup-edit-atlas ." + privates.editedObjects[i].data("edit-path").replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).next().val().trim();
-                        options.push(currentOptions);
-                    }
+                            currentOptions.file = privates.editedObjects[i].data("edit-attr-file-" + name);
+                            currentOptions.path = privates.editedObjects[i].data("edit-attr-path-" + name);
+                            currentOptions.type = type;
+                            currentOptions.source = privates.editedObjects[i].data("edit-attr-source-" + name);
+                            currentOptions.attrName = name;
+                            currentOptions.value = $(".popup-edit-atlas ." + privates.cleanPath(privates.editedObjects[i].data("edit-attr-path-" + name))).next().val().trim();
 
-                    if (privates.editedObjects[i].data('edit-attr') === true) {
-                        for (var j in privates.editedObjects[i].data()) {
-                            if (j.indexOf('editAttrName') !== -1) {
-                                name = privates.toDash(j.replace('editAttrName', '')).slice(1);
-
-                                currentOptions = {};
-
-                                currentOptions.file = privates.editedObjects[i].data("edit-attr-file-" + name);
-                                currentOptions.path = privates.editedObjects[i].data("edit-attr-path-" + name);
-                                currentOptions.type = 'attr';
-                                currentOptions.source = privates.editedObjects[i].data("edit-attr-source-" + name);
-                                currentOptions.attrName = name;
-                                currentOptions.value = $(".popup-edit-atlas ." + privates.editedObjects[i].data("edit-attr-path-" + name).replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).next().val().trim();
-                                options.push(currentOptions);
-                            }
+                            options.push(currentOptions);
                         }
                     }
+                } else {         
+                    currentOptions = {};
+
+                    currentOptions.file = privates.editedObjects[i].data("edit-file");
+                    currentOptions.path = privates.editedObjects[i].data("edit-path");
+                    currentOptions.source = privates.editedObjects[i].data("edit-source");
+                    currentOptions.type = type;
+                    currentOptions.value = $(".popup-edit-atlas ." + privates.cleanPath(privates.editedObjects[i].data("edit-path"))).next().val().trim();
+                    
+                    options.push(currentOptions);
+                }
+
+                return options;
+            }
+                
+            if (!$html.hasClass("is-editable")) {
+                for (var i = 0, l = privates.editedObjects.length; i < l; i++) {
+                    options = addVariationForUpdate('html', options, i);
+                    options = addVariationForUpdate('text', options, i);
+                    options = addVariationForUpdate('attr', options, i);
                 }
 
                 publics.sendContent(options);
@@ -366,29 +429,26 @@ var website = website || {},
         publics.socket.emit('update-variation', options);
     };
 
-    publics.sourceContent = function (options) {
+    publics.sourceContent = function () {
         publics.socket.on('source-variation', function (data) {
-            var area = $(".popup-edit-atlas ." + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]")).next();
-            area.show();
-            area.val(data.value);
-            area.next().show();
+            var $label = $(".popup-edit-atlas ." + privates.cleanPath(data.path)),
+                $area = $label.next();
+            $label.attr("data-cancel", data.value);
+            $area.show();
+            $area.val(data.value);
+            $area.next().show();
         });
     };
 
-    publics.broadcastContent = function (options) {
+    publics.broadcastContent = function () {
         publics.socket.on('update-variation', function (data) {
-            if (data.type === 'html') {
-                $('[data-edit-path=' + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html(data.value);
-                eval(data.source);
+            if (data.type === 'html' || data.type === 'text') {
+                $('[data-edit-path=' + privates.cleanPath(data.path) + ']').html(data.value);
             } 
-            if (data.type === 'text') {
-                $('[data-edit-path=' + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').html(data.value);
-                eval(data.source);
-            }
             if (data.type === 'attr') {
-                $('[data-edit-attr-path-' + data.attrName + '=' + data.path.replace(/\./g, "\\\.").replace(/\[/g, "\\\[").replace(/\]/g, "\\\]") + ']').attr(data.attrName, data.value);
-                eval(data.source);
+                $('[data-edit-attr-path-' + data.attrName + '=' + privates.cleanPath(data.path) + ']').attr(data.attrName, data.value);
             }
+            eval(data.source);
         });
     };
 

@@ -3,6 +3,7 @@
         "close": "Fermer",
         "wysiwyg": "(Éditeur)",
         "plainText": "(Source)",
+        "cancelUpdate": "(Annuler)",
         "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
         "title": "Zone d'édition de contenu",
         "next": "Continuer avant d'envoyer",
@@ -22,7 +23,7 @@
         "Test de changement de code live"
     ],
     "image": {
-        "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
+        "src": "http://colorvisiontesting.com/images/plate%20with%205.jpg",
         "alt": "The Moment by Dzsurnik",
         "width": "560",
         "height": "372"

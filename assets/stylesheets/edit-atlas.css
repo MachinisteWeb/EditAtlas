@@ -1,6 +1,7 @@
 .is-editable [data-edit=true][data-edit-targeted=true],
+.is-editable [data-addhoc=true],
 .is-editable [data-edit=true][data-edit-targeted=true] * {
-	background-color: #E4ECF8;
+	background-color: rgba(238, 236, 248, 0.8);
 	cursor: crosshair;
 }
 .is-editable [data-edit=true][data-edit-targeted=true]:empty:before,
@@ -13,6 +14,7 @@
 .is-editable img[data-edit-attr=true][data-edit-targeted=true] {
 	border: 3px solid #E4ECF8;
 	margin: -3px;
+	opacity: 0.5;
 }
 
 .popup-edit-atlas .plaintext {

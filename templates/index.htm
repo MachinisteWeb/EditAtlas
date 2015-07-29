@@ -208,10 +208,7 @@
 </a>
 
 <h3><%- et(common, ['demoTitle[11]', fc]) %></h3>
-<select name="country"
-	data-val="true"
-	data-rule-required="true"
-	data-msg-required="<%- ea(common, ['country.errors.required', fc, 'data-msg-required']) %>">
+<select name="country">
 	<option value=""<%- ea(common, ['country.label', fc, '$text']) + "</option" %>>
 	<% for (var i = 0; i < common.country.list.length; i++) { %>
 		<option value="<%- ea(common, ['country.list[' + i + '].value', fc, 'value']) %>"<%- ea(common, ['country.list[' + i + '].text', fc, '$text']) + "</option" %>>

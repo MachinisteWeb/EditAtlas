@@ -67,7 +67,7 @@ var website = {};
         return files;
     };
 
-    publics.setFilters = function (variation, NA) {
+    publics.setFilters = function (variation, NA, activateFront) {
         function setFilter(object, auth, pathProperty, sourceFunction, property, markup, type) {
             var file,
                 claimSource = " ",
@@ -89,34 +89,40 @@ var website = {};
                 }
             }
 
-            if (!object) { object = ""; }
+            if (typeof activateFront === 'undefined' || activateFront) {
 
-            if (typeof markup !== 'undefined') {
-                if (sourceFunction) {
-                    claimSource = ' data-edit-source="' + sourceFunction + '" ';
-                }
-                if (auth) {
-                    result = '<' + markup + claimSource + 'data-edit="true" data-edit-type="' + type + '" data-edit-file="' + file + '" data-edit-path="' + pathProperty + '">' +  object + "</" + markup + ">";
+                if (!object) { object = ""; }
+
+                if (typeof markup !== 'undefined') {
+                    if (sourceFunction) {
+                        claimSource = ' data-edit-source="' + sourceFunction + '" ';
+                    }
+                    if (auth) {
+                        result = '<' + markup + claimSource + 'data-edit="true" data-edit-type="' + type + '" data-edit-file="' + file + '" data-edit-path="' + pathProperty + '">' +  object + "</" + markup + ">";
+                    } else {
+                        result = '<' + markup + ' data-edit-path="' + pathProperty + '">' +  object + "</" + markup + ">";
+                    }
                 } else {
-                    result = '<' + markup + ' data-edit-path="' + pathProperty + '">' +  object + "</" + markup + ">";
+                    if (sourceFunction) {
+                        claimSource = ' data-edit-attr-source-' + property + '="' + sourceFunction + '" ';
+                    }
+                    if (property !== '$text') {               
+                        if (auth) {
+                            result = object + '" data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file;
+                        } else {
+                            result = object + '" data-edit-attr-path-' + property + '="' + pathProperty;
+                        }        
+                    } else {
+                        if (auth) {
+                            result = ' data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file + '">' + object;
+                        } else {
+                            result = ' data-edit-attr-path-' + property + '="' + pathProperty + '">' + object;
+                        }   
+                    }
                 }
+
             } else {
-                if (sourceFunction) {
-                    claimSource = ' data-edit-attr-source-' + property + '="' + sourceFunction + '" ';
-                }
-                if (property !== '$text') {               
-                    if (auth) {
-                        result = object + '" data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file;
-                    } else {
-                        result = object + '" data-edit-attr-path-' + property + '="' + pathProperty;
-                    }        
-                } else {
-                    if (auth) {
-                        result = ' data-edit="true"' + claimSource + 'data-edit-attr="true" data-edit-attr-name-' + property + '="true" data-edit-attr-path-' + property + '="' + pathProperty + '" data-edit-attr-file-' + property + '="' + file + '">' + object;
-                    } else {
-                        result = ' data-edit-attr-path-' + property + '="' + pathProperty + '">' + object;
-                    }   
-                }
+                result = object;
             }
 
             return result;
@@ -137,7 +143,7 @@ var website = {};
         return variation;
     };
 
-    publics.sockets = function (socket, NA, auth) {
+    publics.sockets = function (socket, NA, auth, activateDemo) {
         var fs = NA.modules.fs,
             path = NA.modules.path;
 
@@ -170,7 +176,7 @@ var website = {};
                                     //}
                                 }
                             }
-                            if (!NA.webconfig._demo) { // Adding part for avoid recording for demo mode.
+                            if (typeof activateDemo === 'undefined' || activateDemo) {
                                 fs.writeFileSync(path.join(NA.websitePhysicalPath, NA.webconfig.variationsRelativePath, file), JSON.stringify(object, undefined, "    "));
                             }
                         } catch (exception) {

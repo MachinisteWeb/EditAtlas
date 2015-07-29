@@ -1,6 +1,6 @@
 # EdtitAtlas #
 
-Version : 0.13 (Beta)
+Version : 0.14 (Beta)
 
 NodeAtlas Version minimale : 0.44
 
@@ -535,6 +535,64 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
    ```js
 website.editAtlas();
 ```
+
+
+
+
+
+## Mode Démo ##
+
+Il est possible d'inhiber l'enregistrement dans les fichiers de variations mais de tout de même répercuter les changements dans toutes les pages ouvertes. C'est le mode démonstration. Par exemple avec le code suivant :
+
+```js
+website.components.editAtlas.sockets(socket, NA, true, NA.webconfig._modeDemo);
+```
+
+et le webconfig suivant :
+
+```js
+{
+	...
+	"_modeDemo": true
+	...
+}
+```
+
+*Note*: S'il n'y a pas de troisième paramètre, les paramètres seront bien enregistrées.
+
+
+
+
+
+## Désactiver la partie Front ##
+
+Il est possible de ne pas générer les balises utilisées pour permettre au système l'édition temps réel. Le mécanisme ne fonctionnera plus mais cela est très utile pour manager les textes dans sa version de création avec un serveur local, et de s'en passer pour la version générée avec `--generate` et destinée à l'envoi extérieur.
+
+```js
+variation = website.components.editAtlas.setFilters(variation, NA, NA.webconfig._activateFront);
+```
+
+et le webconfig pour la version serveur suivant :
+
+```js
+{
+	...
+	"_activateFront": true
+	...
+}
+```
+
+et le webconfig pour la version de génération (utilisant `--generate`) suivant :
+
+```js
+{
+	...
+	"_activateFront": false
+	...
+}
+```
+
+*Note*: S'il n'y a pas de troisième paramètre, les balises supplémentaires seront générées.
 
 
 
@@ -1111,6 +1169,64 @@ Finally, for save your values ​​in your variation file, we will have to use 
    ```js
 website.editAtlas();
 ```
+
+
+
+
+
+## Demo Mode ##
+
+It's possible to desactivated record into variations files but conserve update propagation in real time in current opened windows. It's demo mode. For example with the following code :
+
+```js
+website.components.editAtlas.sockets(socket, NA, true, NA.webconfig._modeDemo);
+```
+
+and this webconfig :
+
+```js
+{
+	...
+	"_modeDemo": true
+	...
+}
+```
+
+*Note*: Without third parameter, variations are recorded.
+
+
+
+
+
+## Desactivate the Front part ##
+
+It's possible to not generate extra markup required for EditAtlas functionality. It's useful for managing two versions : for example a real time version with mechanism and a `--generate` version without mechanism.
+```js
+variation = website.components.editAtlas.setFilters(variation, NA, NA.webconfig._activateFront);
+```
+
+and a webconfig for real-time version :
+
+```js
+{
+	...
+	"_activateFront": true
+	...
+}
+```
+
+and a webconfig for generated version (with `--generate`) :
+
+```js
+{
+	...
+	"_activateFront": false
+	...
+}
+```
+
+*Note*: Without third parameter, extra markup will be generated.
+
 
 
 

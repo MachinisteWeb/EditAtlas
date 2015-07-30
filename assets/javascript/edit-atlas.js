@@ -69,6 +69,8 @@ var website = website || {},
         }).mousedown(function (e) {
             e.stopPropagation();
             if ($(e.target).hasClass('popup-content')) {
+                $popup.removeClass("docked-right");
+                $popup.removeClass("docked-left");
                 $.data(this, "draggable", true);
                 $.data(this, "offset-x", e.pageX);
                 $.data(this, "offset-y", e.pageY);
@@ -103,6 +105,44 @@ var website = website || {},
                 $.data(this, "offset-y", e.pageY);
             }
         }).data("draggable", false).data("offset-x", 0).data("offset-y", 0);
+
+        $(".to-left").click(function () {
+            $pc.attr("style", "");
+            $popup
+                .attr("style", "")
+                .addClass("docked-left")
+                .removeClass("docked-right");
+            privates.resizeArea();
+            $window.bind("resize", privates.resizeArea);
+        });
+        $(".anchor").click(function () {
+            $pc.attr("style", "");
+            $popup
+                .attr("style", "")
+                .removeClass("docked-left")
+                .removeClass("docked-right");
+            $popup.find(".templates").height("");
+            $window.unbind("resize", privates.resizeArea);
+        });
+        $(".to-right").click(function () {
+            $pc.attr("style", "");
+            $popup
+                .attr("style", "")
+                .addClass("docked-right")
+                .removeClass("docked-left");
+            privates.resizeArea();
+            $window.bind("resize", privates.resizeArea);
+        });
+
+    };
+
+    privates.resizeArea = function () {
+         var $pc = $(".popup-content"),
+            $popup = $(".popup-edit-atlas");
+
+        if ($popup.hasClass("docked-left") || $popup.hasClass("docked-right")) {
+            $popup.find(".templates").height($popup.height() - $popup.find("#wysiwyg").height() - $popup.find("#wysiwyg-bottom").height() - 100);
+        }
     };
 
     publics.eaNumberId = 0;
@@ -227,6 +267,9 @@ var website = website || {},
                                     eval($editedObject.data('edit-source'));
                                 }
                             });
+                            CKEDITOR.instances[i].on("instanceReady", function(e) {
+                                privates.resizeArea();
+                            });
                         }
                     }
 
@@ -245,7 +288,6 @@ var website = website || {},
                     } else {
                         createEditor();
                     }
-
                 });
 
                 $clone.find(".plaintext").click(function () {
@@ -257,6 +299,7 @@ var website = website || {},
                             CKEDITOR.instances[$plainText.parents(".html").find("textarea").attr("id")].destroy();
                         }
                     }
+                    privates.resizeArea();
                 });
 
                 publics.eaNumberId++;
@@ -509,14 +552,12 @@ var website = website || {},
                             onKeyup();
                         }
                         $html.addClass("is-editable");
-                        //$("textarea, input")[0].readOnly = true;
                     }
                 } else {
                     if (typeof onKeyDown !== 'undefined') {
                         onKeyDown();
                     }
                     $html.removeClass("is-editable");
-                    //$("textarea, input")[0].readOnly = false;
                 }
         });
     };

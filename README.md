@@ -1,6 +1,6 @@
 # EdtitAtlas #
 
-Version : 0.14 (Beta)
+Version : 0.15 (Beta)
 
 NodeAtlas Version minimale : 0.44
 
@@ -181,9 +181,9 @@ En imaginant que dans votre controlleur commun vous précisiez ceci :
 		// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
 		if (session.hasPermissionForEdit) {
 			// Le fichier spécifique utilisé pour générer cette vue.
-			variation.fs = variation.currentRouteParameters.variation;
+			variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
 			// Le fichier commun utilisé pour générer cette vue.
-			variation.fc = variation.webconfig.commonVariation;
+			variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 		}
 
 		mainCallback(variation);
@@ -458,7 +458,10 @@ L'interface elle-même est éditable et son contenu est à placer dans le fichie
 		"close": "Fermer",
         "wysiwyg": "(Éditeur)",
         "plainText": "(Source)",
-        "cancelUpdate": "(Annuler)",
+        "dockLeft": "⇤",
+        "dockRight": "⇥",
+        "anchor": "<ins>⚓</ins><del>X</del>",
+        "cancelUpdate": "Annuler",
         "sourceInfo": "Cette valeur provenant du serveur, un rechargement de page peut-être nécessaire.",
         "title": "Zone d'édition de contenu",
         "next": "Continuer avant d'envoyer",
@@ -516,8 +519,8 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 		var variation = params.variation,
 			NA = params.NA;
 
-		variation.fs = variation.currentRouteParameters.variation;
-		variation.fc = variation.webconfig.commonVariation;
+		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 
 		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
 
@@ -811,9 +814,9 @@ Imagining that your common controller you to specify this:
 		// If the user are the right, we allowed edit files.
 		if (session.hasPermissionForEdit) {
 			// The specific file used to generate this view.
-			variation.fs = variation.currentRouteParameters.variation;
+			variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
 			// The common file used to generate this view.
-			variation.fc = variation.webconfig.commonVariation;
+			variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 		}
 
 		mainCallback(variation);
@@ -1092,7 +1095,10 @@ The interface itself is editable and its content is to place in the common varia
 		"close": "Close",
         "wysiwyg": "(Editor)",
         "plainText": "(Source)",
-        "cancelUpdate": "(Cancel)",
+        "dockLeft": "⇤",
+        "dockRight": "⇥",
+        "anchor": "<ins>⚓</ins><del>X</del>",
+        "cancelUpdate": "Cancel",
         "sourceInfo": "This value come from server, a page reloading is maybe necessary.",
         "title": "Editing Content Area",
         "next": "Continue before validation",
@@ -1144,8 +1150,8 @@ Finally, for save your values ​​in your variation file, we will have to use 
 		var variation = params.variation;
 			NA = params.NA;
 
-		variation.fs = variation.currentRouteParameters.variation;
-		variation.fc = variation.webconfig.commonVariation;
+		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 
 		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
 

@@ -40,8 +40,8 @@ website.components = {};
 			NA = params.NA;
 
 		variation.file = variation.currentRouteParameters.variation;
-		variation.fs = variation.currentRouteParameters.variation;
-		variation.fc = variation.webconfig.commonVariation;
+		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 
 		variation = website.components.editAtlas.setFilters(variation, NA);
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<%- ((languageCode) ? languageCode + "/": "") %>">
 	<head>
 		<meta charset="utf-8" />
 
@@ -10,10 +10,10 @@
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700">
 		
 		<% if (webconfig._minified) { %>
-		<link rel="stylesheet" type="text/css" href="stylesheets/common.min.css" />
+		<link rel="stylesheet" type="text/css" href="<%- urlBasePath %>stylesheets/common.min.css" />
 		<% } else { %>
-		<link rel="stylesheet" type="text/css" href="stylesheets/edit-atlas.css" />
-		<link rel="stylesheet" type="text/css" href="stylesheets/common.css" />
+		<link rel="stylesheet" type="text/css" href="<%- urlBasePath %>stylesheets/edit-atlas.css" />
+		<link rel="stylesheet" type="text/css" href="<%- urlBasePath %>stylesheets/common.css" />
 		<% } %>
 	</head>
 	<body data-hostname='<%= webconfig.urlWithoutFileName %>' data-subpath='<%= webconfig.urlRelativeSubPath.slice(1) %>'>

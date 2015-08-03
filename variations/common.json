@@ -24,7 +24,9 @@
         "Test divers",
         "Édition d'images avec lien",
         "Changement de code live",
-        "Les Éléments ne pouvant pas avoir d'éléments enfants"
+        "Les Éléments ne pouvant pas avoir d'éléments enfants",
+        "Liste dynamique avec Template",
+        "Même valeur sous différente formes"
     ],
     "image": {
         "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
@@ -132,6 +134,37 @@
                     "description": "Title 3"
                 }
             }
-        ]
+        ],
+        "template": [
+            {
+                "image": {
+                    "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
+                    "alt": "%firstname% %lastname% chez %company%."
+                },
+                "name": "<h3>%firstname% <br /> %lastname%</h3>",
+                "company": "%company%"
+            }
+        ],
+        "list": [
+            {
+                "firstname": "Bruno",
+                "lastname": "Lesieur",
+                "company": "Haeresis Inc.",
+                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+            },
+            {
+                "firstname": "Magalie",
+                "lastname": "Lesieur",
+                "company": "ZoliePlante & Cie",
+                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+            },
+            {
+                "firstname": "Dayski",
+                "lastname": "Lesieur",
+                "company": "Dayski Wooof",
+                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+            }
+        ],
+        "same": "Je suis une valeur qui peut."
     }
 }

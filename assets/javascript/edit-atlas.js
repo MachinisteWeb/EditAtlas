@@ -166,6 +166,23 @@ var website = website || {},
 
             $opener.unbind("click", setPropagation).bind("click", setPropagation);
         });
+        $("a").each(function () {
+            var $opener = $(this);
+
+            $opener.removeAttr("data-addhoc").attr("data-addhoc", true);
+
+            function setPropagation() {
+                var $subpart = $opener.find("[data-edit=true]");
+
+                if ($subpart.length > 0 && $html.hasClass("is-editable")) {
+                    $subpart.each(function () {
+                        privates.loadData($(this), undefined);
+                    });
+                }
+            }
+
+            $opener.unbind("click", setPropagation).bind("click", setPropagation);
+        });
     };
 
     privates.loadData = function ($editedObject, e) {
@@ -175,8 +192,13 @@ var website = website || {},
             accept = false;
 
         if ($html.hasClass("is-editable")) {
+
+            console.log($editedObject.data("edit-type"));
+
             if (typeof e !== 'undefined') {
-                e.preventDefault();
+                if (document.activeElement.tagName === 'A') {
+                    e.preventDefault();
+                }
             }
 
             $popup.addClass("opened");
@@ -212,17 +234,19 @@ var website = website || {},
                 }
 
                 $clone.find(".cancel").click(function () {
-                    $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
-                    if (typeof $editedObject.data('edit-source') === 'string') {
-                        eval($editedObject.data('edit-source'));
-                    }
-                    if (typeof CKEDITOR !== 'undefined') {
-                        if (Object.keys(CKEDITOR.instances).length > 0) {
-                            CKEDITOR.instances[$clone.find("textarea").attr("id")].destroy();
+                    if (!$html.hasClass("is-editable")) {
+                        $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
+                        if (typeof $editedObject.data('edit-source') === 'string') {
+                            eval($editedObject.data('edit-source'));
                         }
+                        if (typeof CKEDITOR !== 'undefined') {
+                            if (Object.keys(CKEDITOR.instances).length > 0) {
+                                CKEDITOR.instances[$clone.find("textarea").attr("id")].destroy();
+                            }
+                        }
+                        $clone.remove();
+                        privates.closePopupIfAllCancel();
                     }
-                    $clone.remove();
-                    privates.closePopupIfAllCancel();
                 });
 
                 privates.editedObjects.push($editedObject);
@@ -231,8 +255,6 @@ var website = website || {},
                 $clone.find(".wysiwyg").click(function () {
                     var $wysiwyg = $(this),
                         alreadyLoad = false;
-
-                    $wysiwyg.parents(".html").addClass("alternative");
 
                     function createEditor() {
                         CKEDITOR.disableAutoInline = true;
@@ -273,33 +295,39 @@ var website = website || {},
                         }
                     }
 
-                    if (!alreadyLoad) {
-                        (function(d, script) {
-                            script = d.createElement('script');
-                            script.type = 'text/javascript';
-                            script.async = true;
-                            script.onload = function(){
-                                alreadyLoad = true;
-                                createEditor();
-                            };
-                            script.src = '//cdn.ckeditor.com/4.4.7/full-all/ckeditor.js';
-                            d.getElementsByTagName('head')[0].appendChild(script);
-                        }(document));
-                    } else {
-                        createEditor();
+                    if (!$html.hasClass("is-editable")) {
+                        $wysiwyg.parents(".html").addClass("alternative");
+
+                        if (!alreadyLoad) {
+                            (function(d, script) {
+                                script = d.createElement('script');
+                                script.type = 'text/javascript';
+                                script.async = true;
+                                script.onload = function(){
+                                    alreadyLoad = true;
+                                    createEditor();
+                                };
+                                script.src = '//cdn.ckeditor.com/4.4.7/full-all/ckeditor.js';
+                                d.getElementsByTagName('head')[0].appendChild(script);
+                            }(document));
+                        } else {
+                            createEditor();
+                        }
                     }
                 });
 
                 $clone.find(".plaintext").click(function () {
                     var $plainText = $(this);
 
-                    $plainText.parents(".html").removeClass("alternative");
-                    if (typeof CKEDITOR !== 'undefined') {
-                        if (Object.keys(CKEDITOR.instances).length > 0) {
-                            CKEDITOR.instances[$plainText.parents(".html").find("textarea").attr("id")].destroy();
+                    if (!$html.hasClass("is-editable")) {
+                        $plainText.parents(".html").removeClass("alternative");
+                        if (typeof CKEDITOR !== 'undefined') {
+                            if (Object.keys(CKEDITOR.instances).length > 0) {
+                                CKEDITOR.instances[$plainText.parents(".html").find("textarea").attr("id")].destroy();
+                            }
                         }
+                        privates.resizeArea();
                     }
-                    privates.resizeArea();
                 });
 
                 publics.eaNumberId++;
@@ -334,17 +362,28 @@ var website = website || {},
                 }
 
                 $clone.find(".cancel").click(function () {
-                    $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
-                    if (typeof $editedObject.data('edit-source') === 'string') {
-                        eval($editedObject.data('edit-source'));
+                    if (!$html.hasClass("is-editable")) {
+                        $('[data-edit-path='+ privates.cleanPath($editedObject.data('edit-path')) + ']').html($clone.find("label").attr("data-cancel"));
+                        if (typeof $editedObject.data('edit-source') === 'string') {
+                            eval($editedObject.data('edit-source'));
+                        }
+                        $clone.remove();
+                        privates.closePopupIfAllCancel();
                     }
-                    $clone.remove();
-                    privates.closePopupIfAllCancel();
                 });
 
                 privates.editedObjects.push($editedObject);
                 publics.targetDataEditAtlas();
             }
+
+            /* Close if click on item */
+            setTimeout(function() {
+                if (typeof onKeyup !== 'undefined') {
+                    onKeyup();
+                }
+                $html.removeClass("is-editable");
+            }, 500);
+            /* --- */
 
             if ($editedObject.data("edit-attr") === true) {
                 for (var i in $editedObject.data()) {
@@ -389,16 +428,18 @@ var website = website || {},
                                         }
                                     });
                                     $clone.find(".cancel").click(function () {
-                                        if (currentName === '$text') {
-                                            $('[data-edit-attr-path-' + privates.cleanName(currentName) + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').html($(this).parents(".text:first").find("label").attr("data-cancel"));
-                                        } else {
-                                            $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).parents(".text:first").find("label").attr("data-cancel"));
+                                        if (!$html.hasClass("is-editable")) {
+                                            if (currentName === '$text') {
+                                                $('[data-edit-attr-path-' + privates.cleanName(currentName) + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').html($(this).parents(".text:first").find("label").attr("data-cancel"));
+                                            } else {
+                                                $('[data-edit-attr-path-' + currentName + '='+ privates.cleanPath($editedObject.data('edit-attr-path-' + currentName)) + ']').attr(currentName, $(this).parents(".text:first").find("label").attr("data-cancel"));
+                                            }
+                                            if (typeof $editedObject.data('edit-attr-source-' + currentName) === 'string') {
+                                                eval($editedObject.data('edit-attr-source-' + currentName));
+                                            }
+                                            $(this).parents(".text:first").remove();
+                                            privates.closePopupIfAllCancel();
                                         }
-                                        if (typeof $editedObject.data('edit-attr-source-' + currentName) === 'string') {
-                                            eval($editedObject.data('edit-attr-source-' + currentName));
-                                        }
-                                        $(this).parents(".text:first").remove();
-                                        privates.closePopupIfAllCancel();
                                     });
                                 }
                             }
@@ -542,23 +583,33 @@ var website = website || {},
     };
 
     publics.listeningKeystroke = function (onKeyup, onKeyDown) {
-        $window.on("keyup keydown", function (e) {
-            e = e || event;
-            publics.keys[e.keyCode] = e.type === 'keydown';
 
-                if (publics.keys[69] && publics.keys[84]) {
-                    if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
-                        if (typeof onKeyup !== 'undefined') {
-                            onKeyup();
+        $window.on("keydown", function (e) {
+            if (!privates.auto) {
+                e = e || event;
+                publics.keys[e.keyCode] = true;
+
+                if (publics.keys[17] && publics.keys[83]) {
+                    e.preventDefault();
+                    //if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                        if (!$html.hasClass("is-editable")) {
+                            if (typeof onKeyDown !== 'undefined') {
+                                onKeyDown();
+                            }
+                            $html.addClass("is-editable");
+                        } else {
+                            if (typeof onKeyup !== 'undefined') {
+                                onKeyup();
+                            }
+                        	$html.removeClass("is-editable");
                         }
-                        $html.addClass("is-editable");
-                    }
-                } else {
-                    if (typeof onKeyDown !== 'undefined') {
-                        onKeyDown();
-                    }
-                    $html.removeClass("is-editable");
+                    //}
                 }
+            }
+        });
+        $window.on("keyup", function (e) {
+            e = e || event;
+            publics.keys[e.keyCode] = false;
         });
     };
 

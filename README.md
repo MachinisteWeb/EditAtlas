@@ -158,7 +158,7 @@ On remarque également que :
 
 - Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de fonction la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
 
-**Dès lors, nos valeurs sont cliquables en maintenant les touches `ctrl + s` enfoncé et éditable dans la fenêtre d'édition.**
+**Dès lors, nos valeurs sont cliquables après avoir appuyé sur les touches `ctrl + s` et éditable dans la fenêtre d'édition.**
 
 
 
@@ -791,7 +791,7 @@ We also note that:
 
 - For `editHtml`, `editText` and `editAttr`, it does not pass the variable but the object containing the variable. The value we pass in first is to view/edit and the second parameters is the json file in which the change will be registered.
 
-**Therefore, our values ​​are clickable holding down `ctrl + s` keys and editable in the edit window.**
+**Therefore, our values ​​are clickable after push `ctrl + s` keys and editable in the edit window.**
 
 
 

@@ -1,0 +1,27 @@
+<section$ class="component-example-loop">
+	<div class="ui">
+		<h4$>Affichage de Composants imbriqués avec une Boucle</h4$>
+		<% if (component && component.components) { %>
+		<ul>
+			<% component.i = 1; for (var placeholder in component.components) { %>
+			<% if (component.components.hasOwnProperty(placeholder)) { %>
+			<li>
+				<div class="component-example--item">
+					<%- eh(specific, ['demo.component1', fs]) %>
+					<%- eh(specific, ['demo.component2', fs]) %>
+					<%- eh(specific, ['demo.component3', fs]) %>
+					<%- eh(common, ['demo.component1', fc]) %>
+					<%- eh(common, ['demo.component2', fc]) %>
+					<%- eh(common, ['demo.component3', fc]) %>
+					<%- component['title' + component.i] %>
+					<%- eh(common, [path + 'title'+ component.i, fc]) %>
+					<%- eh(eval(component.variation), [path + 'title'+ component.i, eval(component.file)]) %>
+					<%- includeComponents(placeholder, component, path) %>
+				</div>
+			</li>
+			<% } component.i++ %>
+			<% } %>
+		</ul>
+		<% } %>
+	</div>
+</section$>

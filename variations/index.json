@@ -56,6 +56,95 @@
                     "description": "Title 3"
                 }
             }
+        ],
+        "component1": "Phrase Spécifique 1",
+        "component2": "Phrase Spécifique 2",
+        "component3": "Phrase Spécifique 3"
+    },
+    "components": {
+        "exampleStandard": [
+            {
+                "path": "templates/component-example.htm",
+                "variation": {
+                    "maintTag": "section",
+                    "file": "fs",
+                    "variation": "specific",
+                    "title1": "Item 1 Depth 1",
+                    "title2": "Item 2 Depth 1",
+                    "title3": "Item 3 Depth 1",
+                    "components": {
+                        "item1": [
+                            {
+                                "path": "templates/component-example.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "file": "fs",
+                                    "variation": "specific",
+                                    "title1": "Item 1 Depth 2",
+                                    "title2": "Item 2 Depth 2",
+                                    "title3": "Item 3 Depth 2",
+                                    "components": {
+                                        "item1": [
+                                            {
+                                                "path": "templates/component-example.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "item2": [
+                            {
+                                "path": "templates/component-example.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "title1": "Item 1 Depth 2",
+                                    "title2": "Item 2 Depth 2",
+                                    "title3": "Item 3 Depth 2",
+                                    "file": "fs",
+                                    "variation": "specific",
+                                    "components": {
+                                        "item2": [
+                                            {
+                                                "path": "templates/component-example.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "item3": [
+                            {
+                                "path": "templates/component-example.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "title1": "Item 1 Depth 2",
+                                    "title2": "Item 2 Depth 2",
+                                    "title3": "Item 3 Depth 2",
+                                    "file": "fs",
+                                    "variation": "specific",
+                                    "components": {
+                                        "item3": [
+                                            {
+                                                "path": "templates/component-example.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         ]
     }
 }

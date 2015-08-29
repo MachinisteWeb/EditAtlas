@@ -1,0 +1,17 @@
+{
+	"javascript": {
+		"javascript/common.min.js": [
+			"javascript/jquery.js",
+			"javascript/prettify.js",
+			"javascript/prettify/run_prettify.js",
+			"javascript/edit-atlas.js",
+			"javascript/common.js"
+		]
+	},
+	"stylesheets": {
+		"stylesheets/common.min.css": [
+			"stylesheets/edit-atlas.css",
+			"stylesheets/common.css"
+		]
+	}
+}

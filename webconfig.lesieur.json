@@ -1,0 +1,14 @@
+{
+	"httpPort": 7774,
+ 	"commonVariation": "common.json",
+ 	"commonController": "common.js",
+ 	"controllersRelativePath": "controllers",
+ 	"pageNotFound": "/page-inexistante/",
+ 	"httpHostname": "www.lesieur.name",
+	"urlRelativeSubPath": "edit-atlas",
+	"urlPort": 80,
+	"routes": "routes.json",
+	"bundles": "bundles.json",
+	"_minified": ".min",
+	"_demo": true
+}

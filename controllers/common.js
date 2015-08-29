@@ -6,6 +6,7 @@ website.components = {};
 	"use strict";
 
 	website.components.editAtlas = require('../components/controllers/edit-atlas');
+	website.components.sublimeAtlas = require('../components/controllers/sublime-atlas');
 	website.components.socketio = require('../components/controllers/socket-io');
 
 	publics.loadModules = function (NA) {
@@ -71,6 +72,7 @@ website.components = {};
 		}
 
 		variation = website.components.editAtlas.setFilters(variation, NA);
+		variation = website.components.sublimeAtlas.includeComponents(variation, NA, "components", "mainTag");
 
 		mainCallback(variation);
 	};

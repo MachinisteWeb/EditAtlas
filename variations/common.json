@@ -135,6 +135,9 @@
                 }
             }
         ],
+        "component1": "Phrase Commune 1",
+        "component2": "Phrase Commune 2",
+        "component3": "Phrase Commune 3",
         "template": [
             {
                 "image": {
@@ -166,5 +169,91 @@
             }
         ],
         "same": "Je suis une valeur qui peut."
+    },
+    "components": {
+        "exampleLoop": [
+            {
+                "path": "templates/component-example-loop.htm",
+                "variation": {
+                    "maintTag": "section",
+                    "file": "fc",
+                    "variation": "common",
+                    "title1": "Boucle 1 Depth 1",
+                    "title2": "Boucle 2 Depth 1",
+                    "title3": "Boucle 3 Depth 1",
+                    "components": {
+                        "item1": [
+                            {
+                                "path": "templates/component-example-loop.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "file": "fc",
+                                    "variation": "common",
+                                    "title1": "Boucle 1 Depth 2",
+                                    "title2": "Boucle 2 Depth 2",
+                                    "title3": "Boucle 3 Depth 2",
+                                    "components": {
+                                        "item-1": [
+                                            {
+                                                "path": "templates/component-example-loop.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "item2": [
+                            {
+                                "path": "templates/component-example-loop.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "file": "fc",
+                                    "variation": "common",
+                                    "title1": "Boucle 1 Depth 2",
+                                    "title2": "Boucle 2 Depth 2",
+                                    "title3": "Boucle 3 Depth 2",
+                                    "components": {
+                                        "item-2": [
+                                            {
+                                                "path": "templates/component-example-loop.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "item3": [
+                            {
+                                "path": "templates/component-example-loop.htm",
+                                "variation": {
+                                    "mainTag": "div",
+                                    "file": "fc",
+                                    "variation": "common",
+                                    "title1": "Boucle 1 Depth 2",
+                                    "title2": "Boucle 2 Depth 2",
+                                    "title3": "Boucle 3 Depth 2",
+                                    "components": {
+                                        "item-3": [
+                                            {
+                                                "path": "templates/component-example-loop.htm",
+                                                "variation": {
+                                                    "mainTag": "div"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
     }
 }

@@ -26,7 +26,8 @@
         "Changement de code live",
         "Les Éléments ne pouvant pas avoir d'éléments enfants",
         "Liste dynamique avec Template",
-        "Même valeur sous différente formes"
+        "Même valeur sous différente formes",
+        "Test avec SublimeAtlas"
     ],
     "image": {
         "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
@@ -76,7 +77,9 @@
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;Ce texte &lt;strong&gt;n'est&lt;/strong&gt; pas éditable.&lt;/p&gt;\n&lt;div&gt;&lt;p&gt;Ce HTML n'est...&lt;/p&gt; &lt;p&gt;...pas éditable.&lt;/p&gt;&lt;/div&gt;\n&lt;p&gt;&lt;a href=\"javascript:;\" title=\"Title\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"javascript:;\" title=\"Title\"&gt;Ce texte et ses attributs ne sont pas éditable&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"class-multi\"&gt;&lt;p&gt;&lt;strong&gt;et ce HTML &lt;br /&gt; non plus&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</code></pre>",
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;&lt;%- common.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;\n&lt;%- common.demo.example.hardHtmlNotEditable %&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= common.demo.example.hardAttrNotEditable.url %&gt;\" title=\"&lt;%= common.demo.example.hardAttrNotEditable.description %&gt;\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= common.demo.example.hardMultiNotEditable.url %&gt;\" title=\"&lt;%= common.demo.example.hardMultiNotEditable.description %&gt;\"&gt;&lt;%- common.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"&lt;%= common.demo.example.hardMultiNotEditable.class %&gt;\"&gt;&lt;%- common.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>",
         "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;p&gt;&lt;%- specific.demo.example.hardTextNotEditable %&gt;&lt;/p&gt;\n&lt;%- specific.demo.example.hardHtmlNotEditable %&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= specific.demo.example.hardAttrNotEditable.url %&gt;\" title=\"&lt;%= specific.demo.example.hardAttrNotEditable.description %&gt;\"&gt;Les attributs ne sont pas éditable.&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"&lt;%= specific.demo.example.hardMultiNotEditable.url %&gt;\" title=\"&lt;%= specific.demo.example.hardMultiNotEditable.description %&gt;\"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.content %&gt;&lt;/a&gt;&lt;/p&gt;\n&lt;div class=\"&lt;%= specific.demo.example.hardMultiNotEditable.class %&gt;\"&gt;&lt;%- specific.demo.example.hardMultiNotEditable.html %&gt;&lt;/div&gt;</code></pre>",
-        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;select name=\"country\"\n\tdata-val=\"true\"\n\tdata-rule-required=\"true\"\n\tdata-msg-required=\"&lt;%- ea(specific, ['country.errors.required', fc, 'data-msg-required']) %&gt;\"&gt;\n\t&lt;option value=\"\"&lt;%- ea(common, ['country.label', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% for (var i = 0; i &lt; common.country.list.length; i++) { %&gt;\n\t\t&lt;option value=\"&lt;%- ea(common, ['country.list[' + i + '].value', fc, 'value']) %&gt;\"&lt;%- ea(common, ['country.list[' + i + '].text', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% } %&gt;\n&lt;/select&gt;</code></pre>"
+        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;select name=\"country\"\n\tdata-val=\"true\"\n\tdata-rule-required=\"true\"\n\tdata-msg-required=\"&lt;%- ea(specific, ['country.errors.required', fc, 'data-msg-required']) %&gt;\"&gt;\n\t&lt;option value=\"\"&lt;%- ea(common, ['country.label', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% for (var i = 0; i &lt; common.country.list.length; i++) { %&gt;\n\t\t&lt;option value=\"&lt;%- ea(common, ['country.list[' + i + '].value', fc, 'value']) %&gt;\"&lt;%- ea(common, ['country.list[' + i + '].text', fc, '$text']) + \"&lt;/option\" %&gt;&gt;\n\t&lt;% } %&gt;\n&lt;/select&gt;</code></pre>",
+        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;section$ class=\"component-example\"&gt;\n\t&lt;div class=\"ui\"&gt;\n\t\t&lt;h4$&gt;&lt;%- et(common, ['demo.componentTitle', fc]) %&gt;&lt;/h4$&gt;\n\t\t&lt;ul&gt;\n\t\t\t&lt;% if (component && component.components && component.components['item1']) { %&gt;\n\t\t\t&lt;li&gt;\n\t\t\t\t&lt;div class=\"component-example--item\"&gt;\n\t\t\t\t\t&lt;%- et(specific, ['demo.component1', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(common, ['demo.component1', fc]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- component.title1 %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(specific, [path + 'title1', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(eval(component.variation), [path + 'title1', eval(component.file)]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- includeComponents('item1', component, path) %&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/li&gt;\n\t\t\t&lt;% } %&gt;\n\t\t\t&lt;% if (component && component.components && component.components['item2']) { %&gt;\n\t\t\t&lt;li&gt;\n\t\t\t\t&lt;div class=\"component-example--item\"&gt;\n\t\t\t\t\t&lt;%- et(specific, ['demo.component2', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(common, ['demo.component2', fc]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- component.title2 %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(specific, [path + 'title2', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(eval(component.variation), [path + 'title2', eval(component.file)]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- includeComponents('item2', component, path) %&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/li&gt;\n\t\t\t&lt;% } %&gt;\n\t\t\t&lt;% if (component && component.components && component.components['item3']) { %&gt;\n\t\t\t&lt;li&gt;\n\t\t\t\t&lt;div class=\"component-example--item\"&gt;\n\t\t\t\t\t&lt;%- et(specific, ['demo.component3', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(common, ['demo.component3', fc]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- component.title3 %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(specific, [path + 'title3', fs]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- et(eval(component.variation), [path + 'title3', eval(component.file)]) %&gt; &lt;br&gt;\n\t\t\t\t\t&lt;%- includeComponents('item3', component, path) %&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/li&gt;\n\t\t\t&lt;% } %&gt;\n\t\t&lt;/ul&gt;\n\t&lt;/div&gt;\n&lt;/section$&gt;</code></pre>",
+        "<pre class=\"prettyprint linenums\"><code class=\"lang-html\">&lt;section$ class=\"component-example-loop\"&gt;\n\t&lt;div class=\"ui\"&gt;\n\t\t&lt;h4$&gt;&lt;%- et(specific, ['demo.componentTitle', fs]) %&gt;&lt;/h4$&gt;\n\t\t&lt;% if (component && component.components) { %&gt;\n\t\t&lt;ul&gt;\n\t\t\t&lt;% component.i = 1; for (var placeholder in component.components) { %&gt;\n\t\t\t&lt;% if (component.components.hasOwnProperty(placeholder)) { %&gt;\n\t\t\t&lt;li&gt;\n\t\t\t\t&lt;div class=\"component-example--item\"&gt;\n\t\t\t\t\t&lt;%- eh(specific, ['demo.component1', fs]) %&gt;\n\t\t\t\t\t&lt;%- eh(specific, ['demo.component2', fs]) %&gt;\n\t\t\t\t\t&lt;%- eh(specific, ['demo.component3', fs]) %&gt;\n\t\t\t\t\t&lt;%- eh(common, ['demo.component1', fc]) %&gt;\n\t\t\t\t\t&lt;%- eh(common, ['demo.component2', fc]) %&gt;\n\t\t\t\t\t&lt;%- eh(common, ['demo.component3', fc]) %&gt;\n\t\t\t\t\t&lt;%- component['title' + component.i] %&gt;\n\t\t\t\t\t&lt;%- eh(common, [path + 'title'+ component.i, fc]) %&gt;\n\t\t\t\t\t&lt;%- eh(eval(component.variation), [path + 'title'+ component.i, eval(component.file)]) %&gt;\n\t\t\t\t\t&lt;%- includeComponents(placeholder, component, path) %&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/li&gt;\n\t\t\t&lt;% } component.i++ %&gt;\n\t\t\t&lt;% } %&gt;\n\t\t&lt;/ul&gt;\n\t\t&lt;% } %&gt;\n\t&lt;/div&gt;\n&lt;/section$&gt;</code></pre>"
     ],
     "demo": {
         "inCommon": "dans Common",
@@ -135,9 +138,9 @@
                 }
             }
         ],
-        "component1": "Phrase Commune 1",
-        "component2": "Phrase Commune 2",
-        "component3": "Phrase Commune 3",
+        "component1": "Depuis common dans un composant, item 1",
+        "component2": "Depuis common dans un composant, item 2",
+        "component3": "Depuis common dans un composant, item 3",
         "template": [
             {
                 "image": {
@@ -168,7 +171,8 @@
                 "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
             }
         ],
-        "same": "Je suis une valeur qui peut."
+        "same": "Je suis une valeur qui peut.",
+        "componentTitle": "Affichage de Composants imbriqués par Slot"
     },
     "components": {
         "exampleLoop": [
@@ -178,9 +182,9 @@
                     "maintTag": "section",
                     "file": "fc",
                     "variation": "common",
-                    "title1": "Boucle 1 Depth 1",
-                    "title2": "Boucle 2 Depth 1",
-                    "title3": "Boucle 3 Depth 1",
+                    "title1": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 1",
+                    "title2": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 2",
+                    "title3": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 3",
                     "components": {
                         "item1": [
                             {
@@ -189,7 +193,7 @@
                                     "mainTag": "div",
                                     "file": "fc",
                                     "variation": "common",
-                                    "title1": "Boucle 1 Depth 2",
+                                    "title1": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 1",
                                     "title2": "Boucle 2 Depth 2",
                                     "title3": "Boucle 3 Depth 2",
                                     "components": {
@@ -212,7 +216,7 @@
                                     "mainTag": "div",
                                     "file": "fc",
                                     "variation": "common",
-                                    "title1": "Boucle 1 Depth 2",
+                                    "title1": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 2",
                                     "title2": "Boucle 2 Depth 2",
                                     "title3": "Boucle 3 Depth 2",
                                     "components": {
@@ -235,7 +239,7 @@
                                     "mainTag": "div",
                                     "file": "fc",
                                     "variation": "common",
-                                    "title1": "Boucle 1 Depth 2",
+                                    "title1": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 3",
                                     "title2": "Boucle 2 Depth 2",
                                     "title3": "Boucle 3 Depth 2",
                                     "components": {

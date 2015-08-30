@@ -1,6 +1,6 @@
 <section$ class="component-example-loop">
 	<div class="ui">
-		<h4$>Affichage de Composants imbriqués avec une Boucle</h4$>
+		<h4$><%- et(specific, ['demo.componentTitle', fs]) %></h4$>
 		<% if (component && component.components) { %>
 		<ul>
 			<% component.i = 1; for (var placeholder in component.components) { %>

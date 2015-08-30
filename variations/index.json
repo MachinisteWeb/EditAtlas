@@ -57,9 +57,10 @@
                 }
             }
         ],
-        "component1": "Phrase Spécifique 1",
-        "component2": "Phrase Spécifique 2",
-        "component3": "Phrase Spécifique 3"
+        "component1": "Depuis specific dans un composant, item 1",
+        "component2": "Depuis specific dans un composant, item 2",
+        "component3": "Depuis specific dans un composant, item 3",
+        "componentTitle": "Affichage de Composants imbriqués avec une Boucle"
     },
     "components": {
         "exampleStandard": [
@@ -69,9 +70,9 @@
                     "maintTag": "section",
                     "file": "fs",
                     "variation": "specific",
-                    "title1": "Item 1 Depth 1",
-                    "title2": "Item 2 Depth 1",
-                    "title3": "Item 3 Depth 1",
+                    "title1": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 1",
+                    "title2": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 2",
+                    "title3": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 3",
                     "components": {
                         "item1": [
                             {
@@ -80,7 +81,7 @@
                                     "mainTag": "div",
                                     "file": "fs",
                                     "variation": "specific",
-                                    "title1": "Item 1 Depth 2",
+                                    "title1": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 1",
                                     "title2": "Item 2 Depth 2",
                                     "title3": "Item 3 Depth 2",
                                     "components": {
@@ -102,7 +103,7 @@
                                 "variation": {
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
-                                    "title2": "Item 2 Depth 2",
+                                    "title2": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 2",
                                     "title3": "Item 3 Depth 2",
                                     "file": "fs",
                                     "variation": "specific",
@@ -126,7 +127,7 @@
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
                                     "title2": "Item 2 Depth 2",
-                                    "title3": "Item 3 Depth 2",
+                                    "title3": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 3",
                                     "file": "fs",
                                     "variation": "specific",
                                     "components": {

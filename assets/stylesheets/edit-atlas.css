@@ -273,3 +273,13 @@
 .popup-edit-atlas .close {
 	float: right;
 }
+
+.popup-edit-atlas label {
+	margin-bottom: 4px;
+	display: inline-block;
+}
+.popup-edit-atlas input[type=text],
+.popup-edit-atlas textarea {
+	padding: 4px;
+	font-family: Monaco, monospace;
+}

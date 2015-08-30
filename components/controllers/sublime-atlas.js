@@ -6,8 +6,8 @@ var website = {};
 
     publics.changeSection = function (dom, replacement) {
         dom = dom
-            .replace(/<section\$/g, "<" + replacement)
-            .replace(/<\/section\$>/g, "</" + replacement + ">");
+            .replace(/<(div|nav|aside|article|section)\$/g, "<" + replacement)
+            .replace(/<\/(div|nav|aside|article|section)\$>/g, "</" + replacement + ">");
 
         return dom;
     };

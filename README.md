@@ -533,7 +533,7 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 
 #### Dernières choses à faire ####
 
-- Vous devez lancer le JavaScript client quand le DOM est prèt avec
+- Vous devez lancer le JavaScript client quand le DOM est prèt avec
 
    ```js
 website.editAtlas();
@@ -597,6 +597,39 @@ et le webconfig pour la version de génération (utilisant `--generate`) suivant
 
 *Note*: S'il n'y a pas de troisième paramètre, les balises supplémentaires seront générées.
 
+
+
+
+
+## Utilisation avec SublimeAtlas ##
+
+Il est également possible d'éditer des valeurs dans les composants utilisés par [SublimeAtlas](https://github.com/Haeresis/SublimeAtlas) grâce à la variable exposée `path`. Il faut pour exposer cette variable aux composants inclus dans les composants la passer en troisième paramètre `includeComponents('componentsPlaceholder', component, path)`.
+
+Pour éditer un composant provenant du fichier `specific` c'est comme suit :
+
+```html
+<%- et(specific, [path + 'title', fs]) %>
+<%- eh(specific, [path + 'content', fs]) %>
+<%- ea(specific, [path + 'href', fs, 'href']) %>
+```
+
+Pour éditer un composant provenant du fichier `common` c'est comme suit :
+
+```html
+<%- et(common, [path + 'title', fc]) %>
+<%- eh(common, [path + 'content', fc]) %>
+<%- ea(common, [path + 'href', fc, 'href']) %>
+```
+
+Enfin, si votre composant peut provenir, en fonction des cas, du fichier `specific` ou du fichier `common`, faites comme suit :
+
+```html
+<%- et(eval(component.variation), [path + 'title', eval(component.file)]) %>
+<%- eh(eval(component.variation), [path + 'content', eval(component.file)]) %>
+<%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
+```
+
+En alimentant vos variables `variation` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de SublimeAtlas](https://github.com/Haeresis/SublimeAtlas)).
 
 
 
@@ -1232,6 +1265,40 @@ and a webconfig for generated version (with `--generate`) :
 ```
 
 *Note*: Without third parameter, extra markup will be generated.
+
+
+
+
+
+## Using with SublimeAtlas ##
+
+It's also possible to edit values into component used by [SublimeAtlas](https://github.com/Haeresis/SublimeAtlas) thanks to `path` variable. To work with it, it's important to pass it in third parameter `includeComponents('componentsPlaceholder', component, path)`.
+
+To edit a value in component from `specific` file, use that :
+
+```html
+<%- et(specific, [path + 'title', fs]) %>
+<%- eh(specific, [path + 'content', fs]) %>
+<%- ea(specific, [path + 'href', fs, 'href']) %>
+```
+
+To edit a value in component from `common` file, use that :
+
+```html
+<%- et(common, [path + 'title', fc]) %>
+<%- eh(common, [path + 'content', fc]) %>
+<%- ea(common, [path + 'href', fc, 'href']) %>
+```
+
+Then, if the component variation called from `specific` or `common`, use that :
+
+```html
+<%- et(eval(component.variation), [path + 'title', eval(component.file)]) %>
+<%- eh(eval(component.variation), [path + 'content', eval(component.file)]) %>
+<%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
+```
+
+With `variation` and `file` used from same place of `mainTag` (Know more on [SublimeAtlas repository](https://github.com/Haeresis/SublimeAtlas)).
 
 
 

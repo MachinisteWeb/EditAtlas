@@ -696,7 +696,7 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
 
 
- ### How it work ###
+ ### How does it work ###
 
  [NodeAtlas](http://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
 

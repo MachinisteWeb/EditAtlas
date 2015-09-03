@@ -12,14 +12,14 @@ NodeAtlas Version minimale : 1.0.x
 
 EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](http://www.lesieur.name/nodeatlas/). Facile à intégrer, facile à éditer ! Il permet :
 
- 1. L'édition de n'importe quel texte, groupe de balise HTML ou attribut de balise dans la source cliente. 
+ 1. L'édition de n'importe quel texte, groupe de balise HTML ou attribut de balise dans la source cliente.
 
  2. L'édition avec rendu caractère par caractère du résultat final en temps réel partout où la phrase est logée dans la page.
 
  3. Répercution de toutes les modifications sur toutes les pages déjà ouvertes dans les navigateurs des utilisateurs sans rechargement de celles-ci.
- 
+
  4. Modification du texte depuis la source serveur (désactive les features 2 et 3).
- 
+
  5. Jouer des fonctions après modification pour re-rendre en temps réel le résultat (active la feature 4 et ré-active 2 et 3).
 
  6. D'empiler et de déplacer vos zones d'édition dans une fenêtre pour toujours voir votre rendu.
@@ -32,10 +32,10 @@ Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-a
 
 ## Comment ça marche ? ##
 
-[NodeAtlas](http://www.lesieur.name/nodeatlas/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent : 
+[NodeAtlas](http://www.lesieur.name/nodeatlas/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent :
 
 - un fichier « common » à tous les templates et
-- des fichiers « specific » par template. 
+- des fichiers « specific » par template.
 
 Cela est très pratique pour produire une même page de maquette HTML plusieurs fois ou pour créer des sites multilingues.
 
@@ -209,7 +209,7 @@ Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection de
 </a>
 ```
 
-Dans ce cas: 
+Dans ce cas:
 
 - si l'utilisateur en a le droit, `fs` et `fc` fournissent les noms des fichiers, et l'édition est possible mais
 - si l'utilisateur n'en a pas le droit, `fs` et `fc` valent `false` et l'édition n'est pas permise.
@@ -223,7 +223,7 @@ Dans ce cas:
 Les balises tel que `<option>` ne peuvent pas contenir de balise enfant. Aussi il est impossible d'injecter une valeur comme ceci via `editText` (`et`) :
 
 ```html
-<select 
+<select
 	name="country">
 	<option value=""><%- et(specific, ['fields.country.label', fs]) %></option>
 	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>
@@ -235,7 +235,7 @@ Les balises tel que `<option>` ne peuvent pas contenir de balise enfant. Aussi i
 La solution est de remplacer le contenu et le chevron fermant de se type de balise par la fonction `editAttr` (`ea`) avec comme troisième paramètre la valeur `$text`. Afin de garder l'auto-coloration de votre éditeur intact, je vous conseil de fermer la balise comme dans l'exemple ci après.
 
 ```html
-<select 
+<select
 	name="country">
 	<option value=""<%- ea(specific, ['fields.country.label', fs, '$text']) + "</option" %>>
 	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>

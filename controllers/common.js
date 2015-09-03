@@ -1,3 +1,4 @@
+/* jslint node: true */
 var website = {};
 
 website.components = {};
@@ -9,27 +10,28 @@ website.components = {};
 	website.components.sublimeAtlas = require('../components/controllers/sublime-atlas');
 	website.components.socketio = require('../components/controllers/socket-io');
 
-	publics.loadModules = function (NA) {
+	publics.loadModules = function () {
+		var NA = this;
+
 		NA.modules.cookie = require('cookie');
 		NA.modules.socketio = require('socket.io');
-
-		return NA;
 	};
 
-	publics.setConfigurations = function (NA, next) {
-		var socketio = NA.modules.socketio;
+	publics.setConfigurations = function (next) {
+		var NA = this,
+			socketio = NA.modules.socketio;
 
 		website.components.socketio.initialisation(socketio, NA, function (socketio, NA) {
 			website.components.socketio.events(socketio, NA, function (params) {
-				website.asynchrones(params);
-				next(NA);
+				website.asynchrones.call(NA, params);
+				next();
 			});
 		});
 	};
 
 	publics.asynchrones = function (params) {
-		var socketio = params.socketio,
-			NA = params.NA;
+		var NA = this,
+			socketio = params.socketio;
 
 		socketio.sockets.on('connection', function (socket) {
 			website.components.editAtlas.sockets(socket, NA, true, !NA.webconfig._demo);
@@ -37,8 +39,8 @@ website.components = {};
 	};
 
 	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			NA = params.NA,
+		var NA = this,
+			variation = params.variation,
 			template = variation.common.demo.template[0],
 			object;
 

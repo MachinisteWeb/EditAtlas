@@ -22,7 +22,7 @@ var website = {};
 
             NA.sessionStore.load(handshakeData.sessionID, function (error, session) {
                 if (error || !session) {
-                    return next(new Error('Aucune session récupérée.'));
+                    return next(new Error('No session found.'));
                 } else {
                     handshakeData.session = session;
                     next();

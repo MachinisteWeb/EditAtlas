@@ -276,11 +276,6 @@
     float: right;
 }
 
-
-
-.popup-edit-atlas {
-    font-size: 1.2em;
-}
 .popup-edit-atlas .popup-content .cke_textarea_inline,
 .popup-edit-atlas .popup-content textarea,
 .popup-edit-atlas .popup-content input[type=text] {

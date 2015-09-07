@@ -601,9 +601,9 @@ et le webconfig pour la version de génération (utilisant `--generate`) suivant
 
 
 
-## Utilisation avec SublimeAtlas ##
+## Utilisation avec ComponentAtlas ##
 
-Il est également possible d'éditer des valeurs dans les composants utilisés par [SublimeAtlas](https://github.com/Haeresis/SublimeAtlas) grâce à la variable exposée `path`. Il faut pour exposer cette variable aux composants inclus dans les composants la passer en troisième paramètre `includeComponents('componentsPlaceholder', component, path)`.
+Il est également possible d'éditer des valeurs dans les composants utilisés par [ComponentAtlas](https://github.com/Haeresis/ComponentAtlas) grâce à la variable exposée `path`. Il faut pour exposer cette variable aux composants inclus dans les composants la passer en troisième paramètre `includeComponents('componentsPlaceholder', component, path)`.
 
 Pour éditer un composant provenant du fichier `specific` c'est comme suit :
 
@@ -629,7 +629,7 @@ Enfin, si votre composant peut provenir, en fonction des cas, du fichier `specif
 <%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
 ```
 
-En alimentant vos variables `variation` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de SublimeAtlas](https://github.com/Haeresis/SublimeAtlas)).
+En alimentant vos variables `variation` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/Haeresis/ComponentAtlas)).
 
 
 
@@ -1270,9 +1270,9 @@ and a webconfig for generated version (with `--generate`) :
 
 
 
-## Using with SublimeAtlas ##
+## Using with ComponentAtlas ##
 
-It's also possible to edit values into component used by [SublimeAtlas](https://github.com/Haeresis/SublimeAtlas) thanks to `path` variable. To work with it, it's important to pass it in third parameter `includeComponents('componentsPlaceholder', component, path)`.
+It's also possible to edit values into component used by [ComponentAtlas](https://github.com/Haeresis/ComponentAtlas) thanks to `path` variable. To work with it, it's important to pass it in third parameter `includeComponents('componentsPlaceholder', component, path)`.
 
 To edit a value in component from `specific` file, use that :
 
@@ -1298,7 +1298,7 @@ Then, if the component variation called from `specific` or `common`, use that :
 <%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
 ```
 
-With `variation` and `file` used from same place of `mainTag` (Know more on [SublimeAtlas repository](https://github.com/Haeresis/SublimeAtlas)).
+With `variation` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/Haeresis/ComponentAtlas)).
 
 
 

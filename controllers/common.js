@@ -4,7 +4,6 @@ var website = {};
 website.components = {};
 
 (function (publics) {
-	"use strict";
 
 	website.components.editAtlas = require('../components/controllers/edit-atlas');
 	website.components.sublimeAtlas = require('../components/controllers/sublime-atlas');
@@ -19,13 +18,13 @@ website.components = {};
 
 	publics.setConfigurations = function (next) {
 		var NA = this,
-			socketio = NA.modules.socketio;
+			socketio = NA.modules.socketio,
+			params = {};
 
-		website.components.socketio.initialisation(socketio, NA, function (socketio, NA) {
-			website.components.socketio.events(socketio, NA, function (params) {
-				website.asynchrones.call(NA, params);
-				next();
-			});
+		website.components.socketio.initialisation.call(NA, socketio, function (socketio) {
+			params.socketio = socketio;
+			website.asynchrones.call(NA, params);
+			next();
 		});
 	};
 
@@ -34,7 +33,7 @@ website.components = {};
 			socketio = params.socketio;
 
 		socketio.sockets.on('connection', function (socket) {
-			website.components.editAtlas.sockets(socket, NA, true, !NA.webconfig._demo);
+			website.components.editAtlas.sockets.call(NA, socket, true, !NA.webconfig._demo);
 		});
 	};
 
@@ -73,7 +72,7 @@ website.components = {};
 			variation.common.demo.template.push(object);
 		}
 
-		variation = website.components.editAtlas.setFilters(variation, NA);
+		variation = website.components.editAtlas.setFilters.call(NA, variation);
 		variation = website.components.sublimeAtlas.includeComponents(variation, NA, "components", "mainTag");
 
 		mainCallback(variation);

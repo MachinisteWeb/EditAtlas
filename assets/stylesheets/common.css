@@ -1,118 +1,118 @@
 body {
-	margin: 0;
-	font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	padding: 8px;
+    margin: 0;
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 8px;
 }
 
 p {
-	color: #777;	
+    color: #777;
 }
 
 h1, h2, h3 {
-	font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .link,
 a {
-	cursor: pointer;
-	color: #48739E;
-	text-decoration: none;
+    cursor: pointer;
+    color: #48739E;
+    text-decoration: none;
 }
 
 a:visited {
-	color: #48739E;
+    color: #48739E;
 }
 
 a:visited:hover,
 a:hover {
-	color: #CC0000;
+    color: #CC0000;
 }
 
 .layout {
-	max-width: 1200px;
-	margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.pln { 
-	color: #000;
+.pln {
+    color: #000;
 }
 
-.str { 
-	color: #800080;
+.str {
+    color: #800080;
 }
 
-.kwd { 
-	color: #008;
+.kwd {
+    color: #008;
 }
 
-.com { 
-	color: #008000;
-	font-style: italic;
+.com {
+    color: #008000;
+    font-style: italic;
 }
 
-.typ { 
-	color: #606;
+.typ {
+    color: #606;
 }
 
-.lit { 
-	color: #066;
+.lit {
+    color: #066;
 }
 
 .pun,
 .opn,
-.clo { 
-	color: #660; 
+.clo {
+    color: #660;
 }
 .tag {
-	color: #008; 
+    color: #008;
 }
 
-.atn { 
-	color: #606; 
+.atn {
+    color: #606;
 }
 
-.atv { 
-	color: #080; 
+.atv {
+    color: #080;
  }
 
-.dec, 
-.var { 
-	color: #606; 
- } 
+.dec,
+.var {
+    color: #606;
+ }
 
-.fun { 
-	color: red; 
+.fun {
+    color: red;
 }
 
-pre.prettyprint { 
-	font-family: monospace;
-	padding: 2px;
-	border: 1px dashed #ccc;
-	overflow-y: auto;
-	cursor: e-resize;
-	font-size: 1.0em;
+pre.prettyprint {
+    font-family: monospace;
+    padding: 2px;
+    border: 1px dashed #ccc;
+    overflow-y: auto;
+    cursor: e-resize;
+    font-size: 1.0em;
 }
 
-ol.linenums { 
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-left: 35px;
+ol.linenums {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 35px;
 }
 
 li.L0,
 li.L2,
 li.L4,
 li.L6,
-li.L8 { 
-	background: rgba(255,255,255, 0.6);
-	color: #ccc;
+li.L8 {
+    background: rgba(255,255,255, 0.6);
+    color: #ccc;
  }
 
 li.L1,
 li.L3,
 li.L5,
 li.L7,
-li.L9 { 
-	background: rgba(232,232,232, 0.6);
-	color: #ccc;
+li.L9 {
+    background: rgba(232,232,232, 0.6);
+    color: #ccc;
 }

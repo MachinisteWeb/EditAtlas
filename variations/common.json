@@ -1,6 +1,8 @@
 {
     "editableArea": {
         "close": "Fermer",
+        "switchBlock": "Contenu<br>complet",
+        "switchInline": "Annuler les modifications",
         "wysiwyg": "(Éditeur)",
         "plainText": "(Source)",
         "dockLeft": "⇤",
@@ -99,7 +101,7 @@
                 "html": "<strong>et ce HTML <br /> non plus</strong>."
             },
             "hardText": "Ce texte est éditable.",
-            "hardHtml": "<div>\n   <p>Ce HTML est...</p> \n   <p>... éditable.</p>\n</div>",
+            "hardHtml": "<div>\n<p>Ce HTML est...</p>\n\n<p>... éditable.</p>\n</div>",
             "hardAttr": {
                 "url": "javascript:;",
                 "description": "Title"

@@ -17,36 +17,36 @@
     opacity: .5;
 }
 
-.popup-edit-atlas .plaintext {
+.edit-atlas--plaintext {
     display: none;
 }
-.popup-edit-atlas .alternative .plaintext {
+.as-alternative .edit-atlas--plaintext {
     display: inline;
 }
-.popup-edit-atlas .alternative .wysiwyg {
+.as-alternative .edit-atlas--wysiwyg {
     display: none;
 }
 
-.popup-edit-atlas .to-left {
+.edit-atlas--to-left {
     float: left;
     font-weight: bold;
     cursor: pointer;
     font-size: 1.2em;
     margin-top: -0.2em;
 }
-.popup-edit-atlas .to-right {
+.edit-atlas--to-right {
     float: left;
     font-weight: bold;
     cursor: pointer;
     font-size: 1.2em;
     margin-top: -0.2em;
 }
-.popup-edit-atlas .anchor {
+.edit-atlas--anchor {
     float: left;
     font-size: 1em;
 }
 
-.popup-edit-atlas.docked-left {
+.edit-atlas.is-docked-left {
     height: calc(100% - 16px);
     width: auto;
     top: 0;
@@ -62,10 +62,10 @@
          -o-transition: left 0.5s ease;
             transition: left 0.5s ease;
 }
-.popup-edit-atlas.docked-left:hover {
+.edit-atlas.is-docked-left:hover {
     left: 0;
 }
-.popup-edit-atlas.docked-left .popup-content {
+.is-docked-left .edit-atlas--popup {
     height: 100%;
     top: 0;
     left: 0;
@@ -79,7 +79,7 @@
     -webkit-border-bottom-left-radius: 0;
             border-bottom-left-radius: 0;
 }
-.popup-edit-atlas.docked-right {
+.edit-atlas.is-docked-right {
     height: calc(100% - 16px);
     width: auto;
     top: 0;
@@ -96,11 +96,11 @@
          -o-transition: right 0.5s ease;
             transition: right 0.5s ease;
 }
-.popup-edit-atlas.docked-right:hover {
+.edit-atlas.is-docked-right:hover {
     right: 0;
 }
 
-.popup-edit-atlas.docked-right .popup-content {
+.is-docked-right .edit-atlas--popup {
     height: 100%;
     top: 0;
     right: 0;
@@ -115,64 +115,57 @@
     -webkit-border-bottom-right-radius: 0;
             border-bottom-right-radius: 0;
 }
-.popup-edit-atlas.docked-left .popup-content .submit,
-.popup-edit-atlas.docked-right .popup-content .submit {
+.is-docked-left .edit-atlas--submit,
+.is-docked-right .edit-atlas--submit {
     position: absolute;
     bottom: 8px;
     left: 8px;
     width: calc(100% - 16px);
 }
-.popup-edit-atlas.docked-left .popup-content .templates,
-.popup-edit-atlas.docked-right .popup-content .templates {
-    /*position: absolute;
-    top: 61px;
-    left: 8px;
-    width: calc(100% - 16px);
-    height: calc(100% - 114px);*/
+.is-docked-left .edit-atlas--templates,
+.is-docked-right .edit-atlas--templates {
     max-height: none;
 }
 
-.popup-edit-atlas.docked-left .templates + hr,
-.popup-edit-atlas.docked-right .templates + hr {
+.is-docked-left .edit-atlas--templates + hr,
+.is-docked-right .edit-atlas--templates + hr {
     position: absolute;
     bottom: 33px;
     left: 8px;
     width: calc(100% - 16px);
 }
 
-.popup-edit-atlas .submit ins {
+.edit-atlas--submit ins {
     text-decoration: none;
     color: #777;
 }
-.popup-edit-atlas .submit del {
+.edit-atlas--submit del {
     text-decoration: none;
     display: none;
 }
-.popup-edit-atlas.docked-left .submit ins,
-.popup-edit-atlas.docked-right .submit ins {
+.is-docked-left .edit-atlas--submit ins,
+.is-docked-right .edit-atlas--submit ins {
     display: none;
 }
-.popup-edit-atlas.docked-left .submit del,
-.popup-edit-atlas.docked-right .submit del {
+.is-docked-left .edit-atlas--submit del,
+.is-docked-right .edit-atlas--submit del {
     display: block;
     font-size: .9em;
     cursor: pointer;
 }
 
-.popup-edit-atlas.docked-left .to-left {
+.is-docked-left .edit-atlas--to-left {
     display: none;
 }
-.popup-edit-atlas.docked-right .to-right {
+.is-docked-right .edit-atlas--to-right {
     display: none;
 }
 
-.popup-edit-atlas {
-    display: none;
-}
-.popup-edit-atlas.opened {
+.edit-atlas.is-opened {
     display: block;
 }
-.popup-edit-atlas {
+.edit-atlas {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -186,7 +179,7 @@
          -o-transform: translateY(-50%) translateX(-50%);
             transform: translateY(-50%) translateX(-50%);
 }
-.popup-edit-atlas .popup-content {
+.edit-atlas--popup {
     padding: 8px;
     position: absolute;
     top: 50%;
@@ -207,21 +200,27 @@
     cursor: all-scroll;
 }
 
-.popup-edit-atlas .popup-content .close,
-.popup-edit-atlas .popup-content h1,
-.popup-edit-atlas .popup-content .templates,
-.popup-edit-atlas .popup-content .submit {
+.edit-atlas--variations,
+.edit-atlas--close,
+.edit-atlas--popup h1,
+.edit-atlas--templates,
+.edit-atlas--submit {
     background-color: #fff;
     cursor: default;
 }
 @media (min-width: 430px) {
-    .popup-edit-atlas .popup-content {
+    .edit-atlas--popup {
         width: 430px;
     }
 }
-.popup-edit-atlas .popup-content .cke_textarea_inline,
-.popup-edit-atlas .popup-content textarea,
-.popup-edit-atlas .popup-content input[type=text] {
+.edit-atlas--variations:after {
+    content: "";
+    display: block;
+    clear: left;
+}
+.edit-atlas--popup .cke_textarea_inline,
+.edit-atlas--popup textarea,
+.edit-atlas--popup input[type=text] {
     border: 1px solid rgb(169, 169, 169);
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -229,56 +228,105 @@
     width: 100%;
 }
 
-.popup-edit-atlas .popup-content .submit {
+.edit-atlas--submit {
     text-align: right;
 }
 
-.popup-edit-atlas .wysiwyg,
-.popup-edit-atlas .plaintext,
-.popup-edit-atlas .cancel {
+.edit-atlas--wysiwyg,
+.edit-atlas--plaintext,
+.edit-atlas--cancel {
     color: #48739E;
     text-decoration: none;
     cursor: pointer;
 }
 
-.popup-edit-atlas .next-variation-change {
+.edit-atlas--info .as-link,
+.edit-atlas--close--switch-block,
+.edit-atlas--close--switch-inline,
+.edit-atlas--close--button {
     cursor: pointer;
     border: 0;
     background-color: transparent;
-}
-.popup-edit-atlas .next-variation-change {
     color: #48739E;
     text-decoration: none;
 }
-.popup-edit-atlas .next-variation-change:hover {
+.edit-atlas--close--switch-block {
+    font-size: .6em;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+.edit-atlas--info .as-link:hover,
+.edit-atlas--close--button:hover {
     color: #CC0000;
 }
-.popup-edit-atlas .source,
-.popup-edit-atlas .template {
+.edit-atlas--source,
+.edit-atlas--template {
     display: none;
 }
-.popup-edit-atlas .source em {
+.edit-atlas--source em {
     font-size: .7em;
 }
-.popup-edit-atlas .templates {
+.edit-atlas--templates {
     max-height: 250px;
     -ms-overflow-y: auto;
         overflow-y: auto;
 }
-.popup-edit-atlas h1 {
+
+.edit-atlas h1 {
     margin-top: 0;
     margin-bottom: 24px;
 }
-.popup-edit-atlas hr {
+.edit-atlas hr {
     margin-top: .5em;
 }
-.popup-edit-atlas .close {
+.edit-atlas--close {
     float: right;
 }
 
-.popup-edit-atlas .popup-content .cke_textarea_inline,
-.popup-edit-atlas .popup-content textarea,
-.popup-edit-atlas .popup-content input[type=text] {
+.edit-atlas--popup .cke_textarea_inline,
+.edit-atlas--popup textarea,
+.edit-atlas--popup input[type=text] {
     padding: 4px;
-    font-size: 1.1em;
+}
+
+.edit-atlas--inline {
+    display: block;
+}
+.edit-atlas--block {
+    display: none;
+}
+.is-block .edit-atlas--block {
+    display: block;
+}
+.is-block .edit-atlas--inline {
+    display: none;
+}
+.edit-atlas--variations--common,
+.edit-atlas--variations--specific {
+    float: left;
+    width: 50%;
+    overflow: hidden;
+    -webkit-transition: width 1s ease, opacity 1s ease;
+       -moz-transition: width 1s ease, opacity 1s ease;
+        -ms-transition: width 1s ease, opacity 1s ease;
+         -o-transition: width 1s ease, opacity 1s ease;
+            transition: width 1s ease, opacity 1s ease;
+}
+.for-specific .edit-atlas--variations--specific,
+.for-common .edit-atlas--variations--common {
+    width: 90%;
+}
+.for-specific .edit-atlas--variations--common,
+.for-common .edit-atlas--variations--specific {
+    width: 10%;
+    opacity: 0.2;
+}
+.for-common .edit-atlas--variations--common,
+.for-specific .edit-atlas--variations--specific {
+    opacity: 1;
+}
+.edit-atlas--variations--common--title,
+.edit-atlas--variations--specific--title {
+    white-space: nowrap;
 }

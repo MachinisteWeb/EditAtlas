@@ -2,7 +2,6 @@ var website = website || {},
     $body = $('body');
 
 (function (publics) {
-    "use strict";
 
     var optionsSocket;
 

@@ -24,9 +24,27 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
  6. D'empiler et de déplacer vos zones d'édition dans une fenêtre pour toujours voir votre rendu.
 
+ 7. De passer en mode plein fichier pour éditer des valeurs non visible dans la page courante.
+
 Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](http://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
+
+
+
+## Utilisation ##
+
+### Valeur par valeur ###
+
+Prenez le focus d'une page en cliquant bien dans la zone d'affichage et appuyé sur « ctrl + s » pour mettre en surbrillance toutes les zones de texte convenue comme éditable. Cliquez sur un élément pour le récupérer dans la fenêtre d'édition.
+
+### Par groupe de valeur ###
+
+Prenez le focus comme précédemment et maintenez les touches « ctrl + s » enfoncées. Les zones en surbrillance éditable seront ajoutable au clique dans la fenêtre d'édition tant que vous n'aurez pas relachez « ctrl + s ».
+
+### Toutes les valeurs ###
+
+Réaliser l'étape une sur une quelconque valeur puis dans la fenêtre d'édition de contenu cliquez sur « Contenu complet ». Vous aurez alors le contenu complet du fichier `common` au site et `specific` à cette page disponible à l'édition.
 
 
 
@@ -690,23 +708,41 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
  6. Stack and move your edit area in the popup window to keep an eye on the rendering behind.
 
- You can download this repository to test it or integrate it with any of your [NodeAtlas](http://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+ 7. Pass to full file mode to edit non visible value in the current page.
 
- A live example of this repository is testable at [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
+You can download this repository to test it or integrate it with any of your [NodeAtlas](http://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
-
-
- ### How does it work ###
-
- [NodeAtlas](http://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
-
- - a "common" file used by all templates and
- - a "specific" file for each template.
-
- This is useful to produce a model of the same HTML page multiple times or to create multilingual sites.
+A live example of this repository is testable at [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
 
 
- #### Without edit, in built-in ####
+
+### Using ###
+
+#### Value by value ####
+
+Focus page with your mouse on the page and push both « ctrl + s » buttons on you keyboard to highlight all text area that it are editable. Click on one of this element to edit it in the edit frame.
+
+#### By group of values ####
+
+Focus page with your mouse on the page and hold on both « ctrl + s » buttons. All area that it are editable will be added to edit frame if you click on it until your not hold on « ctrl + s ».
+
+#### All values ####
+
+Execute the first step on any value and in the edit frame click on « Complet Content ». You will be able to change the complete content of `common` file and `specific` file for this page.
+
+
+
+### How does it work ###
+
+[NodeAtlas](http://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
+
+- a "common" file used by all templates and
+- a "specific" file for each template.
+
+This is useful to produce a model of the same HTML page multiple times or to create multilingual sites.
+
+
+#### Without edit, in built-in ####
 
  In a typical environment, with a configuration like this:
 

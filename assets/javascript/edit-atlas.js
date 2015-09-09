@@ -62,9 +62,11 @@ var website = website || {},
     };
 
     publics.forEach = function (object, callback) {
-        publics.forEach(object, function (current) {
-            callback(current, object);
-        });
+        for (var current in object) {
+            if (object.hasOwnProperty(current)) {
+                callback(current, object);
+            }
+        }
     };
 
     publics.moveEditableArea = function () {
@@ -286,11 +288,9 @@ var website = website || {},
                     });
                 }
 
-                for (var i in CKEDITOR.instances) {
-                    if (CKEDITOR.instances(i)) {
-                        watchCkeditor(i);
-                    }
-                }
+                publics.forEach(CKEDITOR.instances, function (i) {
+                    watchCkeditor(i);
+                });
             }
 
             if (!$html.hasClass("is-editable")) {
@@ -470,7 +470,7 @@ var website = website || {},
                         $clone = publics.cleanDataEditAtlas($clone);
                         $popup.find(".edit-atlas--insert").before($clone);
                         $clone.find("label").addClass($editedObject.data('edit-attr-path-' + name));
-                        $clone.find(".edit-atlas--info").html('<span class="as-link">' + $editedObject.data('edit-file') + "</span> > " + $editedObject.data('edit-attr-path-' + name));
+                        $clone.find(".edit-atlas--info").html('<span class="as-link">' + $editedObject.data('edit-attr-file-' + name) + "</span> > " + $editedObject.data('edit-attr-path-' + name));
                         publics.goToBlock($clone.find(".edit-atlas--info .as-link"));
                         if ($editedObject.data('edit-attr-source-' + name)) {
                             $clone.find("input").hide();
@@ -588,15 +588,13 @@ var website = website || {},
                             options.push(currentOptions);
                         }
                     }
-                } else {
+                } else if ($(".edit-atlas ." + privates.cleanPath(privates.editedObjects[i].data("edit-path"))).next().val()) {
                     currentOptions = {};
-
                     currentOptions.file = privates.editedObjects[i].data("edit-file");
                     currentOptions.path = privates.editedObjects[i].data("edit-path");
                     currentOptions.source = privates.editedObjects[i].data("edit-source");
                     currentOptions.type = type;
                     currentOptions.value = $(".edit-atlas ." + privates.cleanPath(privates.editedObjects[i].data("edit-path"))).next().val().trim();
-
                     options.push(currentOptions);
                 }
 

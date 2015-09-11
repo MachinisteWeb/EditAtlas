@@ -5,8 +5,8 @@ var website = {};
 
     publics.changeSection = function (dom, replacement) {
         dom = dom
-            .replace(/<(div|nav|aside|article|section)\$/g, "<" + replacement)
-            .replace(/<\/(div|nav|aside|article|section)\$>/g, "</" + replacement + ">");
+            .replace(/<(template|div|nav|aside|article|section)\$/g, "<" + replacement)
+            .replace(/<\/(template|div|nav|aside|article|section)\$>/g, "</" + replacement + ">");
 
         return dom;
     };
@@ -34,7 +34,6 @@ var website = {};
             dom = publics.changeSection(dom, currentComponents[placeholder][i].variation[activateSemantic]);
 
         } else {
-            dom = publics.changeSection(dom, "section");
             dom = publics.ignoreHeaders(dom);
         }
 
@@ -43,8 +42,8 @@ var website = {};
 
     publics.ignoreHeaders = function (dom) {
         dom = dom
-            .replace(/<(header|footer|h1|h2|h3|h4|h5|h6)\$/g, '<$1')
-            .replace(/<\/(header|footer|h1|h2|h3|h4|h5|h6)\$>/g, "</$1>");
+            .replace(/<(template|div|nav|aside|article|section|header|footer|h1|h2|h3|h4|h5|h6)\$/g, '<$1')
+            .replace(/<\/(template|div|nav|aside|article|section|header|footer|h1|h2|h3|h4|h5|h6)\$>/g, "</$1>");
 
         return dom;
     };

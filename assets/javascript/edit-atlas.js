@@ -155,9 +155,9 @@ var website = website || {},
          var $popup = $(".edit-atlas");
 
         if ($popup.hasClass("is-docked-left") || $popup.hasClass("is-docked-right")) {
-            $popup.find(".edit-atlas--templates").height($popup.height() - $popup.find(".edit-atlas--wysiwyg").height() - $popup.find(".edit-atlas--wysiwyg-bottom").height() - 100);
-            $popup.find(".edit-atlas--variations--common textarea").height($popup.height() - 120);
-            $popup.find(".edit-atlas--variations--specific textarea").height($popup.height() - 120);
+            $popup.find(".edit-atlas--templates").height($popup.height() - $popup.find(".edit-atlas--id-wysiwyg").height() - $popup.find(".edit-atlas--id-wysiwyg-bottom").height() - 120);
+            $popup.find(".edit-atlas--variations--common textarea").height($popup.height() - 140);
+            $popup.find(".edit-atlas--variations--specific textarea").height($popup.height() - 140);
         }
     };
 
@@ -253,6 +253,8 @@ var website = website || {},
             function createEditor() {
                 CKEDITOR.disableAutoInline = true;
                 CKEDITOR.inline($wysiwyg.parents(".as-html:first").find("textarea")[0], {
+                    enterMode : CKEDITOR.ENTER_BR,
+                    shiftEnterMode : CKEDITOR.ENTER_P,
                     extraPlugins: 'sharedspace',
                     entities_latin: false,
                     entities: false,
@@ -287,6 +289,7 @@ var website = website || {},
                         }
                     });
                     CKEDITOR.instances[i].on("instanceReady", function() {
+                        console.log("here");
                         privates.resizeArea();
                     });
                 }

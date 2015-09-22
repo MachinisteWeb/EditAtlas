@@ -84,6 +84,11 @@ a:hover {
     color: red;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 pre.prettyprint {
     font-family: monospace;
     padding: 2px;

@@ -289,7 +289,6 @@ var website = website || {},
                         }
                     });
                     CKEDITOR.instances[i].on("instanceReady", function() {
-                        console.log("here");
                         privates.resizeArea();
                     });
                 }

@@ -10,7 +10,7 @@ NodeAtlas Version minimale : 1.0.x
 
 ## Avant-propos ##
 
-EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](http://www.lesieur.name/nodeatlas/). Facile à intégrer, facile à éditer ! Il permet :
+EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](https://www.lesieur.name/nodeatlas/). Facile à intégrer, facile à éditer ! Il permet :
 
  1. L'édition de n'importe quel texte, groupe de balise HTML ou attribut de balise dans la source cliente.
 
@@ -26,9 +26,9 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
  7. De passer en mode plein fichier pour éditer des valeurs non visible dans la page courante.
 
-Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](http://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](https://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
-Un exemple live de ce repository est testable à [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
+Un exemple live de ce repository est testable à [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
 
 
@@ -50,7 +50,7 @@ Réaliser l'étape une sur une quelconque valeur puis dans la fenêtre d'éditio
 
 ## Comment ça marche ? ##
 
-[NodeAtlas](http://www.lesieur.name/nodeatlas/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent :
+[NodeAtlas](https://www.lesieur.name/nodeatlas/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent :
 
 - un fichier « common » à tous les templates et
 - des fichiers « specific » par template.
@@ -445,7 +445,7 @@ En dupliquant un élément HTML éditable ou contenant des éléments éditables
 
 ## Intégrer EditAtlas à votre site NodeAtlas ##
 
-Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas pour vos propres sites node.js avec [NodeAtlas](http://www.lesieur.name/node-atlas/) tient dans quelques fichiers.
+Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas pour vos propres sites node.js avec [NodeAtlas](https://www.lesieur.name/node-atlas/) tient dans quelques fichiers.
 
 
 
@@ -654,7 +654,7 @@ En alimentant vos variables `variation` et `file` au même endroit que par exemp
 
 ## Lancer ce repository en local ##
 
-Pour faire tourner le site en local, il vous faudra installer [NodeAtlas](http://www.lesieur.name/node-atlas/) sur votre poste de développement.
+Pour faire tourner le site en local, il vous faudra installer [NodeAtlas](https://www.lesieur.name/node-atlas/) sur votre poste de développement.
 
 Déplacez vous ensuite dans le dossier :
 
@@ -684,7 +684,7 @@ Le site sera accessible ici :
 
 ## Exemple en ligne ##
 
-Vous pouvez voir fonctionner ce repository à l'adresse : [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/).
+Vous pouvez voir fonctionner ce repository à l'adresse : [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/).
 
 
 -----
@@ -710,9 +710,9 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
  7. Pass to full file mode to edit non visible value in the current page.
 
-You can download this repository to test it or integrate it with any of your [NodeAtlas](http://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+You can download this repository to test it or integrate it with any of your [NodeAtlas](https://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
-A live example of this repository is testable at [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
+A live example of this repository is testable at [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
 
 
 
@@ -734,7 +734,7 @@ Execute the first step on any value and in the edit frame click on « Complet Co
 
 ### How does it work ###
 
-[NodeAtlas](http://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
+[NodeAtlas](https://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
 
 - a "common" file used by all templates and
 - a "specific" file for each template.
@@ -1133,7 +1133,7 @@ In cloning an editable HTML tag or containing editable elements that were presen
 
 ### Embed EditAtlas to your NodeAtlas website ###
 
-Despite the number of file in this example, the EditAtlas core useful for your own websites with node.js [NodeAtlas](http://www.lesieur.name/node-atlas/) is in some files.
+Despite the number of file in this example, the EditAtlas core useful for your own websites with node.js [NodeAtlas](https://www.lesieur.name/node-atlas/) is in some files.
 
 
 
@@ -1342,7 +1342,7 @@ With `variation` and `file` used from same place of `mainTag` (Know more on [Com
 
 ### Run the website in local server ###
 
-To run the website in local, you must install [NodeAtlas](http://www.lesieur.name/node-atlas/) on your development machine.
+To run the website in local, you must install [NodeAtlas](https://www.lesieur.name/node-atlas/) on your development machine.
 
 Then you move into the folder:
 
@@ -1372,4 +1372,4 @@ The website will be to:
 
 ### Online Example ###
 
-You can see this repository running at: [http://www.lesieur.name/edit-atlas/](http://www.lesieur.name/edit-atlas/).
+You can see this repository running at: [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/).

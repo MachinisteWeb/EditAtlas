@@ -1,7 +1,7 @@
 {
     "demo": {
         "title": "EditAtlas",
-        "subtitle": "<p>Démonstration d'édition de contenu sans peine ! Ce mécanisme est intégrable aux sites <a href=\"http://www.lesieur.name/node-atlas/\">NodeAtlas</a>. Les <a href=\"https://github.com/Haeresis/EditAtlas\">sources ce trouvent sur ce répertoire GitHub ainsi qu'un Readme explicatif</a>.</p>",
+        "subtitle": "<p>Démonstration d'édition de contenu sans peine ! Ce mécanisme est intégrable aux sites <a href=\"https://www.lesieur.name/node-atlas/\">NodeAtlas</a>. Les <a href=\"https://github.com/Haeresis/EditAtlas\">sources ce trouvent sur ce répertoire GitHub ainsi qu'un Readme explicatif</a>.</p>",
         "explaination": "<p>Vous pouvez éditer n'importe quelle zone convenue comme éditable dans la vue via l'interface d'édition de contenu. Pour éditer une valeur, appuyez sur les touches « ctrl + s » et cliquez sur une zone violette. Pour en éditer plusieurs, maintenez « ctrl + s » enfoncé ce qui vous permet d'empiler les valeurs sans appuyer sans arrêt sur la combinaison de touche.&nbsp;Vous pouvez déplacer votre fenêtre d'édition en restant le clique enfoncé dans une zone blanche et en déplaçant votre souris. Testons les syntaxes possibles dans cette page. <strong>Pour cette démo, vos valeurs ne seront pas enregistrées dans les fichiers de variations, donc, un coup de F5 remettra les valeurs d'origine. Cependant les modifications seront bien répercutées dans les autres fenêtres ouvertes chez tout les utilisateurs : ne vous étonnez donc pas si le contenu change comme par magie !</strong></p>",
         "example": {
             "hardTextNotEditable": "Ce texte <strong>n'est</strong> pas éditable.",

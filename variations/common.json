@@ -32,13 +32,13 @@
         "Test avec SublimeAtlas"
     ],
     "image": {
-        "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
+        "src": "media/images/the_moment_by_dzsurnik.jpg",
         "alt": "The Moment by Dzsurnik",
         "width": "560",
         "height": "372"
     },
     "link": {
-        "href": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
+        "href": "media/images/the_moment_by_dzsurnik.jpg",
         "title": "The Moment by Dzsurnik"
     },
     "country": {
@@ -146,7 +146,7 @@
         "template": [
             {
                 "image": {
-                    "src": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg",
+                    "src": "media/images/the_moment_by_dzsurnik.jpg",
                     "alt": "%firstname% %lastname% chez %company%."
                 },
                 "name": "<h3>%firstname% <br /> %lastname%</h3>",
@@ -158,19 +158,19 @@
                 "firstname": "Bruno",
                 "lastname": "Lesieur",
                 "company": "Haeresis Inc.",
-                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+                "image": "media/images/the_moment_by_dzsurnik.jpg"
             },
             {
                 "firstname": "Magalie",
                 "lastname": "Lesieur",
                 "company": "ZoliePlante & Cie",
-                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+                "image": "media/images/the_moment_by_dzsurnik.jpg"
             },
             {
                 "firstname": "Dayski",
                 "lastname": "Lesieur",
                 "company": "Dayski Wooof",
-                "image": "http://blog.haeresis.fr/upload/image/the_moment_by_dzsurnik.jpg"
+                "image": "media/images/the_moment_by_dzsurnik.jpg"
             }
         ],
         "same": "Je suis une valeur qui peut.",

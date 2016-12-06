@@ -65,7 +65,7 @@
     "components": {
         "exampleStandard": [
             {
-                "path": "templates/component-example.htm",
+                "path": "partials/component-example.htm",
                 "variation": {
                     "maintTag": "section",
                     "file": "fs",
@@ -76,7 +76,7 @@
                     "components": {
                         "item1": [
                             {
-                                "path": "templates/component-example.htm",
+                                "path": "partials/component-example.htm",
                                 "variation": {
                                     "mainTag": "div",
                                     "file": "fs",
@@ -87,7 +87,7 @@
                                     "components": {
                                         "item1": [
                                             {
-                                                "path": "templates/component-example.htm",
+                                                "path": "partials/component-example.htm",
                                                 "variation": {
                                                     "mainTag": "div"
                                                 }
@@ -99,7 +99,7 @@
                         ],
                         "item2": [
                             {
-                                "path": "templates/component-example.htm",
+                                "path": "partials/component-example.htm",
                                 "variation": {
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
@@ -110,7 +110,7 @@
                                     "components": {
                                         "item2": [
                                             {
-                                                "path": "templates/component-example.htm",
+                                                "path": "partials/component-example.htm",
                                                 "variation": {
                                                     "mainTag": "div"
                                                 }
@@ -122,7 +122,7 @@
                         ],
                         "item3": [
                             {
-                                "path": "templates/component-example.htm",
+                                "path": "partials/component-example.htm",
                                 "variation": {
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
@@ -133,7 +133,7 @@
                                     "components": {
                                         "item3": [
                                             {
-                                                "path": "templates/component-example.htm",
+                                                "path": "partials/component-example.htm",
                                                 "variation": {
                                                     "mainTag": "div"
                                                 }

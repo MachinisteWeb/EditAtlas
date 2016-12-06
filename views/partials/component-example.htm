@@ -1,0 +1,43 @@
+<section$ class="component-example">
+	<div class="ui">
+		<h4$><?- et(common, ['demo.componentTitle', fc]) ?></h4$>
+		<ul>
+			<? if (component && component.components && component.components['item1']) { ?>
+			<li>
+				<div class="component-example--item">
+					<?- et(specific, ['demo.component1', fs]) ?> <br>
+					<?- et(common, ['demo.component1', fc]) ?> <br>
+					<?- component.title1 ?> <br>
+					<?- et(specific, [path + 'title1', fs]) ?> <br>
+					<?- et(eval(component.variation), [path + 'title1', eval(component.file)]) ?> <br>
+					<?- includeComponents('item1', component, path) ?>
+				</div>
+			</li>
+			<? } ?>
+			<? if (component && component.components && component.components['item2']) { ?>
+			<li>
+				<div class="component-example--item">
+					<?- et(specific, ['demo.component2', fs]) ?> <br>
+					<?- et(common, ['demo.component2', fc]) ?> <br>
+					<?- component.title2 ?> <br>
+					<?- et(specific, [path + 'title2', fs]) ?> <br>
+					<?- et(eval(component.variation), [path + 'title2', eval(component.file)]) ?> <br>
+					<?- includeComponents('item2', component, path) ?>
+				</div>
+			</li>
+			<? } ?>
+			<? if (component && component.components && component.components['item3']) { ?>
+			<li>
+				<div class="component-example--item">
+					<?- et(specific, ['demo.component3', fs]) ?> <br>
+					<?- et(common, ['demo.component3', fc]) ?> <br>
+					<?- component.title3 ?> <br>
+					<?- et(specific, [path + 'title3', fs]) ?> <br>
+					<?- et(eval(component.variation), [path + 'title3', eval(component.file)]) ?> <br>
+					<?- includeComponents('item3', component, path) ?>
+				</div>
+			</li>
+			<? } ?>
+		</ul>
+	</div>
+</section$>

@@ -1,6 +1,6 @@
 {
 	"/": {
-		"template": "index.htm",
+		"view": "index.htm",
 		"variation": "index.json"
 	},
 	"/page-inexistante/": {

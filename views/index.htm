@@ -1,0 +1,250 @@
+<? include partials/head.htm ?>
+
+<h1><?- et(specific, ['demo.title', fs]) ?></h1>
+
+<?- eh(specific, ['demo.subtitle', fs]) ?>
+<?- eh(specific, ['demo.explaination', fs]) ?>
+
+<hr>
+
+<!-- Éditable -->
+<h2><?- et(common, ['demoTitle[0]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p><?- editText(common.demo.example.hardText, ['common.demo.example.hardText', 'common.json']) ?></p>
+<?- editHtml(common.demo.example.hardHtml, ['common.demo.example.hardHtml', 'common.json']) ?>
+<p><a href="<?- editAttr(common.demo.example.hardAttr.url, ['common.demo.example.hardAttr.url', 'common.json', 'href']) ?>" title="<?- editAttr(common.demo.example.hardAttr.description, ['common.demo.example.hardAttr.description', 'common.json', 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(common.demo.example.hardMulti.url, ['common.demo.example.hardMulti.url', 'common.json', 'href']) ?>" title="<?- editAttr(common.demo.example.hardMulti.description, ['common.demo.example.hardMulti.description', 'common.json', 'title']) ?>"><?- editText(common.demo.example.hardMulti.content, ['common.demo.example.hardMulti.content', 'common.json']) ?></a></p>
+<div class="<?- editAttr(common.demo.example.hardMulti.class, ['common.demo.example.hardMulti.class', 'common.json', 'class']) ?>"><?- editHtml(common.demo.example.hardMulti.html, ['common.demo.example.hardMulti.html', 'common.json']) ?></div>
+
+<?- eh(common, ['demoCode[0]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p><?- editText(specific.demo.example.hardText, ['specific.demo.example.hardText', 'index.json']) ?></p>
+<?- editHtml(specific.demo.example.hardHtml, ['specific.demo.example.hardHtml', 'index.json']) ?>
+<p><a href="<?- editAttr(specific.demo.example.hardAttr.url, ['specific.demo.example.hardAttr.url', 'index.json', 'href']) ?>" title="<?- editAttr(specific.demo.example.hardAttr.description, ['specific.demo.example.hardAttr.description', 'index.json', 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(specific.demo.example.hardMulti.url, ['specific.demo.example.hardMulti.url', 'index.json', 'href']) ?>" title="<?- editAttr(specific.demo.example.hardMulti.description, ['specific.demo.example.hardMulti.description', 'index.json', 'title']) ?>"><?- editText(specific.demo.example.hardMulti.content, ['specific.demo.example.hardMulti.content', 'index.json']) ?></a></p>
+<div class="<?- editAttr(specific.demo.example.hardMulti.class, ['specific.demo.example.hardMulti.class', 'index.json', 'class']) ?>"><?- editHtml(specific.demo.example.hardMulti.html, ['specific.demo.example.hardMulti.html', 'index.json']) ?></div>
+
+<?- eh(common, ['demoCode[1]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Avec fichier passer en variable (file = 'index.json') -->
+<h2><?- et(common, ['demoTitle[1]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p><?- editText(common.demo.example.hardText, ['common.demo.example.hardText', file]) ?></p>
+<?- editHtml(common.demo.example.hardHtml, ['common.demo.example.hardHtml', file]) ?>
+<p><a href="<?- editAttr(common.demo.example.hardAttr.url, ['common.demo.example.hardAttr.url', file, 'href']) ?>" title="<?- editAttr(common.demo.example.hardAttr.description, ['common.demo.example.hardAttr.description', file, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(common.demo.example.hardMulti.url, ['common.demo.example.hardMulti.url', file, 'href']) ?>" title="<?- editAttr(common.demo.example.hardMulti.description, ['common.demo.example.hardMulti.description', file, 'title']) ?>"><?- editText(common.demo.example.hardMulti.content, ['common.demo.example.hardMulti.content', file]) ?></a></p>
+<div class="<?- editAttr(common.demo.example.hardMulti.class, ['common.demo.example.hardMulti.class', file, 'class']) ?>"><?- editHtml(common.demo.example.hardMulti.html, ['common.demo.example.hardMulti.html', file]) ?></div>
+
+<?- eh(common, ['demoCode[2]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p><?- editText(specific.demo.example.hardText, ['specific.demo.example.hardText', file]) ?></p>
+<?- editHtml(specific.demo.example.hardHtml, ['specific.demo.example.hardHtml', file]) ?>
+<p><a href="<?- editAttr(specific.demo.example.hardAttr.url, ['specific.demo.example.hardAttr.url', file, 'href']) ?>" title="<?- editAttr(specific.demo.example.hardAttr.description, ['specific.demo.example.hardAttr.description', file, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(specific.demo.example.hardMulti.url, ['specific.demo.example.hardMulti.url', file, 'href']) ?>" title="<?- editAttr(specific.demo.example.hardMulti.description, ['specific.demo.example.hardMulti.description', file, 'title']) ?>"><?- editText(specific.demo.example.hardMulti.content, ['specific.demo.example.hardMulti.content', file]) ?></a></p>
+<div class="<?- editAttr(specific.demo.example.hardMulti.class, ['specific.demo.example.hardMulti.class', file, 'class']) ?>"><?- editHtml(specific.demo.example.hardMulti.html, ['specific.demo.example.hardMulti.html', file]) ?></div>
+
+<?- eh(common, ['demoCode[3]', fc, 'prettyPrint()']) ?>
+
+
+<!-- Avec fichier à false passer en variable (file = false) -->
+<h2><?- et(common, ['demoTitle[2]', fc]) ?></h2>
+<? var edit1 = false ?>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p><?- editText(common.demo.example.hardText, ['common.demo.example.hardText', edit1]) ?></p>
+<?- editHtml(common.demo.example.hardHtml, ['common.demo.example.hardHtml', edit1]) ?>
+<p><a href="<?- editAttr(common.demo.example.hardAttr.url, ['common.demo.example.hardAttr.url', edit1, 'href']) ?>" title="<?- editAttr(common.demo.example.hardAttr.description, ['common.demo.example.hardAttr.description', edit1, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(common.demo.example.hardMulti.url, ['common.demo.example.hardMulti.url', edit1, 'href']) ?>" title="<?- editAttr(common.demo.example.hardMulti.description, ['common.demo.example.hardMulti.description', edit1, 'title']) ?>"><?- editText(common.demo.example.hardMulti.content, ['common.demo.example.hardMulti.content', edit1]) ?></a></p>
+<div class="<?- editAttr(common.demo.example.hardMulti.class, ['common.demo.example.hardMulti.class', edit1, 'class']) ?>"><?- editHtml(common.demo.example.hardMulti.html, ['common.demo.example.hardMulti.html', edit1]) ?></div>
+
+<?- eh(common, ['demoCode[4]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p><?- editText(specific.demo.example.hardText, ['specific.demo.example.hardText', edit1]) ?></p>
+<?- editHtml(specific.demo.example.hardHtml, ['specific.demo.example.hardHtml', edit1]) ?>
+<p><a href="<?- editAttr(specific.demo.example.hardAttr.url, ['specific.demo.example.hardAttr.url', edit1, 'href']) ?>" title="<?- editAttr(specific.demo.example.hardAttr.description, ['specific.demo.example.hardAttr.description', edit1, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- editAttr(specific.demo.example.hardMulti.url, ['specific.demo.example.hardMulti.url', edit1, 'href']) ?>" title="<?- editAttr(specific.demo.example.hardMulti.description, ['specific.demo.example.hardMulti.description', edit1, 'title']) ?>"><?- editText(specific.demo.example.hardMulti.content, ['specific.demo.example.hardMulti.content', edit1]) ?></a></p>
+<div class="<?- editAttr(specific.demo.example.hardMulti.class, ['specific.demo.example.hardMulti.class', edit1, 'class']) ?>"><?- editHtml(specific.demo.example.hardMulti.html, ['specific.demo.example.hardMulti.html', edit1]) ?></div>
+
+<?- eh(common, ['demoCode[5]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Avec raccourci et variable fc et fs -->
+<h2><?- et(common, ['demoTitle[3]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p><?- et(common, ['demo.example.hardText', fc]) ?></p>
+<?- eh(common, ['demo.example.hardHtml', fc]) ?>
+<p><a href="<?- ea(common, ['demo.example.hardAttr.url', fc, 'href']) ?>" title="<?- ea(common, ['demo.example.hardAttr.description', fc, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- ea(common, ['demo.example.hardMulti.url', fc, 'href']) ?>" title="<?- ea(common, ['demo.example.hardMulti.description', fc, 'title']) ?>"><?- et(common, ['demo.example.hardMulti.content', fc]) ?></a></p>
+<div class="<?- ea(common, ['demo.example.hardMulti.class', fc, 'class']) ?>"><?- eh(common, ['demo.example.hardMulti.html', fc]) ?></div>
+
+<?- eh(common, ['demoCode[6]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p><?- et(specific, ['demo.example.hardText', fs]) ?></p>
+<?- eh(specific, ['demo.example.hardHtml', fs]) ?>
+<p><a href="<?- ea(specific, ['demo.example.hardAttr.url', fs, 'href']) ?>" title="<?- ea(specific, ['demo.example.hardAttr.description', fs, 'title']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<p><a href="<?- ea(specific, ['demo.example.hardMulti.url', fs, 'href']) ?>" title="<?- ea(specific, ['demo.example.hardMulti.description', fs, 'title']) ?>"><?- et(specific, ['demo.example.hardMulti.content', fs]) ?></a></p>
+<div class="<?- ea(specific, ['demo.example.hardMulti.class', fs, 'class']) ?>"><?- eh(specific, ['demo.example.hardMulti.html', fs]) ?></div>
+
+<?- eh(common, ['demoCode[7]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Avec réclamation de source -->
+<h2><?- et(common, ['demoTitle[4]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p><?- et(common, ['demo.example.hardText', fc, true]) ?></p>
+<div><?- eh(common, ['demo.example.hardHtml', fc, true]) ?></div>
+<p><a href="<?- ea(common, ['demo.example.hardAttr.url', fc, 'href', true]) ?>" title="<?- ea(common, ['demo.example.hardAttr.description', fc, 'title', true]) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+
+<?- eh(common, ['demoCode[8]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p ><?- et(specific, ['demo.example.hardText', fs, true]) ?></p>
+<div><?- eh(specific, ['demo.example.hardHtml', fs, true]) ?></div>
+<p><a href="<?- ea(specific, ['demo.example.hardAttr.url', fs, 'href', true]) ?>" title="<?- ea(specific, ['demo.example.hardAttr.description', fs, 'title', true]) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+
+<?- eh(common, ['demoCode[9]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Avec réclamation de source et execution temp réelle de fonction -->
+<h2><?- et(common, ['demoTitle[5]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<p class="add-text"><?- et(common, ['demo.example.hardText', fc, 'website.addText()']) ?></p>
+<div class="add-text"><?- eh(common, ['demo.example.hardHtml', fc, 'website.addText()']) ?></div>
+<p><a class="add-attr" href="<?- ea(common, ['demo.example.hardAttr.url', fc, 'href', 'website.addAttr()']) ?>" title="<?- ea(common, ['demo.example.hardAttr.description', fc, 'title', 'website.addAttr()']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+
+<?- eh(common, ['demoCode[10]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<p class="add-text"><?- et(specific, ['demo.example.hardText', fs, 'website.addText()']) ?></p>
+<div class="add-text"><?- eh(specific, ['demo.example.hardHtml', fs, 'website.addText()']) ?></div>
+<p><a class="add-attr" href="<?- ea(specific, ['demo.example.hardAttr.url', fs, 'href', 'website.addAttr()']) ?>" title="<?- ea(specific, ['demo.example.hardAttr.description', fs, 'title', 'website.addAttr()']) ?>">Les attributs sont éditable.</a></p>
+
+<?- eh(common, ['demoCode[11]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Test de boucle -->
+<h2><?- et(common, ['demoTitle[6]', fc]) ?></h2>
+<h3><?- et(common, ['demo.inCommon', fc]) ?></h3>
+<? for (var i = 0, l = common.demo.loop.length; i < l; i++) { ?>
+<p class="add-text"><?- et(common, ['demo.loop[' + i + '].hardText', fc, 'website.addText()']) ?></p>
+<div class="add-text"><?- eh(common, ['demo.loop[' + i + '].hardHtml', fc, 'website.addText()']) ?></div>
+<p><a class="add-attr" href="<?- ea(common, ['demo.loop[' + i + '].hardAttr.url', fc, 'href', 'website.addAttr()']) ?>" title="<?- ea(common, ['demo.loop[' + i + '].hardAttr.description', fc, 'title', 'website.addAttr()']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<? } ?>
+
+<?- eh(common, ['demoCode[12]', fc, 'prettyPrint()']) ?>
+
+
+<h3><?- et(common, ['demo.inSpecific', fc]) ?></h3>
+<? for (var i = 0, l = specific.demo.loop.length; i < l; i++) { ?>
+<p class="add-text"><?- et(specific, ['demo.loop[' + i + '].hardText', fs, 'website.addText()']) ?></p>
+<div class="add-text"><?- eh(specific, ['demo.loop[' + i + '].hardHtml', fs, 'website.addText()']) ?></div>
+<p><a class="add-attr" href="<?- ea(specific, ['demo.loop[' + i + '].hardAttr.url', fs, 'href', 'website.addAttr()']) ?>" title="<?- ea(specific, ['demo.loop[' + i + '].hardAttr.description', fs, 'title', 'website.addAttr()']) ?>">Les attributs sont éditable mais pas le contenu.</a></p>
+<? } ?>
+
+<?- eh(common, ['demoCode[13]', fc, 'prettyPrint()']) ?>
+
+
+<hr>
+
+<!-- Non éditable -->
+<h2><?- et(common, ['demoTitle[7]', fc]) ?></h2>
+<h3>En dure</h3>
+<p>Ce texte <strong>n'est</strong> pas éditable.</p>
+<div><p>Ce HTML n'est...</p> <p>...pas éditable.</p></div>
+<p><a href="javascript:;" title="Title">Les attributs ne sont pas éditable.</a></p>
+<p><a href="javascript:;" title="Title">Ce texte et ses attributs ne sont pas éditable</a></p>
+<div class="class-multi"><p><strong>et ce HTML <br /> non plus</strong></p></div>
+
+<?- eh(common, ['demoCode[14]', fc, 'prettyPrint()']) ?>
+
+
+<h3>Sans filtre dans Common</h3>
+<p><?- common.demo.example.hardTextNotEditable ?></p>
+<?- common.demo.example.hardHtmlNotEditable ?>
+<p><a href="<?= common.demo.example.hardAttrNotEditable.url ?>" title="<?= common.demo.example.hardAttrNotEditable.description ?>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<?= common.demo.example.hardMultiNotEditable.url ?>" title="<?= common.demo.example.hardMultiNotEditable.description ?>"><?- common.demo.example.hardMultiNotEditable.content ?></a></p>
+<div class="<?= common.demo.example.hardMultiNotEditable.class ?>"><?- common.demo.example.hardMultiNotEditable.html ?></div>
+
+<?- eh(common, ['demoCode[15]', fc, 'prettyPrint()']) ?>
+
+
+<h3>Sans filtre dans Specific</h3>
+<p><?- specific.demo.example.hardTextNotEditable ?></p>
+<?- specific.demo.example.hardHtmlNotEditable ?>
+<p><a href="<?= specific.demo.example.hardAttrNotEditable.url ?>" title="<?= specific.demo.example.hardAttrNotEditable.description ?>">Les attributs ne sont pas éditable.</a></p>
+<p><a href="<?= specific.demo.example.hardMultiNotEditable.url ?>" title="<?= specific.demo.example.hardMultiNotEditable.description ?>"><?- specific.demo.example.hardMultiNotEditable.content ?></a></p>
+<div class="<?= specific.demo.example.hardMultiNotEditable.class ?>"><?- specific.demo.example.hardMultiNotEditable.html ?></div>
+
+<?- eh(common, ['demoCode[16]', fc, 'prettyPrint()']) ?>
+
+<hr>
+
+<!-- Tests divers -->
+<h2><?- et(common, ['demoTitle[8]', fc]) ?></h2>
+<h3><?- et(common, ['demoTitle[9]', fc]) ?></h3>
+
+<a href="<?- ea(common, ['link.href', fc, 'href']) ?>" title="<?- ea(common, ['link.title', fc, 'title']) ?>">
+	<img src="<?- ea(common, ['image.src', fc, 'src']) ?>" alt="<?- ea(common, ['image.alt', fc, 'alt']) ?>" width="<?- ea(common, ['image.width', fc, 'width']) ?>" height="<?- ea(common, ['image.height', fc, 'height']) ?>">
+</a>
+
+<h3><?- et(common, ['demoTitle[11]', fc]) ?></h3>
+<select name="country">
+	<option value=""<?- ea(common, ['country.label', fc, '$text']) + "</option" ?>>
+	<? for (var i = 0; i < common.country.list.length; i++) { ?>
+		<option value="<?- ea(common, ['country.list[' + i + '].value', fc, 'value']) ?>"<?- ea(common, ['country.list[' + i + '].text', fc, '$text']) + "</option" ?>>
+	<? } ?>
+</select>
+
+<h3><?- et(common, ['demoTitle[10]', fc]) ?></h3>
+<?- eh(common, ['demoCode[17]', fc, 'prettyPrint()']) ?>
+
+<h3><?- et(common, ['demoTitle[12]', fc]) ?></h3>
+<ul>
+<? for (var i = 0, l = common.demo.template.length; i < l; i++) { ?>
+	<li>
+		<img width="112" height="74" src="<?- ea(common, ['demo.template[' + i + '].image.src', ((i === 0) ? fc : false), 'src', true]) ?>" alt="<?- ea(common, ['demo.template[' + i + '].image.alt', ((i === 0) ? fc : false), 'alt', true]) ?>" />
+		<?- eh(common, ['demo.template[' + i + '].name', ((i === 0) ? fc : false), true]) ?>
+		<h2><?- et(common, ['demo.template[' + i + '].company', ((i === 0) ? fc : false), true]) ?></h2>
+	</li>
+<? } ?>
+</ul>
+
+<!-- <h3><?#- et(common, ['demoTitle[13]', fc]) ?></h3> -->
+
+<!--
+<?#- eh(common, ['demo.same', fc]) ?>
+<a href="<?#- ea(common, ['demo.same', fc, 'href']) ?>" alt="<?#- ea(common, ['demo.same', fc, 'alt']) ?>">
+	Test1<?#- et(common, ['demo.same', fc]) ?>
+</a>
+<a href="<?#- ea(common, ['demo.same', fc, 'href']) ?>" alt="<?#- ea(common, ['demo.same', fc, 'alt']) ?>">
+	<?#- et(common, ['demo.same', fc]) ?>
+</a>
+-->
+
+<h3><?- et(common, ['demoTitle[14]', fc]) ?></h3>
+<?- includeComponents('exampleStandard') ?>
+<?- eh(common, ['demoCode[18]', fc, 'prettyPrint()']) ?>
+<?- includeComponents('exampleLoop', 'common') ?>
+<?- eh(common, ['demoCode[19]', fc, 'prettyPrint()']) ?>
+
+<? include partials/foot.htm ?>

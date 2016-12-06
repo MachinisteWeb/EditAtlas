@@ -5,11 +5,11 @@ website.components = {};
 
 (function (publics) {
 
-    website.components.editAtlas = require('../components/controllers/edit-atlas');
-    website.components.componentAtlas = require('../components/controllers/component-atlas');
-    website.components.socketio = require('../components/controllers/socket-io');
+    website.components.editAtlas = require('./modules/edit-atlas');
+    website.components.componentAtlas = require('./modules/component-atlas');
+    website.components.socketio = require('./modules/socket-io');
 
-    publics.loadModules = function () {
+    publics.setModules = function () {
         var NA = this;
 
         NA.modules.cookie = require('cookie');
@@ -37,7 +37,7 @@ website.components = {};
         });
     };
 
-    publics.changeVariation = function (params, mainCallback) {
+    publics.changeVariation = function (params, next) {
         var NA = this,
             variation = params.variation,
             template = variation.common.demo.template[0],
@@ -75,7 +75,7 @@ website.components = {};
         variation = website.components.editAtlas.setFilters.call(NA, variation);
         variation = website.components.componentAtlas.includeComponents.call(NA, variation, "components", "mainTag");
 
-        mainCallback(variation);
+        next(variation);
     };
 
 }(website));
@@ -83,5 +83,5 @@ website.components = {};
 
 
 exports.changeVariation = website.changeVariation;
-exports.loadModules = website.loadModules;
+exports.setModules = website.setModules;
 exports.setConfigurations = website.setConfigurations;

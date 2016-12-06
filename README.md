@@ -2,7 +2,7 @@
 
 Version : 0.17 (Beta)
 
-NodeAtlas Version minimale : 1.0.x
+NodeAtlas Version minimale : 2.0.x
 
 **For an international version of this README.md, [see below](#international-version).**
 
@@ -10,7 +10,7 @@ NodeAtlas Version minimale : 1.0.x
 
 ## Avant-propos ##
 
-EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](https://www.lesieur.name/nodeatlas/). Facile à intégrer, facile à éditer ! Il permet :
+EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas](https://node-atlas.js.org/). Facile à intégrer, facile à éditer ! Il permet :
 
  1. L'édition de n'importe quel texte, groupe de balise HTML ou attribut de balise dans la source cliente.
 
@@ -26,7 +26,7 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
  7. De passer en mode plein fichier pour éditer des valeurs non visible dans la page courante.
 
-Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](https://www.lesieur.name/nodeatlas/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](https://node-atlas.js.org/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 Un exemple live de ce repository est testable à [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
@@ -50,7 +50,7 @@ Réaliser l'étape une sur une quelconque valeur puis dans la fenêtre d'éditio
 
 ## Comment ça marche ? ##
 
-[NodeAtlas](https://www.lesieur.name/nodeatlas/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent :
+[NodeAtlas](https://node-atlas.js.org/) possède deux types de fichier de variation vous permettant pour un template donné d'injecter du contenu différent :
 
 - un fichier « common » à tous les templates et
 - des fichiers « specific » par template.
@@ -69,7 +69,7 @@ Dans un contexte standard, avec une configuration comme celle-ci :
 	"commonVariation": "common.json",
 	"routes": {
 		"/": {
-			"template": "index.htm",
+			"view": "index.htm",
 			"variation": "index.json"
 		}
 	}
@@ -109,14 +109,14 @@ ainsi que dans un fichier spécifique `index.json` ces variables :
 nous sommes capable de les afficher dans le template `index.htm` comme ceci :
 
 ```html
-<%- common.text %>
-<a href="<%= common.liens[0].url %>" title="<%= common.liens[0].description %>">
-	<%- common.liens[0].content %>
+<?- common.text ?>
+<a href="<?= common.liens[0].url ?>" title="<?= common.liens[0].description ?>">
+	<?- common.liens[0].content ?>
 </a>
 
-<%- specific.texts[0] %>
-<a href="<%= specific.lien.url %>" title="<%= specific.lien.description %>">
-	<%- specific.lien.content %>
+<?- specific.texts[0] ?>
+<a href="<?= specific.lien.url ?>" title="<?= specific.lien.description ?>">
+	<?- specific.lien.content ?>
 </a>
 ```
 
@@ -141,14 +141,14 @@ et le code source disponible dans votre navigateur pour l'adresse `http://localh
 En transformant le code précédent en celui-ci :
 
 ```html
-<%- eh(common, ['text','common.json']) %>
-<a href="<%- ea(common, ['liens[0].url','common.json','href']) %>" title="<%- ea(common, ['liens[0].description','common.json','title']) %>">
-	<%- et(common, ['liens[0].content','common.json']) %>
+<?- eh(common, ['text','common.json']) ?>
+<a href="<?- ea(common, ['liens[0].url','common.json','href']) ?>" title="<?- ea(common, ['liens[0].description','common.json','title']) ?>">
+	<?- et(common, ['liens[0].content','common.json']) ?>
 </a>
 
-<%- eh(specific, ['texts[0]','index.json']) %>
-<a href="<%- ea(specific, ['lien.url','index.json','href']) %>" title="<%- ea(specific, ['lien.title','index.json','title']) %>">
-	<%- et(specific, ['lien.content','index.json']) %>
+<?- eh(specific, ['texts[0]','index.json']) ?>
+<a href="<?- ea(specific, ['lien.url','index.json','href']) ?>" title="<?- ea(specific, ['lien.title','index.json','title']) ?>">
+	<?- et(specific, ['lien.content','index.json']) ?>
 </a>
 ```
 
@@ -174,7 +174,7 @@ On peut alors s'apercevoir que :
 
 On remarque également que :
 
-- Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de fonction la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistré
+- Pour `editHtml`, `editText` et `editAttr`, on ne passe plus la variable mais l'objet contenant la variable. On passe en premier argument de fonction la valeur à afficher/modifier et en second le fichier json dans lequel la modification va être enregistrée.
 
 **Dès lors, nos valeurs sont cliquables après avoir appuyé sur les touches `ctrl + s` et éditable dans la fenêtre d'édition. Maintenir `ctrl + s` permet d'en éditer plusieurs à la fois.**
 
@@ -185,30 +185,24 @@ On remarque également que :
 En imaginant que dans votre controlleur commun vous précisiez ceci :
 
 ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation,
+		session = params.request.session;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			session = params.request.session;
+	// Création de variable à false.
+	variation.fs = false;
+	variation.fc = false;
 
-		// Création de variable à false.
-		variation.fs = false;
-		variation.fc = false;
+	// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
+	if (session.hasPermissionForEdit) {
+		// Le fichier spécifique utilisé pour générer cette vue.
+		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		// Le fichier commun utilisé pour générer cette vue.
+		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	}
 
-		// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
-		if (session.hasPermissionForEdit) {
-			// Le fichier spécifique utilisé pour générer cette vue.
-			variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-			// Le fichier commun utilisé pour générer cette vue.
-			variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
-		}
-
-		mainCallback(variation);
-	};
-}(website));
-
-exports.changeVariation = website.changeVariation;
+	next(variation);
+};
 ```
 
 vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BookAtlas](https://github.com/Haeresis/BookAtlas/).
@@ -216,14 +210,14 @@ vous pourriez permettre de controller dans quel condition un utilisateur peut ou
 Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
 
 ```html
-<%- eh(common, ['text',fc]) %>
-<a href="<%- ea(common, ['liens[0].url',fc,'href']) %>" title="<%- ea(common, ['liens[0].description',fc,'title']) %>">
-	<%- et(common, ['liens[0].content',fc]) %>
+<?- eh(common, ['text',fc]) ?>
+<a href="<?- ea(common, ['liens[0].url',fc,'href']) ?>" title="<?- ea(common, ['liens[0].description',fc,'title']) ?>">
+	<?- et(common, ['liens[0].content',fc]) ?>
 </a>
 
-<%- eh(specific, ['texts[0]',fs]) %>
-<a href="<%- ea(specific, ['lien.url',fs,'href']) %>" title="<%- ea(specific, ['lien.title',fs,'title']) %>">
-	<%- et(specific, ['lien.content',fs]) %>
+<?- eh(specific, ['texts[0]',fs]) ?>
+<a href="<?- ea(specific, ['lien.url',fs,'href']) ?>" title="<?- ea(specific, ['lien.title',fs,'title']) ?>">
+	<?- et(specific, ['lien.content',fs]) ?>
 </a>
 ```
 
@@ -243,10 +237,10 @@ Les balises tel que `<option>` ne peuvent pas contenir de balise enfant. Aussi i
 ```html
 <select
 	name="country">
-	<option value=""><%- et(specific, ['fields.country.label', fs]) %></option>
-	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>
-		<option value="<% ... %>"><%- et(specific, ['fields.country.list[' + i + '].text', fs]) %></option>
-	<% } %>
+	<option value=""><?- et(specific, ['fields.country.label', fs]) ?></option>
+	<? for (var i = 0; i < specific.fields.country.list.length; i++) { ?>
+		<option value="<? ... ?>"><?- et(specific, ['fields.country.list[' + i + '].text', fs]) ?></option>
+	<? } ?>
 </select>
 ```
 
@@ -255,10 +249,10 @@ La solution est de remplacer le contenu et le chevron fermant de se type de bali
 ```html
 <select
 	name="country">
-	<option value=""<%- ea(specific, ['fields.country.label', fs, '$text']) + "</option" %>>
-	<% for (var i = 0; i < specific.fields.country.list.length; i++) { %>
-		<option value="<%- ... %>"<%- ea(specific, ['fields.country.list[' + i + '].text', fs, '$text']) + "</option" %>>
-	<% } %>
+	<option value=""<?- ea(specific, ['fields.country.label', fs, '$text']) + "</option" ?>>
+	<? for (var i = 0; i < specific.fields.country.list.length; i++) { ?>
+		<option value="<?- ... ?>"<?- ea(specific, ['fields.country.list[' + i + '].text', fs, '$text']) + "</option" ?>>
+	<? } ?>
 </select>
 ```
 
@@ -281,26 +275,20 @@ Cette valeur est interceptée côté controller comme ceci :
 *common.js*
 
 ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation,
+		article;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			article;
+	// Renvoi des informations sur un article à partir d'une valeur dans l'url.
+	article = website.getArticle(/* Valeur dans l'url */);
 
-		// Renvoi des informations sur un article à partir d'une valeur dans l'url.
-		article = website.getArticle(/* Valeur dans l'url */);
+	// Si l'article à un titre, alors on modifie la valeur de variation « titleArticle ».
+	if (article.title) {
+		variation.titleArticle = article.title;
+	}
 
-		// Si l'article à un titre, alors on modifie la valeur de variation « titleArticle ».
-		if (article.title) {
-			variation.titleArticle = article.title;
-		}
-
-		mainCallback(variation);
-	};
-}(website));
-
-exports.changeVariation = website.changeVariation;
+	next(variation);
+};
 ```
 
 Ci-bien que le rendu de ceci :
@@ -308,7 +296,7 @@ Ci-bien que le rendu de ceci :
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fs]) %>
+<?- et(common, ['articleTitle',fs]) ?>
 ```
 
 n'est pas ce qu'il y avait dans le fichier de variation :
@@ -330,7 +318,7 @@ Ce qu'il faut, ce n'est pas la source du fichier HTML mais la source du JSON. Po
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fc,true]) %>
+<?- et(common, ['articleTitle',fc,true]) ?>
 ```
 
 Ainsi la valeur éditer sera bien « Cet article n'a pas de titre ». Le revert de la médaille c'est que vous ne verrez pas vos modifications en direct, elles ne seront pas non plus répercuté sur les pages déjà ouvertes.
@@ -342,9 +330,9 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fc,true]) %>
-<%- eh(common, ['articleTitle',fc,true]) %>
-<a href="<%- ea(common, ['articleTitle',fs,'href',true]) %>"></a>
+<?- et(common, ['articleTitle',fc,true]) ?>
+<?- eh(common, ['articleTitle',fc,true]) ?>
+<a href="<?- ea(common, ['articleTitle',fs,'href',true]) ?>"></a>
 ```
 
 
@@ -366,7 +354,7 @@ et que vous fassiez tomber cette valeur sur votre page de rendu :
 *index.htm*
 
 ```html
-<%- eh(common, ['code',fc]) %>
+<?- eh(common, ['code',fc]) ?>
 ```
 
 Ce qui affiche dans la source de votre page côté client :
@@ -402,7 +390,7 @@ On a vu plus haut que
 *index.htm*
 
 ```html
-<%- et(common, ['code',fc,true]) %>
+<?- et(common, ['code',fc,true]) ?>
 ```
 
 irait chercher la valeur d'origine du serveur... mais ne modifierait pas le rendu en live.
@@ -410,7 +398,7 @@ irait chercher la valeur d'origine du serveur... mais ne modifierait pas le rend
 Et bien, au lieu de passer `true`, passez plutôt du code JavaScript qui sera exécuté après chaque modification pour rendre le résultat en temps réel !
 
 ```html
-<%- et(common, ['code',fc,'prettyPrint()']) %>
+<?- et(common, ['code',fc,'prettyPrint()']) ?>
 ```
 
 Ainsi à chaque modification, `prettify.js` sera rappeler et coloriera la nouvelle valeur insérée dans le DOM. Une fois validée, ce même processus ce répercutera sur l'ensemble des fenêtres ouvertes dans tous les autres navigateurs.
@@ -422,9 +410,9 @@ Vous pouvez également faire de même pour les modifications `editText`, `editHt
 *index.htm*
 
 ```html
-<%- et(common, ['code',fc,'some javascript function']) %>
-<%- eh(common, ['code',fc,'some javascript function']) %>
-<a href="<%- ea(common, ['code',fs,'href','some javascript function']) %>"></a>
+<?- et(common, ['code',fc,'some javascript function']) ?>
+<?- eh(common, ['code',fc,'some javascript function']) ?>
+<a href="<?- ea(common, ['code',fs,'href','some javascript function']) ?>"></a>
 ```
 
 
@@ -445,7 +433,7 @@ En dupliquant un élément HTML éditable ou contenant des éléments éditables
 
 ## Intégrer EditAtlas à votre site NodeAtlas ##
 
-Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas pour vos propres sites node.js avec [NodeAtlas](https://www.lesieur.name/node-atlas/) tient dans quelques fichiers.
+Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas pour vos propres sites node.js avec [NodeAtlas](https://node-atlas.js.org/) tient dans quelques fichiers.
 
 
 
@@ -460,7 +448,7 @@ Il vous faudra, pour faire fonctionner EditAtlas, activer le fichier de variatio
 Il va faloir poser sur tous les templates contenant les fonctions d'édition `editHtml`, `editText` et `editAttr` l'inclusion suivante (normalement juste avant la fermeture de la balise `body`, avant vos balises scripts `script`) :
 
 ```html
-<% include templates/edit-atlas.htm %>
+<? include partials/edit-atlas.htm ?>
 ```
 
 
@@ -515,6 +503,8 @@ et lancer la fonction suivante dans votre JavaScript controlleur de page :
 website.editAtlas();
 ```
 
+*Note: est actuellement dépendant de jQuery.*
+
 
 
 ### Enregistrement côté serveur ###
@@ -524,27 +514,23 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 - Pour enregistrer les valeurs et les répercuter à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
 
    ```js
-	require('../components/controllers/edit-atlas').sockets(socket, NA, true);
+	require('./modules/edit-atlas').sockets(socket, NA, true);
 ```
 
 - Ajoutez dans la fonction du contrôleur commun `changeVariation` les chemins vers vos variations et les fonctions d'édition :
 
    ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation,
+		NA = params.NA;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			NA = params.NA;
+	variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+	variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 
-		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	variation = require('./modules/edit-atlas').setFilters(variation, NA);
 
-		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
-
-		mainCallback(variation);
-	};
-}(website));
+	next(variation);
+};
 ```
 
 
@@ -626,25 +612,25 @@ Il est également possible d'éditer des valeurs dans les composants utilisés p
 Pour éditer un composant provenant du fichier `specific` c'est comme suit :
 
 ```html
-<%- et(specific, [path + 'title', fs]) %>
-<%- eh(specific, [path + 'content', fs]) %>
-<%- ea(specific, [path + 'href', fs, 'href']) %>
+<?- et(specific, [path + 'title', fs]) ?>
+<?- eh(specific, [path + 'content', fs]) ?>
+<?- ea(specific, [path + 'href', fs, 'href']) ?>
 ```
 
 Pour éditer un composant provenant du fichier `common` c'est comme suit :
 
 ```html
-<%- et(common, [path + 'title', fc]) %>
-<%- eh(common, [path + 'content', fc]) %>
-<%- ea(common, [path + 'href', fc, 'href']) %>
+<?- et(common, [path + 'title', fc]) ?>
+<?- eh(common, [path + 'content', fc]) ?>
+<?- ea(common, [path + 'href', fc, 'href']) ?>
 ```
 
 Enfin, si votre composant peut provenir, en fonction des cas, du fichier `specific` ou du fichier `common`, faites comme suit :
 
 ```html
-<%- et(eval(component.variation), [path + 'title', eval(component.file)]) %>
-<%- eh(eval(component.variation), [path + 'content', eval(component.file)]) %>
-<%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
+<?- et(eval(component.variation), [path + 'title', eval(component.file)]) ?>
+<?- eh(eval(component.variation), [path + 'content', eval(component.file)]) ?>
+<?- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
 En alimentant vos variables `variation` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/Haeresis/ComponentAtlas)).
@@ -654,7 +640,7 @@ En alimentant vos variables `variation` et `file` au même endroit que par exemp
 
 ## Lancer ce repository en local ##
 
-Pour faire tourner le site en local, il vous faudra installer [NodeAtlas](https://www.lesieur.name/node-atlas/) sur votre poste de développement.
+Pour faire tourner le site en local, il vous faudra installer [NodeAtlas](https://node-atlas.js.org/) sur votre poste de développement.
 
 Déplacez vous ensuite dans le dossier :
 
@@ -710,7 +696,7 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
  7. Pass to full file mode to edit non visible value in the current page.
 
-You can download this repository to test it or integrate it with any of your [NodeAtlas](https://www.lesieur.name/nodeatlas/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+You can download this repository to test it or integrate it with any of your [NodeAtlas](https://node-atlas.js.org/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
 
 A live example of this repository is testable at [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
 
@@ -734,7 +720,7 @@ Execute the first step on any value and in the edit frame click on « Complet Co
 
 ### How does it work ###
 
-[NodeAtlas](https://www.lesieur.name/nodeatlas/) has two types of variation files allowing you to inject different content for a given template:
+[NodeAtlas](https://node-atlas.js.org/) has two types of variation files allowing you to inject different content for a given template:
 
 - a "common" file used by all templates and
 - a "specific" file for each template.
@@ -753,7 +739,7 @@ This is useful to produce a model of the same HTML page multiple times or to cre
 	"commonVariation": "common.json",
 	"routes": {
 		"/": {
-			"template": "index.htm",
+			"view": "index.htm",
 			"variation": "index.json"
 		}
 	}
@@ -793,14 +779,14 @@ and also into this variables into a specific `index.json` file:
 we are able to display them in the template `index.htm` like this:
 
 ```html
-<%- common.text %>
-<a href="<%= common.liens[0].url %>" title="<%= common.liens[0].description %>">
-	<%- common.liens[0].content %>
+<?- common.text ?>
+<a href="<?= common.liens[0].url ?>" title="<?= common.liens[0].description ?>">
+	<?- common.liens[0].content ?>
 </a>
 
-<%- specific.texts[0] %>
-<a href="<%= specific.lien.url %>" title="<%= specific.lien.description %>">
-	<%- specific.lien.content %>
+<?- specific.texts[0] ?>
+<a href="<?= specific.lien.url ?>" title="<?= specific.lien.description ?>">
+	<?- specific.lien.content ?>
 </a>
 ```
 
@@ -825,14 +811,14 @@ and source code available in your browser at the following address: `http://loca
 By changing the code above to this:
 
 ```html
-<%- eh(common, ['text','common.json']) %>
-<a href="<%- ea(common, ['liens[0].url','common.json','href']) %>" title="<%- ea(common, ['liens[0].description','common.json','title']) %>">
-	<%- et(common, ['liens[0].content','common.json']) %>
+<?- eh(common, ['text','common.json']) ?>
+<a href="<?- ea(common, ['liens[0].url','common.json','href']) ?>" title="<?- ea(common, ['liens[0].description','common.json','title']) ?>">
+	<?- et(common, ['liens[0].content','common.json']) ?>
 </a>
 
-<%- eh(specific, ['texts[0]','index.json']) %>
-<a href="<%- ea(specific, ['lien.url','index.json','href']) %>" title="<%- ea(specific, ['lien.title','index.json','title']) %>">
-	<%- et(specific, ['lien.content','index.json']) %>
+<?- eh(specific, ['texts[0]','index.json']) ?>
+<a href="<?- ea(specific, ['lien.url','index.json','href']) ?>" title="<?- ea(specific, ['lien.title','index.json','title']) ?>">
+	<?- et(specific, ['lien.content','index.json']) ?>
 </a>
 ```
 
@@ -869,30 +855,24 @@ We also note that:
 Imagining that your common controller you to specify this:
 
 ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation,
+		session = params.request.session;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			session = params.request.session;
+	// Create variable and setted them to false.
+	variation.fs = false;
+	variation.fc = false;
 
-		// Create variable and setted them to false.
-		variation.fs = false;
-		variation.fc = false;
+	// If the user are the right, we allowed edit files.
+	if (session.hasPermissionForEdit) {
+		// The specific file used to generate this view.
+		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		// The common file used to generate this view.
+		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	}
 
-		// If the user are the right, we allowed edit files.
-		if (session.hasPermissionForEdit) {
-			// The specific file used to generate this view.
-			variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-			// The common file used to generate this view.
-			variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
-		}
-
-		mainCallback(variation);
-	};
-}(website));
-
-exports.changeVariation = website.changeVariation;
+	next(variation);
+};
 ```
 
 you could to check if a user can or can not edit the text. Similar implementation run in [BookAtlas](https://github.com/Haeresis/BookAtlas/).
@@ -900,14 +880,14 @@ you could to check if a user can or can not edit the text. Similar implementatio
 So the above code could be written as following injection with variable `fs` and `fc`:
 
 ```html
-<%- eh(common, ['text',fc]) %>
-<a href="<%- ea(common, ['liens[0].url',fc,'href']) %>" title="<%- ea(common, ['liens[0].description',fc,'title']) %>">
-	<%- et(common, ['liens[0].content',fc]) %>
+<?- eh(common, ['text',fc]) ?>
+<a href="<?- ea(common, ['liens[0].url',fc,'href']) ?>" title="<?- ea(common, ['liens[0].description',fc,'title']) ?>">
+	<?- et(common, ['liens[0].content',fc]) ?>
 </a>
 
-<%- eh(specific, ['texts[0]',fs]) %>
-<a href="<%- ea(specific, ['lien.url',fs,'href']) %>" title="<%- ea(specific, ['lien.title',fs,'title']) %>">
-	<%- et(specific, ['lien.content',fs]) %>
+<?- eh(specific, ['texts[0]',fs]) ?>
+<a href="<?- ea(specific, ['lien.url',fs,'href']) ?>" title="<?- ea(specific, ['lien.title',fs,'title']) ?>">
+	<?- et(specific, ['lien.content',fs]) ?>
 </a>
 ```
 
@@ -928,11 +908,11 @@ Markup like `<option>` cannot contain child markup. It's also imposible to injec
 <select name="country"
 	data-val="true"
 	data-rule-required="true"
-	data-msg-required="<%- ... %>">
-	<option value=""><%- et(specific, ['country.label', fs]) %></option>
-	<% for (var i = 0; i < specific.country.list.length; i++) { %>
-		<option value="<% ... %>"><%- et(specific, ['country.list[' + i + '].text', fs]) %></option>
-	<% } %>
+	data-msg-required="<?- ... ?>">
+	<option value=""><?- et(specific, ['country.label', fs]) ?></option>
+	<? for (var i = 0; i < specific.country.list.length; i++) { ?>
+		<option value="<? ... ?>"><?- et(specific, ['country.list[' + i + '].text', fs]) ?></option>
+	<? } ?>
 </select>
 ```
 
@@ -942,11 +922,11 @@ The solution is to remplace the content and the close bracket by `editAttr` (`ea
 <select name="country"
 	data-val="true"
 	data-rule-required="true"
-	data-msg-required="<%- ... %>">
-	<option value=""<%- ea(specific, ['country.label', fs, '$text']) + "</option" %>>
-	<% for (var i = 0; i < specific.country.list.length; i++) { %>
-		<option value="<%- ... %>"<%- ea(specific, ['country.list[' + i + '].text', fs, '$text']) + "</option" %>>
-	<% } %>
+	data-msg-required="<?- ... ?>">
+	<option value=""<?- ea(specific, ['country.label', fs, '$text']) + "</option" ?>>
+	<? for (var i = 0; i < specific.country.list.length; i++) { ?>
+		<option value="<?- ... ?>"<?- ea(specific, ['country.list[' + i + '].text', fs, '$text']) + "</option" ?>>
+	<? } ?>
 </select>
 ```
 
@@ -969,26 +949,20 @@ This value is intercepted in controller-side like this:
 *common.js*
 
 ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation,
+		article;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation,
-			article;
+	// Re sending information on an article from a value in the url.
+	article = website.getArticle(/* Value into url */);
 
-		// Re sending information on an article from a value in the url.
-		article = website.getArticle(/* Value into url */);
+	// If the article has a title, then change the value of variation "titleArticle".
+	if (article.title) {
+		variation.titleArticle = article.title;
+	}
 
-		// If the article has a title, then change the value of variation "titleArticle".
-		if (article.title) {
-			variation.titleArticle = article.title;
-		}
-
-		mainCallback(variation);
-	};
-}(website));
-
-exports.changeVariation = website.changeVariation;
+	next(variation);
+};
 ```
 
 and it means this:
@@ -996,7 +970,7 @@ and it means this:
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fs]) %>
+<?- et(common, ['articleTitle',fs]) ?>
 ```
 
 is not that it is into the variation file:
@@ -1018,7 +992,7 @@ What we want, it's not the HTML source but the JSON source. For request it direc
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fc,true]) %>
+<?- et(common, ['articleTitle',fc,true]) ?>
 ```
 
 And the edit value will be "This article has no title". But the side effect it's you will not see modification in real time. This modification will not change the page already open in others' user browsers.
@@ -1030,9 +1004,9 @@ You could also make the same modifications with `editText`, `editHtml` et `editA
 *index.htm*
 
 ```html
-<%- et(common, ['articleTitle',fc,true]) %>
-<%- eh(common, ['articleTitle',fc,true]) %>
-<a href="<%- ea(common, ['articleTitle',fs,'href',true]) %>"></a>
+<?- et(common, ['articleTitle',fc,true]) ?>
+<?- eh(common, ['articleTitle',fc,true]) ?>
+<a href="<?- ea(common, ['articleTitle',fs,'href',true]) ?>"></a>
 ```
 
 
@@ -1054,7 +1028,7 @@ and you inject this value on the render page:
 *index.htm*
 
 ```html
-<%- eh(common, ['code',fc]) %>
+<?- eh(common, ['code',fc]) ?>
 ```
 
 That display in the source page, in client side:
@@ -1090,7 +1064,7 @@ We are see above this
 *index.htm*
 
 ```html
-<%- et(common, ['code',fc,true]) %>
+<?- et(common, ['code',fc,true]) ?>
 ```
 
 will find value into original JSON file... but not allow real time modification.
@@ -1098,7 +1072,7 @@ will find value into original JSON file... but not allow real time modification.
 So, in place of `true` in third parameter, use a JavaScript function into a string to render modifications in real time !
 
 ```html
-<%- et(common, ['code',fc,'prettyPrint()']) %>
+<?- et(common, ['code',fc,'prettyPrint()']) ?>
 ```
 
 With that method, each modification `prettify.js` will be call to color the new value insert into the DOM. Once validated, the same process will be execute on all the windows open in all other browsers.
@@ -1110,9 +1084,9 @@ You can also do the same for changes `editText`, `editHtml` and `editAttr`:
 *index.htm*
 
 ```html
-<%- et(common, ['code',fc,'some javascript function']) %>
-<%- eh(common, ['code',fc,'some javascript function']) %>
-<a href="<%- ea(common, ['code',fs,'href','some javascript function']) %>"></a>
+<?- et(common, ['code',fc,'some javascript function']) ?>
+<?- eh(common, ['code',fc,'some javascript function']) ?>
+<a href="<?- ea(common, ['code',fs,'href','some javascript function']) ?>"></a>
 ```
 
 
@@ -1133,7 +1107,7 @@ In cloning an editable HTML tag or containing editable elements that were presen
 
 ### Embed EditAtlas to your NodeAtlas website ###
 
-Despite the number of file in this example, the EditAtlas core useful for your own websites with node.js [NodeAtlas](https://www.lesieur.name/node-atlas/) is in some files.
+Despite the number of file in this example, the EditAtlas core useful for your own websites with node.js [NodeAtlas](https://node-atlas.js.org/) is in some files.
 
 
 
@@ -1148,7 +1122,7 @@ You will need to run EditAtlas, activate common variations file via `commonVaria
 On all templates containing `editHtml`, `editText` and `editAttr` editing functions the following inclusion (usually just before the closing of the `body` tag before your `script` scripts tags):
 
 ```html
-<% include templates/edit-atlas.htm %>
+<? include partials/edit-atlas.htm ?>
 ```
 
 
@@ -1203,6 +1177,8 @@ and run the following JavaScript function in your controller page:
 website.editAtlas();
 ```
 
+*Note: est actuellement dépendant de jQuery.*
+
 
 
 #### Saving in server side ####
@@ -1212,27 +1188,23 @@ Finally, for save your values ​​in your variation file, we will have to use 
 - Add in common `changeVariation` controller fonction the paths to your variations and editing functions :
 
    ```js
-(function (publics) {
-	"use strict";
+exports.changeVariation = function (params, next) {
+	var variation = params.variation;
+		NA = params.NA;
 
-	publics.changeVariation = function (params, mainCallback) {
-		var variation = params.variation;
-			NA = params.NA;
+	variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+	variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
 
-		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	variation = require('./modules/edit-atlas').setFilters(variation, NA);
 
-		variation = require('../components/controllers/edit-atlas').setFilters(variation, NA);
-
-		mainCallback(variation);
-	};
-}(website));
+	next(variation);
+};
 ```
 
 - To save the values ​​and pass them all open windows within `io.sockets.on('connection', function (socket) { ... })`:
 
    ```js
-	require('../components/controllers/edit-atlas').sockets(socket, NA, true);
+	require('./modules/edit-atlas').sockets(socket, NA, true);
 ```
 
 
@@ -1313,25 +1285,25 @@ It's also possible to edit values into component used by [ComponentAtlas](https:
 To edit a value in component from `specific` file, use that :
 
 ```html
-<%- et(specific, [path + 'title', fs]) %>
-<%- eh(specific, [path + 'content', fs]) %>
-<%- ea(specific, [path + 'href', fs, 'href']) %>
+<?- et(specific, [path + 'title', fs]) ?>
+<?- eh(specific, [path + 'content', fs]) ?>
+<?- ea(specific, [path + 'href', fs, 'href']) ?>
 ```
 
 To edit a value in component from `common` file, use that :
 
 ```html
-<%- et(common, [path + 'title', fc]) %>
-<%- eh(common, [path + 'content', fc]) %>
-<%- ea(common, [path + 'href', fc, 'href']) %>
+<?- et(common, [path + 'title', fc]) ?>
+<?- eh(common, [path + 'content', fc]) ?>
+<?- ea(common, [path + 'href', fc, 'href']) ?>
 ```
 
 Then, if the component variation called from `specific` or `common`, use that :
 
 ```html
-<%- et(eval(component.variation), [path + 'title', eval(component.file)]) %>
-<%- eh(eval(component.variation), [path + 'content', eval(component.file)]) %>
-<%- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) %>
+<?- et(eval(component.variation), [path + 'title', eval(component.file)]) ?>
+<?- eh(eval(component.variation), [path + 'content', eval(component.file)]) ?>
+<?- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
 With `variation` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/Haeresis/ComponentAtlas)).
@@ -1342,7 +1314,7 @@ With `variation` and `file` used from same place of `mainTag` (Know more on [Com
 
 ### Run the website in local server ###
 
-To run the website in local, you must install [NodeAtlas](https://www.lesieur.name/node-atlas/) on your development machine.
+To run the website in local, you must install [NodeAtlas](https://node-atlas.js.org/) on your development machine.
 
 Then you move into the folder:
 

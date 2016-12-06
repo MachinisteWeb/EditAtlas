@@ -98,7 +98,7 @@ var website = {};
                     }
 
                     dom = ejs.render(
-                        '<%- include("' + currentComponents[placeholder][i].path + '", { component: ' + currentVariation + ', path : "' + currentPath + '" }) %>',
+                        '<?- include("' + currentComponents[placeholder][i].path + '", { component: ' + currentVariation + ', path : "' + currentPath + '" }) ?>',
                         variation
                     );
 

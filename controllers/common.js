@@ -8,15 +8,13 @@ website.components = {};
     website.components.editAtlas = require('./modules/edit-atlas');
     website.components.componentAtlas = require('./modules/component-atlas');
 
-    publics.setConfigurations = function (next) {
+    publics.setSockets = function () {
         var NA = this,
-            io = NA.io;
+        	io = NA.io;
 
         io.sockets.on('connection', function (socket) {
-            website.components.editAtlas.sockets.call(NA, socket, true, !NA.webconfig._demo);
+        	website.components.editAtlas.sockets.call(NA, socket, true, !NA.webconfig._demo);
         });
-
-        next();
     };
 
     publics.changeVariation = function (params, next) {
@@ -62,6 +60,7 @@ website.components = {};
 
 }(website));
 
+exports.setSockets = website.setSockets;
 exports.changeVariation = website.changeVariation;
 exports.setModules = website.setModules;
 exports.setConfigurations = website.setConfigurations;

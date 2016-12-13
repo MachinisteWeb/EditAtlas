@@ -7,34 +7,16 @@ website.components = {};
 
     website.components.editAtlas = require('./modules/edit-atlas');
     website.components.componentAtlas = require('./modules/component-atlas');
-    website.components.socketio = require('./modules/socket-io');
-
-    publics.setModules = function () {
-        var NA = this;
-
-        NA.modules.cookie = require('cookie');
-        NA.modules.socketio = require('socket.io');
-    };
 
     publics.setConfigurations = function (next) {
         var NA = this,
-            socketio = NA.modules.socketio,
-            params = {};
+            io = NA.io;
 
-        website.components.socketio.initialisation.call(NA, socketio, function (socketio) {
-            params.socketio = socketio;
-            website.asynchrones.call(NA, params);
-            next();
-        });
-    };
-
-    publics.asynchrones = function (params) {
-        var NA = this,
-            socketio = params.socketio;
-
-        socketio.sockets.on('connection', function (socket) {
+        io.sockets.on('connection', function (socket) {
             website.components.editAtlas.sockets.call(NA, socket, true, !NA.webconfig._demo);
         });
+
+        next();
     };
 
     publics.changeVariation = function (params, next) {
@@ -79,8 +61,6 @@ website.components = {};
     };
 
 }(website));
-
-
 
 exports.changeVariation = website.changeVariation;
 exports.setModules = website.setModules;

@@ -15,7 +15,7 @@
 					<?- eh(common, ['demo.component3', fc]) ?>
 					<?- component['title' + component.i] ?>
 					<?- eh(common, [path + 'title'+ component.i, fc]) ?>
-					<?- eh(eval(component.variation), [path + 'title'+ component.i, eval(component.file)]) ?>
+					<?- eh(eval(component.variations), [path + 'title'+ component.i, eval(component.file)]) ?>
 					<?- includeComponents(placeholder, component, path) ?>
 				</div>
 			</li>

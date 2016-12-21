@@ -185,23 +185,23 @@ On remarque également que :
 En imaginant que dans votre controlleur commun vous précisiez ceci :
 
 ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation,
+exports.changeVariations = function (params, next) {
+	var variations = params.variations,
 		session = params.request.session;
 
 	// Création de variable à false.
-	variation.fs = false;
-	variation.fc = false;
+	variations.fs = false;
+	variations.fc = false;
 
 	// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
 	if (session.hasPermissionForEdit) {
 		// Le fichier spécifique utilisé pour générer cette vue.
-		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
 		// Le fichier commun utilisé pour générer cette vue.
-		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
 	}
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -275,19 +275,19 @@ Cette valeur est interceptée côté controller comme ceci :
 *common.js*
 
 ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation,
+exports.changeVariations = function (params, next) {
+	var variations = params.variations,
 		article;
 
 	// Renvoi des informations sur un article à partir d'une valeur dans l'url.
 	article = website.getArticle(/* Valeur dans l'url */);
 
-	// Si l'article à un titre, alors on modifie la valeur de variation « titleArticle ».
+	// Si l'article à un titre, alors on modifie la valeur de variations « titleArticle ».
 	if (article.title) {
-		variation.titleArticle = article.title;
+		variations.titleArticle = article.title;
 	}
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -517,19 +517,19 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 	require('./modules/edit-atlas').sockets(socket, NA, true);
 ```
 
-- Ajoutez dans la fonction du contrôleur commun `changeVariation` les chemins vers vos variations et les fonctions d'édition :
+- Ajoutez dans la fonction du contrôleur commun `changeVariations` les chemins vers vos variations et les fonctions d'édition :
 
    ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation,
+exports.changeVariations = function (params, next) {
+	var variations = params.variations,
 		NA = params.NA;
 
-	variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-	variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
+	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
 
-	variation = require('./modules/edit-atlas').setFilters(variation, NA);
+	variations = require('./modules/edit-atlas').setFilters(variations, NA);
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -576,7 +576,7 @@ et le webconfig suivant :
 Il est possible de ne pas générer les balises utilisées pour permettre au système l'édition temps réel. Le mécanisme ne fonctionnera plus mais cela est très utile pour manager les textes dans sa version de création avec un serveur local, et de s'en passer pour la version générée avec `--generate` et destinée à l'envoi extérieur.
 
 ```js
-variation = website.components.editAtlas.setFilters(variation, NA, NA.webconfig._activateFront);
+variations = website.components.editAtlas.setFilters(variations, NA, NA.webconfig._activateFront);
 ```
 
 et le webconfig pour la version serveur suivant :
@@ -628,12 +628,12 @@ Pour éditer un composant provenant du fichier `common` c'est comme suit :
 Enfin, si votre composant peut provenir, en fonction des cas, du fichier `specific` ou du fichier `common`, faites comme suit :
 
 ```html
-<?- et(eval(component.variation), [path + 'title', eval(component.file)]) ?>
-<?- eh(eval(component.variation), [path + 'content', eval(component.file)]) ?>
-<?- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) ?>
+<?- et(eval(component.variations), [path + 'title', eval(component.file)]) ?>
+<?- eh(eval(component.variations), [path + 'content', eval(component.file)]) ?>
+<?- ea(eval(component.variations), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
-En alimentant vos variables `variation` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/Haeresis/ComponentAtlas)).
+En alimentant vos variables `variations` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/Haeresis/ComponentAtlas)).
 
 
 
@@ -855,23 +855,23 @@ We also note that:
 Imagining that your common controller you to specify this:
 
 ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation,
+exports.changeVariations = function (params, next) {
+	var variations = params.variations,
 		session = params.request.session;
 
 	// Create variable and setted them to false.
-	variation.fs = false;
-	variation.fc = false;
+	variations.fs = false;
+	variations.fc = false;
 
 	// If the user are the right, we allowed edit files.
 	if (session.hasPermissionForEdit) {
 		// The specific file used to generate this view.
-		variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
+		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
 		// The common file used to generate this view.
-		variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
 	}
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -949,19 +949,19 @@ This value is intercepted in controller-side like this:
 *common.js*
 
 ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation,
+exports.changeVariations = function (params, next) {
+	var variations = params.variations,
 		article;
 
 	// Re sending information on an article from a value in the url.
 	article = website.getArticle(/* Value into url */);
 
-	// If the article has a title, then change the value of variation "titleArticle".
+	// If the article has a title, then change the value of variations "titleArticle".
 	if (article.title) {
-		variation.titleArticle = article.title;
+		variations.titleArticle = article.title;
 	}
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -1185,19 +1185,19 @@ website.editAtlas();
 
 Finally, for save your values ​​in your variation file, we will have to use two common functions in your controller.
 
-- Add in common `changeVariation` controller fonction the paths to your variations and editing functions :
+- Add in common `changeVariations` controller fonction the paths to your variations and editing functions :
 
    ```js
-exports.changeVariation = function (params, next) {
-	var variation = params.variation;
+exports.changeVariations = function (params, next) {
+	var variations = params.variations;
 		NA = params.NA;
 
-	variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-	variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
+	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
 
-	variation = require('./modules/edit-atlas').setFilters(variation, NA);
+	variations = require('./modules/edit-atlas').setFilters(variations, NA);
 
-	next(variation);
+	next(variations);
 };
 ```
 
@@ -1249,7 +1249,7 @@ and this webconfig :
 
 It's possible to not generate extra markup required for EditAtlas functionality. It's useful for managing two versions : for example a real time version with mechanism and a `--generate` version without mechanism.
 ```js
-variation = website.components.editAtlas.setFilters(variation, NA, NA.webconfig._activateFront);
+variations = website.components.editAtlas.setFilters(variations, NA, NA.webconfig._activateFront);
 ```
 
 and a webconfig for real-time version :
@@ -1298,15 +1298,15 @@ To edit a value in component from `common` file, use that :
 <?- ea(common, [path + 'href', fc, 'href']) ?>
 ```
 
-Then, if the component variation called from `specific` or `common`, use that :
+Then, if the component variations called from `specific` or `common`, use that :
 
 ```html
-<?- et(eval(component.variation), [path + 'title', eval(component.file)]) ?>
-<?- eh(eval(component.variation), [path + 'content', eval(component.file)]) ?>
-<?- ea(eval(component.variation), [path + 'href', eval(component.file), 'href']) ?>
+<?- et(eval(component.variations), [path + 'title', eval(component.file)]) ?>
+<?- eh(eval(component.variations), [path + 'content', eval(component.file)]) ?>
+<?- ea(eval(component.variations), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
-With `variation` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/Haeresis/ComponentAtlas)).
+With `variations` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/Haeresis/ComponentAtlas)).
 
 
 

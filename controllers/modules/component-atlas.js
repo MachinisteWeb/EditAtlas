@@ -21,17 +21,17 @@ var website = {};
     };
 
     publics.changeSemantic = function (currentComponents, placeholder, i, activateSemantic, dom) {
-        if (typeof activateSemantic === 'string' && currentComponents[placeholder][i].variation && currentComponents[placeholder][i].variation[activateSemantic]) {
-            if (currentComponents[placeholder][i].variation[activateSemantic] === "div" ||
-               currentComponents[placeholder][i].variation[activateSemantic] === "header"  ||
-               currentComponents[placeholder][i].variation[activateSemantic] === "footer")
+        if (typeof activateSemantic === 'string' && currentComponents[placeholder][i].variations && currentComponents[placeholder][i].variations[activateSemantic]) {
+            if (currentComponents[placeholder][i].variations[activateSemantic] === "div" ||
+               currentComponents[placeholder][i].variations[activateSemantic] === "header"  ||
+               currentComponents[placeholder][i].variations[activateSemantic] === "footer")
             {
                 dom = publics.changeHeaders(dom);
             } else {
                 dom = publics.ignoreHeaders(dom);
             }
 
-            dom = publics.changeSection(dom, currentComponents[placeholder][i].variation[activateSemantic]);
+            dom = publics.changeSection(dom, currentComponents[placeholder][i].variations[activateSemantic]);
 
         } else {
             dom = publics.ignoreHeaders(dom);
@@ -48,11 +48,11 @@ var website = {};
         return dom;
     };
 
-    publics.setCurrentComponents = function (component, componentVariation, currentComponents, variation) {
+    publics.setCurrentComponents = function (component, componentVariation, currentComponents, variations) {
         if (component) {
             currentComponents = component[componentVariation];
             if (typeof component === 'string') {
-                currentComponents = variation[component][componentVariation];
+                currentComponents = variations[component][componentVariation];
             }
         }
 
@@ -68,13 +68,13 @@ var website = {};
         }
     };
 
-    publics.includeComponents = function (variation, componentVariation, activateSemantic) {
+    publics.includeComponents = function (variations, componentVariation, activateSemantic) {
         var NA = this,
             ejs = NA.modules.ejs;
 
-        variation.ic = variation.includeComponents = function (placeholder, component, path) {
+        variations.ic = variations.includeComponents = function (placeholder, component, path) {
             var render = "",
-                currentComponents = variation.specific[componentVariation],
+                currentComponents = variations.specific[componentVariation],
                 currentVariation,
                 currentPath,
                 dom = "";
@@ -83,23 +83,23 @@ var website = {};
                 componentVariation = "components";
             }
 
-            currentComponents = publics.setCurrentComponents(component, componentVariation, currentComponents, variation);
+            currentComponents = publics.setCurrentComponents(component, componentVariation, currentComponents, variations);
 
             publics.placeholderNoEmpty(currentComponents, placeholder, function () {
                 for (var i = 0; i < currentComponents[placeholder].length; i++) {
 
-                    currentVariation = 'specific["' + componentVariation + '"]["' + placeholder + '"][' + i + '].variation';
-                    currentPath = ((path) ? path : "") + componentVariation + "." + placeholder + "[" + i + "].variation.";
+                    currentVariation = 'specific["' + componentVariation + '"]["' + placeholder + '"][' + i + '].variations';
+                    currentPath = ((path) ? path : "") + componentVariation + "." + placeholder + "[" + i + "].variations.";
 
                     if (component && typeof component === 'string') {
-                        currentVariation = component + '["' + componentVariation + '"]["' + placeholder + '"][' + i + '].variation';
+                        currentVariation = component + '["' + componentVariation + '"]["' + placeholder + '"][' + i + '].variations';
                     } else if (component && typeof component !== 'string') {
-                        currentVariation = JSON.stringify(currentComponents[placeholder][i].variation);
+                        currentVariation = JSON.stringify(currentComponents[placeholder][i].variations);
                     }
 
                     dom = ejs.render(
                         '<?- include("' + currentComponents[placeholder][i].path + '", { component: ' + currentVariation + ', path : "' + currentPath + '" }) ?>',
-                        variation
+                        variations
                     );
 
                     dom = publics.changeSemantic(currentComponents, placeholder, i, activateSemantic, dom);
@@ -111,9 +111,9 @@ var website = {};
             return render;
         };
 
-        variation.component = {};
+        variations.component = {};
 
-        return variation;
+        return variations;
     };
 
 }(website));

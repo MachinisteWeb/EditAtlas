@@ -17,50 +17,50 @@ website.components = {};
         });
     };
 
-    publics.changeVariation = function (params, next) {
+    publics.changeVariations = function (params, next) {
         var NA = this,
-            variation = params.variation,
-            template = variation.common.demo.template[0],
+            variations = params.variations,
+            template = variations.common.demo.template[0],
             object;
 
-        variation.file = variation.currentRouteParameters.variation;
-        variation.fs = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.currentRouteParameters.variation;
-        variation.fc = ((variation.languageCode) ? variation.languageCode + "/": "") + variation.webconfig.commonVariation;
+        variations.file = variations.routeParameters.variation;
+        variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
+        variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
 
-        variation.common.demo.template = [];
+        variations.common.demo.template = [];
 
         function replaceNames(str, i) {
             return str
-                .replace(/%firstname%/g, variation.common.demo.list[i].firstname)
-                .replace(/%lastname%/g, variation.common.demo.list[i].lastname);
+                .replace(/%firstname%/g, variations.common.demo.list[i].firstname)
+                .replace(/%lastname%/g, variations.common.demo.list[i].lastname);
         }
         function replaceCompany(str, i) {
             return str
-                .replace(/%company%/g, variation.common.demo.list[i].company);
+                .replace(/%company%/g, variations.common.demo.list[i].company);
         }
         function replaceImage(str, i) {
             return replaceCompany(replaceNames(str, i), i);
         }
 
-        for (var i = 0; i < variation.common.demo.list.length; i++) {
+        for (var i = 0; i < variations.common.demo.list.length; i++) {
             object = {};
             object.name = replaceNames(template.name, i);
             object.company = replaceCompany(template.company, i);
             object.image = {};
-            object.image.src = variation.common.demo.list[i].image;
+            object.image.src = variations.common.demo.list[i].image;
             object.image.alt = replaceImage(template.image.alt, i);
-            variation.common.demo.template.push(object);
+            variations.common.demo.template.push(object);
         }
 
-        variation = website.components.editAtlas.setFilters.call(NA, variation);
-        variation = website.components.componentAtlas.includeComponents.call(NA, variation, "components", "mainTag");
+        variations = website.components.editAtlas.setFilters.call(NA, variations);
+        variations = website.components.componentAtlas.includeComponents.call(NA, variations, "components", "mainTag");
 
-        next(variation);
+        next(variations);
     };
 
 }(website));
 
 exports.setSockets = website.setSockets;
-exports.changeVariation = website.changeVariation;
+exports.changeVariations = website.changeVariations;
 exports.setModules = website.setModules;
 exports.setConfigurations = website.setConfigurations;

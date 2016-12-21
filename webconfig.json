@@ -6,5 +6,6 @@
  	"controllersRelativePath": "controllers",
  	"pageNotFound": "/page-inexistante/",
 	"routes": "routes.json",
+	"bundles": "bundles.json",
 	"_minified": ""
 }

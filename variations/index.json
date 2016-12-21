@@ -66,10 +66,10 @@
         "exampleStandard": [
             {
                 "path": "partials/component-example.htm",
-                "variation": {
+                "variations": {
                     "maintTag": "section",
                     "file": "fs",
-                    "variation": "specific",
+                    "variations": "specific",
                     "title1": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 1",
                     "title2": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 2",
                     "title3": "3 tests de profondeur 1, normal, éditable, dynamique éditable, item 3",
@@ -77,10 +77,10 @@
                         "item1": [
                             {
                                 "path": "partials/component-example.htm",
-                                "variation": {
+                                "variations": {
                                     "mainTag": "div",
                                     "file": "fs",
-                                    "variation": "specific",
+                                    "variations": "specific",
                                     "title1": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 1",
                                     "title2": "Item 2 Depth 2",
                                     "title3": "Item 3 Depth 2",
@@ -88,7 +88,7 @@
                                         "item1": [
                                             {
                                                 "path": "partials/component-example.htm",
-                                                "variation": {
+                                                "variations": {
                                                     "mainTag": "div"
                                                 }
                                             }
@@ -100,18 +100,18 @@
                         "item2": [
                             {
                                 "path": "partials/component-example.htm",
-                                "variation": {
+                                "variations": {
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
                                     "title2": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 2",
                                     "title3": "Item 3 Depth 2",
                                     "file": "fs",
-                                    "variation": "specific",
+                                    "variations": "specific",
                                     "components": {
                                         "item2": [
                                             {
                                                 "path": "partials/component-example.htm",
-                                                "variation": {
+                                                "variations": {
                                                     "mainTag": "div"
                                                 }
                                             }
@@ -123,18 +123,18 @@
                         "item3": [
                             {
                                 "path": "partials/component-example.htm",
-                                "variation": {
+                                "variations": {
                                     "mainTag": "div",
                                     "title1": "Item 1 Depth 2",
                                     "title2": "Item 2 Depth 2",
                                     "title3": "3 tests de profondeur 2, normal, éditable, dynamique éditable, item 3",
                                     "file": "fs",
-                                    "variation": "specific",
+                                    "variations": "specific",
                                     "components": {
                                         "item3": [
                                             {
                                                 "path": "partials/component-example.htm",
-                                                "variation": {
+                                                "variations": {
                                                     "mainTag": "div"
                                                 }
                                             }

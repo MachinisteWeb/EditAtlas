@@ -16,5 +16,5 @@
 		<link rel="stylesheet" type="text/css" href="<?- urlBasePath ?>/stylesheets/common.css" />
 		<? } ?>
 	</head>
-	<body data-variation='<?= currentRouteParameters.variation.replace(/\.json/,'') ?>' data-hostname='<?= webconfig.urlRoot ?>' data-subpath='<?= webconfig.urlRelativeSubPath.slice(1) ?>'>
+	<body data-variation='<?= routeParameters.variation.replace(/\.json/,'') ?>' data-hostname='<?= webconfig.urlRoot ?>' data-subpath='<?= webconfig.urlRelativeSubPath.slice(1) ?>'>
 		<div class="layout">

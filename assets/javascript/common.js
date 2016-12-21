@@ -1,13 +1,6 @@
-var website = website || {},
-    $body = $('body');
+var website = website || {};
 
 (function (publics) {
-
-    var optionsSocket;
-
-    optionsSocket = ($body.data('subpath') !== '') ? { path: '/' + $body.data('subpath') + (($body.data('subpath')) ? "/" : "") + 'socket.io' } : undefined;
-
-    publics.socket = io.connect(($body.data('subpath') !== '') ? $body.data('hostname') : undefined, optionsSocket);
 
     publics.addText = function () {
         $(".add-text > span, .add-text > div").each(function () {

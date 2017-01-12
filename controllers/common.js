@@ -24,7 +24,7 @@ website.components = {};
 
         locals.file = locals.routeParameters.variation;
         locals.fs = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.routeParameters.variation;
-        locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.commonVariation;
+        locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.variation;
 
         locals.common.demo.template = [];
 

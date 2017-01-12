@@ -1,7 +1,7 @@
 {
 	"httpPort": 7777,
- 	"commonVariation": "common.json",
- 	"commonController": "common.js",
+ 	"variation": "common.json",
+ 	"controller": "common.js",
  	"urlRelativeSubPath": "edit-atlas",
  	"controllersRelativePath": "controllers",
  	"pageNotFound": "/page-inexistante/",

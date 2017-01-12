@@ -65,8 +65,8 @@ Dans un contexte standard, avec une configuration comme celle-ci :
 ```js
 {
 	"controllersRelativePath": "controllers/",
-	"commonController": "common.js",
-	"commonVariation": "common.json",
+	"controller": "common.js",
+	"variation": "common.json",
 	"routes": {
 		"/": {
 			"view": "index.htm",
@@ -198,7 +198,7 @@ exports.changeVariations = function (params, next) {
 		// Le fichier spécifique utilisé pour générer cette vue.
 		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
 		// Le fichier commun utilisé pour générer cette vue.
-		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
+		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
 	}
 
 	next(variations);
@@ -439,7 +439,7 @@ Malgré le nombre de fichier dans cet exemple, le coeur même utile d'EditAtlas 
 
 ### Configuration minimal ###
 
-Il vous faudra, pour faire fonctionner EditAtlas, activer le fichier de variations communes via `commonVariation`. Il vous faudra également activer la partie Back-end avec `controllersRelativePath` avec le modules node.js `socket.io`. Ce repository en donne un parfait exemple.
+Il vous faudra, pour faire fonctionner EditAtlas, activer le fichier de variations communes via `variation`. Il vous faudra également activer la partie Back-end avec `controllersRelativePath` avec le modules node.js `socket.io`. Ce repository en donne un parfait exemple.
 
 
 
@@ -525,7 +525,7 @@ exports.changeVariations = function (params, next) {
 		NA = params.NA;
 
 	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
+	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
 
 	variations = require('./modules/edit-atlas').setFilters(variations, NA);
 
@@ -735,8 +735,8 @@ This is useful to produce a model of the same HTML page multiple times or to cre
 ```js
 {
 	"controllersRelativePath": "controllers/",
-	"commonController": "common.js",
-	"commonVariation": "common.json",
+	"controller": "common.js",
+	"variation": "common.json",
 	"routes": {
 		"/": {
 			"view": "index.htm",
@@ -868,7 +868,7 @@ exports.changeVariations = function (params, next) {
 		// The specific file used to generate this view.
 		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
 		// The common file used to generate this view.
-		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
+		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
 	}
 
 	next(variations);
@@ -1113,7 +1113,7 @@ Despite the number of file in this example, the EditAtlas core useful for your o
 
 #### Minimum Requirement ####
 
-You will need to run EditAtlas, activate common variations file via `commonVariation`. You also need to activate the Back-end part with `controllersRelativePath` with node.js modules `socket.io`. This repository gives a perfect example.
+You will need to run EditAtlas, activate common variations file via `variation`. You also need to activate the Back-end part with `controllersRelativePath` with node.js modules `socket.io`. This repository gives a perfect example.
 
 
 
@@ -1193,7 +1193,7 @@ exports.changeVariations = function (params, next) {
 		NA = params.NA;
 
 	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.commonVariation;
+	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
 
 	variations = require('./modules/edit-atlas').setFilters(variations, NA);
 

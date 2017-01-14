@@ -494,7 +494,7 @@ Il va falloir, pour habiller votre fenêtre d'édition et mettre en surbrillance
 Pour permettre l'ouverture de votre popup il va falloir injecter le script suivant :
 
 ```html
-<script type="text/javascript" src="javascript/edit-atlas.js"></script>
+<script type="text/javascript" src="javascripts/edit-atlas.js"></script>
 ```
 
 et lancer la fonction suivante dans votre JavaScript controlleur de page :
@@ -1168,7 +1168,7 @@ We'll have to dress up your editing window and highlight the editable items by h
 To allow the opening of your popup, you will have to inject the following script:
 
 ```html
-<script type="text/javascript" src="javascript/edit-atlas.js"></script>
+<script type="text/javascript" src="javascripts/edit-atlas.js"></script>
 ```
 
 and run the following JavaScript function in your controller page:

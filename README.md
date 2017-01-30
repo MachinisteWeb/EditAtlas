@@ -185,23 +185,22 @@ On remarque également que :
 En imaginant que dans votre controlleur commun vous précisiez ceci :
 
 ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations,
-		session = params.request.session;
+exports.changeVariations = function (next, locals, request) {
+    var session = request.session;
 
-	// Création de variable à false.
-	variations.fs = false;
-	variations.fc = false;
+    // Création de variable à false.
+    locals.fs = false;
+    locals.fc = false;
 
-	// Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
-	if (session.hasPermissionForEdit) {
-		// Le fichier spécifique utilisé pour générer cette vue.
-		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-		// Le fichier commun utilisé pour générer cette vue.
-		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
-	}
+    // Si l'utilisateur à le droit, on lui permet d'éditer les fichiers.
+    if (session.hasPermissionForEdit) {
+        // Le fichier spécifique utilisé pour générer cette vue.
+        locals.fs = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.routeParameters.variation;
+        // Le fichier commun utilisé pour générer cette vue.
+        locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.variation;
+    }
 
-	next(variations);
+    next();
 };
 ```
 
@@ -275,19 +274,18 @@ Cette valeur est interceptée côté controller comme ceci :
 *common.js*
 
 ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations,
-		article;
+exports.changeVariations = function (next, locals) {
+	var article;
 
 	// Renvoi des informations sur un article à partir d'une valeur dans l'url.
 	article = website.getArticle(/* Valeur dans l'url */);
 
 	// Si l'article à un titre, alors on modifie la valeur de variations « titleArticle ».
 	if (article.title) {
-		variations.titleArticle = article.title;
+		locals.titleArticle = article.title;
 	}
 
-	next(variations);
+	next();
 };
 ```
 
@@ -514,22 +512,21 @@ Enfin, en vu d'enregistrer vos valeurs dans votre fichier de variation, il va fa
 - Pour enregistrer les valeurs et les répercuter à toutes les fenêtres ouvertes à l'intérieur de `io.sockets.on('connection', function (socket) { ... })` :
 
    ```js
-	require('./modules/edit-atlas').sockets(socket, NA, true);
+    require('./modules/edit-atlas').sockets(socket, NA, true);
 ```
 
 - Ajoutez dans la fonction du contrôleur commun `changeVariations` les chemins vers vos variations et les fonctions d'édition :
 
    ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations,
-		NA = params.NA;
+exports.changeVariations = function (next, locals) {
+    var NA = this;
 
-	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
+    locals.fs = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.routeParameters.variation;
+    locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.variation;
 
-	variations = require('./modules/edit-atlas').setFilters(variations, NA);
+    locals = require('./modules/edit-atlas').setFilters(locals, NA);
 
-	next(variations);
+    next();
 };
 ```
 
@@ -855,23 +852,22 @@ We also note that:
 Imagining that your common controller you to specify this:
 
 ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations,
-		session = params.request.session;
+exports.changeVariations = function (next, locals, request) {
+    var session = request.session;
 
-	// Create variable and setted them to false.
-	variations.fs = false;
-	variations.fc = false;
+    // Create variable and setted them to false.
+    locals.fs = false;
+    locals.fc = false;
 
-	// If the user are the right, we allowed edit files.
-	if (session.hasPermissionForEdit) {
-		// The specific file used to generate this view.
-		variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-		// The common file used to generate this view.
-		variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
-	}
+    // If the user are the right, we allowed edit files.
+    if (session.hasPermissionForEdit) {
+        // The specific file used to generate this view.
+        locals.fs = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.routeParameters.variation;
+        // The common file used to generate this view.
+        locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.variation;
+    }
 
-	next(variations);
+    next();
 };
 ```
 
@@ -949,19 +945,18 @@ This value is intercepted in controller-side like this:
 *common.js*
 
 ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations,
-		article;
+exports.changeVariations = function (next, locals) {
+	var article;
 
 	// Re sending information on an article from a value in the url.
 	article = website.getArticle(/* Value into url */);
 
 	// If the article has a title, then change the value of variations "titleArticle".
 	if (article.title) {
-		variations.titleArticle = article.title;
+		locals.titleArticle = article.title;
 	}
 
-	next(variations);
+	next();
 };
 ```
 
@@ -1185,26 +1180,25 @@ website.editAtlas();
 
 Finally, for save your values ​​in your variation file, we will have to use two common functions in your controller.
 
-- Add in common `changeVariations` controller fonction the paths to your variations and editing functions :
-
-   ```js
-exports.changeVariations = function (params, next) {
-	var variations = params.variations;
-		NA = params.NA;
-
-	variations.fs = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.routeParameters.variation;
-	variations.fc = ((variations.languageCode) ? variations.languageCode + "/": "") + variations.webconfig.variation;
-
-	variations = require('./modules/edit-atlas').setFilters(variations, NA);
-
-	next(variations);
-};
-```
-
 - To save the values ​​and pass them all open windows within `io.sockets.on('connection', function (socket) { ... })`:
 
    ```js
-	require('./modules/edit-atlas').sockets(socket, NA, true);
+    require('./modules/edit-atlas').sockets(socket, NA, true);
+```
+
+- Add in common `changeVariations` controller fonction the paths to your variations and editing functions :
+
+   ```js
+exports.changeVariations = function (next, locals) {
+    var NA = this;
+
+    locals.fs = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.routeParameters.variation;
+    locals.fc = ((locals.languageCode) ? locals.languageCode + "/": "") + locals.webconfig.variation;
+
+    locals = require('./modules/edit-atlas').setFilters(locals, NA);
+
+    next();
+};
 ```
 
 
@@ -1248,6 +1242,7 @@ and this webconfig :
 ## Desactivate the Front part ##
 
 It's possible to not generate extra markup required for EditAtlas functionality. It's useful for managing two versions : for example a real time version with mechanism and a `--generate` version without mechanism.
+
 ```js
 variations = website.components.editAtlas.setFilters(variations, NA, NA.webconfig._activateFront);
 ```

@@ -1,6 +1,7 @@
 {
 	"javascripts": {
 		"javascripts/common.min.js": [
+			"javascripts/socket.io.js",
 			"node-atlas/socket.io.js",
 			"javascripts/jquery.js",
 			"javascripts/prettify.js",

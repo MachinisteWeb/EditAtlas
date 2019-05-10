@@ -9,5 +9,6 @@
  	"pageNotFound": "/page-inexistante/",
 	"routes": "routes.json",
 	"bundles": "bundles.json",
+	"statics": "statics.json",
 	"_minified": ""
 }

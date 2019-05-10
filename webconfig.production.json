@@ -11,6 +11,7 @@
 	"urlPort": 443,
 	"routes": "routes.json",
 	"bundles": "bundles.json",
+	"statics": "statics.json",
 	"_minified": ".min",
 	"_demo": true
 }

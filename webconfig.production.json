@@ -1,14 +1,16 @@
 {
 	"cache": true,
-	"httpPort": 7765,
-	"httpHostname": "www.lesieur.name",
- 	"urlPort": 443,
+	"httpPort": 7774,
  	"httpSecure": true,
-	"get": false,
-	"post": false,
- 	"urlRelativeSubPath": "api/",
- 	"controller": "common.js",
  	"variation": "common.json",
-  	"pageNotFound": "/page-inexistante/",
-	"routes": "routes.json"
+ 	"controller": "common.js",
+ 	"controllersRelativePath": "controllers",
+ 	"pageNotFound": "/page-inexistante/",
+ 	"httpHostname": "www.lesieur.name",
+	"urlRelativeSubPath": "edit-atlas",
+	"urlPort": 443,
+	"routes": "routes.json",
+	"bundles": "bundles.json",
+	"_minified": ".min",
+	"_demo": true
 }

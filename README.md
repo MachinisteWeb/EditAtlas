@@ -26,7 +26,7 @@ EditAtlas est un exemple d'édition de contenu sans Back-office avec [NodeAtlas]
 
  7. De passer en mode plein fichier pour éditer des valeurs non visible dans la page courante.
 
-Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](https://node-atlas.js.org/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+Vous pouvez télécharger ce repository en vu de le tester ou de l'intégrer à l'un de vos projets [NodeAtlas](https://node-atlas.js.org/) ou node.js. Ce mécanisme est actuellement utilisé sur [BookAtlas](https://github.com/MachinisteWeb/BookAtlas/).
 
 Un exemple live de ce repository est testable à [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *La seule différence avec le code de ce repository est que l'enregistrement dans les fichiers de variation de l'exemple live a été inhibé pour qu'en rechargeant votre page, vous récupériez le contenu de test.*
 
@@ -204,7 +204,7 @@ exports.changeVariations = function (next, locals, request) {
 };
 ```
 
-vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+vous pourriez permettre de controller dans quel condition un utilisateur peut ou ne peut pas éditer le texte. Une implémentation similaire tourne dans [BookAtlas](https://github.com/MachinisteWeb/BookAtlas/).
 
 Ainsi le code précédent pourrait s'écrire comme ci-après avec l'injection des variables `fs` et `fc` :
 
@@ -604,7 +604,7 @@ et le webconfig pour la version de génération (utilisant `--generate`) suivant
 
 ## Utilisation avec ComponentAtlas ##
 
-Il est également possible d'éditer des valeurs dans les composants utilisés par [ComponentAtlas](https://github.com/Haeresis/ComponentAtlas) grâce à la variable exposée `path`. Il faut pour exposer cette variable aux composants inclus dans les composants la passer en troisième paramètre `includeComponents('componentsPlaceholder', component, path)`.
+Il est également possible d'éditer des valeurs dans les composants utilisés par [ComponentAtlas](https://github.com/MachinisteWeb/ComponentAtlas) grâce à la variable exposée `path`. Il faut pour exposer cette variable aux composants inclus dans les composants la passer en troisième paramètre `includeComponents('componentsPlaceholder', component, path)`.
 
 Pour éditer un composant provenant du fichier `specific` c'est comme suit :
 
@@ -630,7 +630,7 @@ Enfin, si votre composant peut provenir, en fonction des cas, du fichier `specif
 <?- ea(eval(component.variations), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
-En alimentant vos variables `variations` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/Haeresis/ComponentAtlas)).
+En alimentant vos variables `variations` et `file` au même endroit que par exemple le `mainTag` (En savoir plus sur le [repository de ComponentAtlas](https://github.com/MachinisteWeb/ComponentAtlas)).
 
 
 
@@ -693,7 +693,7 @@ EditAtlas is an example for content filling without Back-office with [NodeAtlas]
 
  7. Pass to full file mode to edit non visible value in the current page.
 
-You can download this repository to test it or integrate it with any of your [NodeAtlas](https://node-atlas.js.org/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+You can download this repository to test it or integrate it with any of your [NodeAtlas](https://node-atlas.js.org/) on node.js projects. This mechanism is currently used on [BookAtlas](https://github.com/MachinisteWeb/BookAtlas/).
 
 A live example of this repository is testable at [https://www.lesieur.name/edit-atlas/](https://www.lesieur.name/edit-atlas/). *The only difference with the code of this repository is: the save in the variation files was inhibited. If you reload your page, you get back the test content.*
 
@@ -871,7 +871,7 @@ exports.changeVariations = function (next, locals, request) {
 };
 ```
 
-you could to check if a user can or can not edit the text. Similar implementation run in [BookAtlas](https://github.com/Haeresis/BookAtlas/).
+you could to check if a user can or can not edit the text. Similar implementation run in [BookAtlas](https://github.com/MachinisteWeb/BookAtlas/).
 
 So the above code could be written as following injection with variable `fs` and `fc`:
 
@@ -1275,7 +1275,7 @@ and a webconfig for generated version (with `--generate`) :
 
 ## Using with ComponentAtlas ##
 
-It's also possible to edit values into component used by [ComponentAtlas](https://github.com/Haeresis/ComponentAtlas) thanks to `path` variable. To work with it, it's important to pass it in third parameter `includeComponents('componentsPlaceholder', component, path)`.
+It's also possible to edit values into component used by [ComponentAtlas](https://github.com/MachinisteWeb/ComponentAtlas) thanks to `path` variable. To work with it, it's important to pass it in third parameter `includeComponents('componentsPlaceholder', component, path)`.
 
 To edit a value in component from `specific` file, use that :
 
@@ -1301,7 +1301,7 @@ Then, if the component variations called from `specific` or `common`, use that :
 <?- ea(eval(component.variations), [path + 'href', eval(component.file), 'href']) ?>
 ```
 
-With `variations` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/Haeresis/ComponentAtlas)).
+With `variations` and `file` used from same place of `mainTag` (Know more on [ComponentAtlas repository](https://github.com/MachinisteWeb/ComponentAtlas)).
 
 
 

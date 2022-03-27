@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Haeresis/EditAtlas.git"
+    "url": "https://github.com/MachinisteWeb/EditAtlas.git"
   },
   "license": {
     "type": "GPL-2.0",
-    "url": "https://github.com/Haeresis/EditAtlas/LICENSE"
+    "url": "https://github.com/MachinisteWeb/EditAtlas/LICENSE"
   },
   "bugs": {
-    "url": "https://github.com/Haeresis/EditAtlas/issues"
+    "url": "https://github.com/MachinisteWeb/EditAtlas/issues"
   },
   "dependencies": {
     "cookie": "^0.3.1",
